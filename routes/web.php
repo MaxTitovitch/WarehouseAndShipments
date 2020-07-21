@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/', 'AdminController@index')->name('index');
+Route::get('/orders', 'AdminController@orders')->name('orders');
+Route::get('/products', 'AdminController@products')->name('products');
+Route::get('/supplies', 'AdminController@supplies')->name('supplies');
+Route::get('/billing', 'AdminController@billing')->name('billing');
+//Route::get('/settings', 'AdminController@order');
