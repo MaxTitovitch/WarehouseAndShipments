@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function index() {
-        return 'index';
+        return view('index');
     }
 
     public function orders() {
