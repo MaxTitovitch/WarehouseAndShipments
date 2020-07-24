@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('/', 'AdminController@index')->name('index');
 Route::get('/orders', 'AdminController@orders')->name('orders');
 Route::get('/products', 'AdminController@products')->name('products');
