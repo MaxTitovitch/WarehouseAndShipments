@@ -29,7 +29,10 @@ class CreateOrdersTable extends Migration
             $table->string('country', 255);
             $table->string('phone', 14);
             $table->enum('shipping_company', ['USPS', 'FedEx', 'DHL', 'UPS']);
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

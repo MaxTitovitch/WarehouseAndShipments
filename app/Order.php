@@ -20,10 +20,15 @@ class Order extends Model
         'state_region',
         'country',
         'phone',
-        'shipping_company'
+        'shipping_company',
+        'user_id'
     ];
 
     public function products() {
         return $this->belongsToMany('App\Product');
+    }
+
+    public function user() {
+        return $this->belongsTo('App\User');
     }
 }
