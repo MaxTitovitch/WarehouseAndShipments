@@ -16,7 +16,7 @@ class AdminController extends Controller
     }
 
     public function inboundShipments() {
-        $shipments = Shipment::all();
+        $shipments = Shipment::with('user')->get();
         return view('inbound-shipments')->with(['shipments' => $shipments]);
     }
 
@@ -31,7 +31,7 @@ class AdminController extends Controller
     }
 
     public function orders() {
-        $orders = Order::all();
+        $orders = Order::with('user')->get();
         return view('orders')->with(['orders' => $orders]);
     }
 }

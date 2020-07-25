@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
         if($this->isHttpException($exception)) {
             switch (intval($exception->getStatusCode())) {
                 case 404:
-                    return redirect()->route('index');
+                    return redirect()->route('home');
                 default:
                     return parent::render($request, $exception);
             }

@@ -92,10 +92,14 @@
             <div class="sidenav">
                 <a class="dashboard ml-1" href="{{ route('home') }}">DASHBOARD</a>
                 <hr>
-                <a href="{{ route('inbound-shipments') }}">Inbound shipment</a>
-                <a href="#services">Balance</a>
-                <a href="#clients">Product</a>
-                <a href="#contact">Orders</a>
+                <a href="{{ route('inbound-shipments') }}">Inbound shipments</a>
+                <a href="{{ route('products') }}">Products</a>
+                <a href="{{ route('orders') }}">Orders</a>
+                @if(\Illuminate\Support\Facades\Auth::user())
+                    @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+                        <a href="{{ route('users') }}">Users</a>
+                    @endif
+                @endif
             </div>
         @show
         <div class="dashboard-table-div">

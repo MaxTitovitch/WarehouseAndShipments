@@ -11,10 +11,10 @@ class Product extends Model
     ];
 
     public function shipments() {
-        return $this->belongsToMany('App\Shipment');
+        return $this->belongsToMany('App\Shipment')->withPivot('quantity');
     }
 
     public function orders() {
-        return $this->belongsToMany('App\Order');
+        return $this->belongsToMany('App\Order')->withPivot('quantity', 'price', 'description');
     }
 }

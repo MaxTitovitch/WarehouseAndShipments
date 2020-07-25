@@ -18,10 +18,10 @@ class CreateBalanceHistoriesTable extends Migration
             $table->decimal('current_balance', 10, 2);
             $table->decimal('transaction_cost', 10, 2);
             $table->enum('type', ['Debit', 'Credit']);
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL')->onUpdate('SET NULL');
         });
     }
 

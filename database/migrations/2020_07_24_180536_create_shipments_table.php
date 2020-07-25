@@ -21,10 +21,10 @@ class CreateShipmentsTable extends Migration
             $table->unsignedInteger('quantity');
             $table->date('received')->nullable();
             $table->date('shipped')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL')->onUpdate('SET NULL');
         });
     }
 

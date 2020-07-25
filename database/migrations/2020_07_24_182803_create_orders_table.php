@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->string('customer', 255);
             $table->string('comment', 255);
             $table->enum('status', ['In progress', 'Completed', 'Canceled'])->default('In progress');
-            $table->decimal('shipping_cost', 10, 2)->default(0);
+            $table->decimal('shipping_cost', 10, 2)->nullable();
             $table->string('tracking_number', 255);
             $table->date('shipped')->nullable();
             $table->enum('packing_selection', ['Bubbles Pack', 'Carton']);
@@ -27,12 +27,12 @@ class CreateOrdersTable extends Migration
             $table->string('zip_postal_code', 255);
             $table->string('state_region', 255);
             $table->string('country', 255);
-            $table->string('phone', 14);
+            $table->string('phone', 30);
             $table->enum('shipping_company', ['USPS', 'FedEx', 'DHL', 'UPS']);
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL')->onUpdate('SET NULL');
         });
     }
 

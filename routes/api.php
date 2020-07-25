@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::group(['middleware' => 'auth'], function () {
+//    Route::resource('user', 'UserController', ['only' => ['index', 'show', 'update', 'destroy']]);
+//    Route::resource('product', 'ProductController', ['only' => ['index', 'show', 'store', 'update']]);
+//    Route::resource('shipment', 'ShipmentController', ['only' => ['show', 'store', 'update']]);
+//    Route::resource('order', 'OrderController', ['only' => ['show', 'store', 'update', 'destroy']]);
+//    Route::post('/order/{order}', 'OrderController@copy')->name('order.copy');
+//});
