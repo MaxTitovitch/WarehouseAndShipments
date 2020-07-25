@@ -7,22 +7,23 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function index() {
-        return view('index');
+        return 'index';
     }
 
-    public function orders() {
-        return 'orders';
+    public function inboundShipments() {
+        return view('inbound-shipments');
+    }
+
+
+    public function users() {
+        return 'billing';
     }
 
     public function products() {
         return 'products';
     }
 
-    public function supplies() {
-        return 'supplies';
-    }
-
-    public function billing() {
-        return 'billing';
+    public function orders() {
+        return 'orders';
     }
 }

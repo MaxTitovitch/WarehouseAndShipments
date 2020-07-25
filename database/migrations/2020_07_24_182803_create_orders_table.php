@@ -17,8 +17,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('customer', 255);
             $table->string('comment', 255);
-            $table->string('status', 255);
-            $table->decimal('shipping_cost', 10, 2);
+            $table->enum('status', ['In progress', 'Completed', 'Canceled'])->default('In progress');
+            $table->decimal('shipping_cost', 10, 2)->default(0);
             $table->string('tracking_number', 255);
             $table->date('shipped')->nullable();
             $table->enum('packing_selection', ['Bubbles Pack', 'Carton']);

@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'AdminController@index')->name('index');
-Route::get('/orders', 'AdminController@orders')->name('orders');
+Route::get('/inbound-shipments ', 'AdminController@inboundShipments')->name('inbound-shipments');
+Route::get('/users', 'AdminController@users')->name('users');
 Route::get('/products', 'AdminController@products')->name('products');
-Route::get('/supplies', 'AdminController@supplies')->name('supplies');
-Route::get('/billing', 'AdminController@billing')->name('billing');
+Route::get('/orders', 'AdminController@orders')->name('orders');
 //Route::get('/settings', 'AdminController@order');
