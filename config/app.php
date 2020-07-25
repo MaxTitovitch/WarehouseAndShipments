@@ -33,9 +33,9 @@ return [
     | Application Debug Mode
     |--------------------------------------------------------------------------
     |
-    | When your application is in debug mode, detailed layout messages with
-    | stack traces will be shown on every layout that occurs within your
-    | application. If disabled, a simple generic layout page is shown.
+    | When your application is in debug mode, detailed layouts messages with
+    | stack traces will be shown on every layouts that occurs within your
+    | application. If disabled, a simple generic layouts page is shown.
     |
     */
 

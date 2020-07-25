@@ -29,4 +29,8 @@ class User extends Authenticatable
     public function orders() {
         return $this->hasMany('App\Order');
     }
+
+    public function balanceHistories() {
+        return $this->hasMany('App\BalanceHistory');
+    }
 }

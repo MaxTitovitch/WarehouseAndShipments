@@ -1,4 +1,8 @@
-@extends('layout.layout')
+@extends('layouts.app')
+
+@section('title')
+    Inbound shipment
+@endsection
 
 @section('content')
 
@@ -64,4 +68,9 @@
             <label class="custom-file-label" for="customFile">Choose file</label>
         </div>
     </div>
+
+{{--    @section('content')--}}
+{{--        @dump($shipments)--}}
+{{--    @endsection--}}
+
 @endsection
