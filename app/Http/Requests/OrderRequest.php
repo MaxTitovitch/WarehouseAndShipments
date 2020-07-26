@@ -21,10 +21,7 @@ class OrderRequest extends FormRequest
             'customer' => 'required|string|max:255',
             'comment' => 'required|string|max:255',
             'shipping_company' => 'required|in:USPS,FedEx,DHL,UPS',
-            'status' => 'in:Created,Shipped',
-            'shipping_cost' => 'numeric|nullable',
             'tracking_number' => 'required|string|max:255',
-            'shipped' => 'date|nullable',
             'packing_selection' => 'required|in:Bubbles Pack,Carton',
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
@@ -32,6 +29,10 @@ class OrderRequest extends FormRequest
             'state_region' => 'required|string|max:255',
             'country' => 'required|string|max:255',
             'phone' => 'required|regex:/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/',
+
+            'status' => 'in:Created,Shipped',
+            'shipping_cost' => 'numeric|nullable',
+            'shipped' => 'date|nullable',
             'user_id' => 'exists:users,id',
             'order_products' => 'required|array',
         ];

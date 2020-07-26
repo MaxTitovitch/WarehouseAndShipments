@@ -9,7 +9,7 @@
     <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Add New</button>
     <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data" >
         @csrf
-        <input type="hidden" name="type" value="products" class="display-none">
+        <input type="hidden" name="type" value="orders" class="display-none">
         <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
         <input id="import-submit" type="submit" value="Submit" class="display-none">
         <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>
