@@ -21,6 +21,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/products', 'AdminController@products')->name('products');
     Route::get('/orders', 'AdminController@orders')->name('orders');
     Route::get('/users', 'AdminController@users')->middleware('authorisation')->name('users');
+
+    Route::post('/parse', 'ImportController@parse')->name('parse');
 });
 
 //Route::group(['middleware' => 'auth', 'prefix' => 'api'], function () {
@@ -32,5 +34,5 @@ Route::group(['prefix' => 'api'], function () {
     Route::resource('shipment', 'ShipmentController', ['only' => ['show', 'store', 'update']]);
     Route::resource('order', 'OrderController', ['only' => ['show', 'store', 'update', 'destroy']]);
     Route::post('/order/{order}', 'OrderController@copy')->name('order.copy');
-//    Route::get('/chart-data', 'AdminController@chartData')->name('chart-data');
+    Route::get('/chart-data', 'AdminController@chartData')->name('chart-data');
 });
