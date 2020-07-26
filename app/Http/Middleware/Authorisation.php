@@ -16,9 +16,9 @@ class Authorisation
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->role == 'user') {
-            return redirect()->route('home');
-        }
+//        if(Auth::user()->role == 'user') {
+//            return redirect()->route('home');
+//        }
         return $next($request);
     }
 }

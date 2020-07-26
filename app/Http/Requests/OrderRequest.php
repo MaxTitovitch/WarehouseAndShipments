@@ -21,7 +21,7 @@ class OrderRequest extends FormRequest
             'customer' => 'required|string|max:255',
             'comment' => 'required|string|max:255',
             'shipping_company' => 'required|in:USPS,FedEx,DHL,UPS',
-            'status' => 'in:In progress,Completed,Canceled',
+            'status' => 'in:Created,Shipped',
             'shipping_cost' => 'numeric|nullable',
             'tracking_number' => 'required|string|max:255',
             'shipped' => 'date|nullable',

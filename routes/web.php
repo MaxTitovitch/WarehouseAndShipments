@@ -32,4 +32,5 @@ Route::group(['prefix' => 'api'], function () {
     Route::resource('shipment', 'ShipmentController', ['only' => ['show', 'store', 'update']]);
     Route::resource('order', 'OrderController', ['only' => ['show', 'store', 'update', 'destroy']]);
     Route::post('/order/{order}', 'OrderController@copy')->name('order.copy');
+//    Route::get('/chart-data', 'AdminController@chartData')->name('chart-data');
 });
