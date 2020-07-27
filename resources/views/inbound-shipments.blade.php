@@ -63,7 +63,8 @@
 @endsection
 
 @section('modal')
-    <div class="modal fade" data-backdrop="static" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="modalAddLabel"
+    <div class="modal fade" data-backdrop="static" id="modalAdd" tabindex="-1" role="dialog"
+         aria-labelledby="modalAddLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -73,8 +74,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form>
+                <form class="form-submit">
+                    <div class="modal-body">
+                        @csrf
                         <div class="form-group">
                             <label for="tracking_number-number">Tracking number</label>
                             <input type="text" class="form-control" required maxlength="255" id="tracking_number"
@@ -99,13 +101,13 @@
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
                             <div class="form-group">
                                 <label for="received">Date of receiving</label>
-                                <input type="date" class="form-control" id="received" name="date" placeholder="date" required
+                                <input type="date" class="form-control" id="received" name="date" placeholder="date"
                                        aria-describedby="dateHelp">
                                 <small id="dateHelp" class="form-text text-muted date-error"></small>
                             </div>
                             <div class="form-group">
                                 <label for="shipped">Date of shipping</label>
-                                <input type="date" class="form-control" id="shipped" name="date" placeholder="date" required
+                                <input type="date" class="form-control" id="shipped" name="date" placeholder="date"
                                        aria-describedby="dateHelp">
                                 <small id="dateHelp" class="form-text text-muted date-error"></small>
                             </div>
@@ -115,8 +117,8 @@
                             <div class="products-container">
                                 <div class="product-container">
                                     <select class="form-control product-select"></select>
-                                    <input type="text" class="form-control quantity" placeholder="quantity"
-                                           required>
+                                    <input type="number" class="form-control quantity" placeholder="quantity"
+                                           required min="1" max="10000">
                                     <a href="#" class="remove-product-select">
                                         <i class="fa fa-times fa-2x text-dark" aria-hidden="true"></i>
                                     </a>
@@ -129,12 +131,13 @@
                                 </a>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary close-modal-button" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary save-changes">Create</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary close-modal-button" data-dismiss="modal">Close
+                        </button>
+                        <button type="submit" class="btn btn-primary save-changes">Create</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

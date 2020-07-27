@@ -39,6 +39,7 @@ $('[type="date"]').toArray().forEach((element) => {
 $('.add-product-select').click(function (event) {
   event.preventDefault();
   let clone = $(".product-container").eq(0).clone();
+  clone.find('.quantity')[0].value = '';
   clone.find('.remove-product-select').click(function (event) {
     event.preventDefault();
     $(this).closest('.product-container').eq(0).remove();
