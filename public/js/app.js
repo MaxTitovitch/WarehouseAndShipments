@@ -1,3 +1,26 @@
+let products = [];
+$(document).ready(() => {
+  $.ajax({
+    type: "GET",
+    url: "/api/product",
+    success: (data) => {
+      products = data;
+      addProducts($('.product-select')[0]);
+    }
+  });
+});
+
+function addProducts(productSelect) {
+  if(productSelect) {
+    products.forEach((element) => {
+      let option = document.createElement('option');
+      option.innerText = element.name;
+      option.value = element.id;
+      productSelect.appendChild(option);
+    })
+  }
+}
+
 $('#import-open').click(function (event) {
     $('#import-input').click();
 });
@@ -11,26 +34,6 @@ $('[type="date"]').toArray().forEach((element) => {
     let dateMax = new Date().setFullYear(new Date().getFullYear() + 10);
     element.setAttribute('min', new Date(dateMin).toISOString().split('T')[0]);
     element.setAttribute('max', new Date(dateMax).toISOString().split('T')[0]);
-});
-
-$(document).ready(() => {
-  let products = [];
-  $.ajax({
-    type: "GET",
-    url: "/api/product",
-    success: (data) => {
-      products = data;
-      let productSelect = $('.product-select')[0];
-      if(productSelect) {
-        products.forEach((element) => {
-          let option = document.createElement('option');
-          option.innerText = element.name;
-          option.value = element.id;
-          productSelect.appendChild(option);
-        })
-      }
-    }
-  });
 });
 
 $('.add-product-select').click(function (event) {
