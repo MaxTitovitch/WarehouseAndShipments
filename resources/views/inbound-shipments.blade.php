@@ -6,21 +6,14 @@
 
 @section('content')
 
-    <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Add New</button>
-    <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data" >
+    <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-shipment">Add New</button>
+    <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="type" value="orders" class="display-none">
+        <input type="hidden" name="type" value="shipments" class="display-none">
         <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
         <input id="import-submit" type="submit" value="Submit" class="display-none">
         <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>
     </form>
-
-{{--    <div class="">--}}
-{{--        <div class="custom-file float-right choose-file my-3 mr-3">--}}
-{{--            <input type="file" class="custom-file-input " id="customFile">--}}
-{{--            <label class="custom-file-label" for="customFile">Choose file</label>--}}
-{{--        </div>--}}
-{{--    </div>--}}
 
     <table class="table mt-5 dashboard-table-div">
         <thead>
@@ -33,53 +26,34 @@
             <th scope="col">Tracking number</th>
             <th scope="col">Comment</th>
             <th scope="col">Quantity</th>
-            <th scope="col">Edit</th>
+            <th scope="col">Created</th>
+            <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
+        @foreach($shipments as $shipment)
         <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td><a href="">Edit</a></td>
+            <th scope="row">{{ $shipment->id }}</th>
+            <td>{{ $shipment->user->id }}</td>
+            <td>{{ $shipment->shipped }}</td>
+            <td>{{ $shipment->received }}</td>
+            <td>{{ $shipment->shipping_company }}</td>
+            <td>{{ $shipment->tracking_number }}</td>
+            <td>{{ $shipment->comment }}</td>
+            <td>{{ $shipment->quantity }}</td>
+            <td>{{ $shipment->created_at->format('Y-m-d') }}</td>
+            <td>
+                <a href="#" class="show-shipment">Show</a>
+                <a href="#" class="edit-shipment">Edit</a>
+            </td>
         </tr>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td><a href="">Edit</a></td>
-        </tr>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td><a href="">Edit</a></td>
-        </tr>
+        @endforeach
+
         </tbody>
     </table>
 
-
-
-
-
-
-{{--    @section('content')--}}
-{{--        @dump($shipments)--}}
-{{--    @endsection--}}
+    {{--    @section('content')--}}
+    {{--        @dump($shipments)--}}
+    {{--    @endsection--}}
 
 @endsection
