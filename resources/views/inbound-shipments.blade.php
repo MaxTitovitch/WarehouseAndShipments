@@ -115,14 +115,14 @@
                                     <select class="form-control product-select"></select>
                                     <input type="text" class="form-control" id="quantity" placeholder="quantity"
                                            required>
-                                    <a href="#">
+                                    <a href="#" class="remove-product-select">
                                         <i class="fa fa-times fa-2x text-dark" aria-hidden="true"></i>
                                     </a>
                                 </div>
                             </div>
 
                             <div class="button-plus mt-2 mr-2">
-                                <a href="#">
+                                <a href="#" class="add-product-select">
                                     <i class="fa fa-2x fa-plus text-dark" aria-hidden="true"></i>
                                 </a>
                             </div>
@@ -131,9 +131,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary save-changes">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+
 @endsection

@@ -6,7 +6,6 @@ $('#import-input').change(function (event) {
   $('#import-submit').click();
 });
 
-
 $('[type="date"]').toArray().forEach((element) => {
     let dateMin = new Date().setFullYear(new Date().getFullYear()-10);
     let dateMax = new Date().setFullYear(new Date().getFullYear()+10);
@@ -20,16 +19,29 @@ $(document).ready(() => {
     type: "GET",
     url: "/api/product",
     success: (data) => {
-      data.forEach((element) => {
-        products.push({[element.id]: element.name});
-      })
+      products = data;
       let productSelect = $('.product-select')[0];
       if(productSelect) {
         products.forEach((element) => {
-          productSelect.appendChild(`<option value="${element.id}">${element.name}<option/>`)
+          let option = document.createElement('option');
+          option.innerText = element.name;
+          option.value = element.id;
+          productSelect.appendChild(option);
         })
       }
     }
   });
 });
+
+$('.add-product-select').click(function (event) {
+  event.preventDefault();
+  let clone = $(".product-container").eq(0).clone();
+  clone.find('.remove-product-select').click(function (event) {
+    event.preventDefault();
+    $(this).closest('.product-container').eq(0).remove();
+  });
+  clone.appendTo(".products-container");
+});
+
+
 
