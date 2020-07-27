@@ -47,8 +47,8 @@
                 <td>{{ $shipment->quantity }}</td>
                 <td>{{ $shipment->created_at->format('Y-m-d') }}</td>
                 <td>
-                    <a href="#" class="show-shipment">Show</a>
-                    <a href="#" class="edit-shipment edit-entity-button" data-value-id="{{ $shipment->id }}">Edit</a>
+                    <a href="#" class="show-shipment text-dark font-weight-bold">Show</a>
+                    <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $shipment->id }}">Edit</a>
                 </td>
             </tr>
         @endforeach
@@ -133,9 +133,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary close-modal-button" data-dismiss="modal">Close
+                        <button type="button" class="btn btn-outline-secondary close-modal-button" data-dismiss="modal">Close
                         </button>
-                        <button type="submit" class="btn btn-primary save-changes">Create</button>
+                        <button type="submit" class="btn btn-dark save-changes">Create</button>
                     </div>
                 </form>
             </div>
