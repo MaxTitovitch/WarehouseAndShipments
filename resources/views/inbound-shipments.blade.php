@@ -81,7 +81,7 @@
                             <label for="tracking_number-number">Tracking number</label>
                             <input type="text" class="form-control" required maxlength="255" id="tracking_number"
                                    aria-describedby="ariaDescribedbyHelp" placeholder="Tracking number">
-                            <small id="ariaDescribedbyHelp" class="form-text text-muted tracking-number-error"></small>
+                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
                             <label for="shipping_company">Shipping company</label>
@@ -96,20 +96,20 @@
                             <label for="comment">Comment</label>
                             <input type="text" class="form-control" required maxlength="255" id="comment"
                                    aria-describedby="commentHelp" placeholder="comment">
-                            <small id="commentHelp" class="form-text text-muted comment-error"></small>
+                            <small id="commentHelp" class="form-text text-danger"></small>
                         </div>
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
                             <div class="form-group">
                                 <label for="received">Date of receiving</label>
                                 <input type="date" class="form-control" id="received" name="date" placeholder="date"
                                        aria-describedby="dateHelp">
-                                <small id="dateHelp" class="form-text text-muted date-error"></small>
+                                <small id="dateHelp" class="form-text text-danger"></small>
                             </div>
                             <div class="form-group">
                                 <label for="shipped">Date of shipping</label>
                                 <input type="date" class="form-control" id="shipped" name="date" placeholder="date"
                                        aria-describedby="dateHelp">
-                                <small id="dateHelp" class="form-text text-muted date-error"></small>
+                                <small id="dateHelp" class="form-text text-danger"></small>
                             </div>
                         @endif
                         <div class="form-group">

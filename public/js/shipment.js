@@ -43,7 +43,14 @@ $('.close-modal-button').click(function (event) {
     productsSelect.remove()
   })
   $('.product-select :first').attr('selected', 'true')
-  $('.product-container').find('.quantity')[0].value = ''
+  $('.product-container').find('.quantity')[0].value = '';
+
+  $('.is-invalid').toArray().forEach((element) => {
+    $(element).removeClass('is-invalid');
+  });
+  $('.form-text').toArray().forEach((element) => {
+    element.innerText = '';
+  });
 })
 
 function addProduct (element, product) {
@@ -95,8 +102,12 @@ function sendEntityAjax (data, type, entityPath = '') {
     success: (data) => {
       window.location.reload()
     },
-    error: (error) => {
-      console.log(error);
+    error: (errorEvent) => {
+      let errors = errorEvent.responseJSON;
+      Object.keys(errors).forEach((error) => {
+        $(`#${error}`).eq(0).addClass('is-invalid');
+        $(`#${error}`).eq(0).next('small')[0].innerText = errors[error][0];
+      });
     }
   })
 }
