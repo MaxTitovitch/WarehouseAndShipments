@@ -65,10 +65,21 @@ body {
     display: none!important;
 }
 
+.product-container{
+    display: flex;
+}
 
+.button-plus{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
 
-
-
+.products-container .product-container:first-child a{
+    opacity: 0;
+    pointer-events: none;
+    cursor: default;
+}
 
 
 
