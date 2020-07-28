@@ -3,7 +3,7 @@ $(document).ready(function () {
         "paging": false,
         columnDefs: [{
             orderable: false,
-            targets: 9
+            targets: 8
         }]
     });
     $('.dataTables_length').addClass('bs-select');

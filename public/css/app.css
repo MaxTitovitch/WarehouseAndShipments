@@ -12,7 +12,6 @@ body {
 }
 
 .table-container {
-    overflow-x: scroll;
     width: 100%;
 }
 
@@ -129,9 +128,26 @@ table.dataTable thead .sorting_desc_disabled:before {
     vertical-align: middle;
 }
 
+input.form-control.product-order-price, input.form-control.product-order-quantity {
+    width: 50% !important;
+}
 
+select.form-control.product-order-select {
+    width: 90% !important;
+}
+.product-order-remove {
+    width: 10% !important;
+    text-align: center;
+}
 
+.product-order-area {
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
 
+#dtEntityTable_wrapper>.row {
+    overflow-x: scroll;
+}
 
 
 

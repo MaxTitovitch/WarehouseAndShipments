@@ -1,52 +1,54 @@
 @extends('layouts.app')
 
 @section('title')
-    Inbound shipment
+    Products
 @endsection
 
 @section('content')
-    <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-shipment" data-toggle="modal"
+    <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
             data-target="#modalAdd">Add New
     </button>
 
     <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="type" value="shipments" class="display-none">
+        <input type="hidden" name="type" value="products" class="display-none">
         <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
         <input id="import-submit" type="submit" value="Submit" class="display-none">
         <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>
     </form>
 
     <div class="table-container">
-        <table class="table mt-5">
+        <table class="table" id="dtEntityTable">
             <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Created</th>
-                <th scope="col">UPC</th>
-                <th scope="col">SKU</th>
-                <th scope="col">Brand</th>
-                <th scope="col">Name</th>
-                <th scope="col">In Transit</th>
-                <th scope="col">Reserved</th>
-                <th scope="col">Available</th>
+                <th scope="col" class="th-sm">ID</th>
+                <th scope="col" class="th-sm">Created</th>
+                <th scope="col" class="th-sm">Customer</th>
+                <th scope="col" class="th-sm">Comment</th>
+                <th scope="col" class="th-sm">Order Status</th>
+                <th scope="col" class="th-sm">Shipping cost</th>
+                <th scope="col" class="th-sm">Tracking number</th>
+                <th scope="col" class="th-sm">Shipped</th>
+                <th scope="col" class="th-sm">Actions</th>
             </tr>
             </thead>
             <tbody>
             @foreach($orders as $order)
                 <tr>
                     <th scope="row">{{ $order->id }}</th>
-                    <td>{{ $order->user->name }}</td>
-                    <td>{{ $order->shipped }}</td>
-                    <td>{{ $order->received }}</td>
-                    <td>{{ $order->shipping_company }}</td>
-                    <td>{{ $order->tracking_number }}</td>
-                    <td>{{ $order->comment }}</td>
-                    <td>{{ $order->quantity }}</td>
                     <td>{{ $order->created_at->format('Y-m-d') }}</td>
+                    <td>{{ $order->customer }}</td>
+                    <td>{{ $order->comment }}</td>
+                    <td>{{ $order->status }}</td>
+                    <td>{{ $order->shipping_cost }}</td>
+                    <td>{{ $order->tracking_number }}</td>
+                    <td>{{ $order->shipped }}</td>
                     <td>
-                        <a href="#" class="show-shipment text-dark font-weight-bold show-entity-button">Show</a>
-                        <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $order->id }}">Edit</a>
+                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button">Show</a>
+                        <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button"
+                           data-value-id="{{ $order->id }}">Edit</a>
+                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button">Delete</a>
+                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button">Copy</a>
                     </td>
                 </tr>
             @endforeach
@@ -62,7 +64,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddLabel">Add new Inbound Shipment</h5>
+                    <h5 class="modal-title" id="modalAddLabelProduct">Add new order</h5>
                     <button type="button" class="close close-modal-button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -71,9 +73,74 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
+                            <label for="customer">Customer</label>
+                            <input type="text" class="form-control" required maxlength="255" id="customer"
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Customer">
+                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyName">Company Name</label>
+                            <input type="text" class="form-control" required maxlength="255" id="companyName"
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Company Name">
+                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" required maxlength="50" id="address"
+                                   aria-describedby="commentHelp" placeholder="Address">
+                            <small id="commentHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
                             <label for="tracking_number-number">Tracking number</label>
                             <input type="text" class="form-control" required maxlength="255" id="tracking_number"
                                    aria-describedby="ariaDescribedbyHelp" placeholder="Tracking number">
+                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" required maxlength="50" id="city"
+                                   aria-describedby="commentHelp" placeholder="City">
+                            <small id="commentHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="shippingCost">Shipping cost</label>
+                            <input type="text" class="form-control" required maxlength="50" id="shippingCost"
+                                   aria-describedby="commentHelp" placeholder="Shipping cost">
+                            <small id="commentHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="zipCode">Zip code / Postal Code</label>
+                            <input type="text" class="form-control" id="zipCode" placeholder="Zip code / Postal Code"
+                                   aria-describedby="dateHelp">
+                            <small id="dateHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State / Region</label>
+                            <input type="text" class="form-control" id="state" placeholder="State / Region"
+                                   aria-describedby="dateHelp">
+                            <small id="dateHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <select class="form-control" id="country"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="shipped">Date of shipping</label>
+                            <input type="date" class="form-control" id="shipped" name="date" placeholder="date"
+                                   aria-describedby="dateHelp">
+                            <small id="dateHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select class="form-control" id="status">
+                                <option>Created</option>
+                                <option>Shipped</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="text" class="form-control" required maxlength="255" id="phone"
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Phone">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
@@ -87,34 +154,42 @@
                         </div>
                         <div class="form-group">
                             <label for="comment">Comment</label>
-                            <input type="text" class="form-control" required maxlength="255" id="comment"
-                                   aria-describedby="commentHelp" placeholder="comment">
-                            <small id="commentHelp" class="form-text text-danger"></small>
+                            <input type="text" class="form-control" id="comment" placeholder="Comment"
+                                   aria-describedby="dateHelp">
+                            <small id="dateHelp" class="form-text text-danger"></small>
                         </div>
-                        @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
-                            <div class="form-group">
-                                <label for="received">Date of receiving</label>
-                                <input type="date" class="form-control" id="received" name="date" placeholder="date"
-                                       aria-describedby="dateHelp">
-                                <small id="dateHelp" class="form-text text-danger"></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="shipped">Date of shipping</label>
-                                <input type="date" class="form-control" id="shipped" name="date" placeholder="date"
-                                       aria-describedby="dateHelp">
-                                <small id="dateHelp" class="form-text text-danger"></small>
-                            </div>
-                        @endif
                         <div class="form-group">
-                            <label for="productFormControlSelect1">Select product</label>
+                            <label>Packing selection</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="packing_selection" id="bubblesPack"
+                                       value="Bubbles Pack" checked>
+                                <label class="form-check-label" for="bubblesPack">
+                                    Bubbles Pack
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="packing_selection" id="carton"
+                                       value="Carton">
+                                <label class="form-check-label" for="carton">
+                                    Carton
+                                </label>
+                            </div>
+                            <small id="dateHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label>Products</label>
                             <div class="products-container">
-                                <div class="product-container">
-                                    <select class="form-control product-select"></select>
-                                    <input type="number" class="form-control quantity" placeholder="quantity"
-                                           required min="1" max="10000">
-                                    <a href="#" class="remove-product-select">
+                                <div class="product-container product-order-area">
+                                    <select class="form-control product-select product-order-select"></select>
+                                    <a href="#" class="remove-product-select product-order-remove">
                                         <i class="fa fa-times fa-2x text-dark" aria-hidden="true"></i>
                                     </a>
+                                    <input type="number" class="form-control quantity product-order-quantity" placeholder="quantity"
+                                           required min="1" max="10000">
+                                    <input type="number" class="form-control price product-order-price" placeholder="price"
+                                                                               min="1" max="10000">
+                                    <textarea style="resize: none; height: 100px" class="form-control description product-order-description" placeholder="Description"
+                                              required maxlength="10000"></textarea>
                                 </div>
                             </div>
 
@@ -126,7 +201,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary close-modal-button" data-dismiss="modal">Close
+                        <button type="button" class="btn btn-outline-secondary close-modal-button" data-dismiss="modal">
+                            Close
                         </button>
                         <button type="submit" class="btn btn-dark save-changes">Create</button>
                     </div>
@@ -142,7 +218,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="showModalLabel">Inbound shipment</h5>
+                    <h5 class="modal-title" id="showModalLabel">Order</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -150,48 +226,85 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label class="font-weight-bold"  for="showId">ID</label>
-                            <span class="form-control form-control-height " id="showId">  ssd sdf ssd xsdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showProductId">ID</label>
+                            <span class="form-control form-control-height " id="showProductId"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showUser">User</label>
-                            <span class="form-control form-control-height " id="showUser">  ssdxdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showProductCreated">Customer</label>
+                            <span class="form-control form-control-height " id="showProductCreated"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showShipped">Shipped</label>
-                            <span class="form-control form-control-height " id="showShipped">  ssd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showProductUPC">Company Name</label>
+                            <span class="form-control form-control-height " id="showProductUPC"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showReceived">Received</label>
-                            <span class="form-control form-control-height " id="showReceived">  ssf ssd fsd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showOrderStatus">Status</label>
+                            <span class="form-control form-control-height " id="showOrderStatus"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showCompany">Shipping company</label>
-                            <span class="form-control form-control-height " id="showCompany">  ssd sdf ssd sdf sdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showOrderTrackingNumber">Tracking number</label>
+                            <span class="form-control form-control-height " id="showOrderTrackingNumber"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showTrackingNumber">Tracking number</label>
-                            <span class="form-control form-control-height " id="showTrackingNumber">  ssdd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showProductSKU">Address</label>
+                            <span class="form-control form-control-height " id="showProductSKU"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showComment">Comment</label>
-                            <span class="form-control form-control-height " id="showComment">  ssd sdf ssd sdf sdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showProductSKU">Shipping cost</label>
+                            <span class="form-control form-control-height " id="showOrderShippingCost"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showQuantity">Quantity</label>
-                            <span class="form-control form-control-height " id="showQuantity">  ssd sdf ssd fsd fsd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showProductBrand">City</label>
+                            <span class="form-control form-control-height " id="showProductBrand"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showCreated">Created</label>
-                            <span class="form-control form-control-height " id="showCreated">  ssd sdf ssd fsd fsd fsdf sdd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showOrderShipped">Shipped</label>
+                            <span class="form-control form-control-height " id="showOrderShipped"></span>
                         </div>
-
                         <div class="form-group">
-                            <label for="productFormControlSelect1" class="font-weight-bold">Products</label>
-                            <div class="products-container">
-                                <div class="product-container">
-                                    <span class="form-control form-control-height " id="showProduct"> Chear</span>
-                                    <span class="form-control form-control-height quantity-width" id="showQuantity">15</span>
+                            <label class="font-weight-bold" for="showOrderPackingSelection">Packing Selection</label>
+                            <span class="form-control form-control-height " id="showOrderPackingSelection"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="showProductName">Zip code / Postal Code</label>
+                            <span class="form-control form-control-height " id="showProductName"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="showProductTransit">State / Region</label>
+                            <span class="form-control form-control-height " id="showProductTransit"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="showProductReserved">Country</label>
+                            <span class="form-control form-control-height " id="showProductReserved"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="showOrderCreated">Created</label>
+                            <span class="form-control form-control-height " id="showOrderCreated"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="showProductAvailable">Phone</label>
+                            <span class="form-control form-control-height " id="showProductAvailable"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="showOrderShippingCompany">Shipping company</label>
+                            <span class="form-control form-control-height " id="showOrderShippingCompany"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="showProductAvailable">Comment</label>
+                            <span class="form-control form-control-height " id="showProductAvailable"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="showOrderUser">User</label>
+                            <span class="form-control form-control-height " id="showOrderUser"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold">Products</label>
+                            <div class="show-products-container">
+                                <div class="show-product-container product-order-area">
+                                    <span class="form-control form-control-height show-product">Chear</span>
+                                    <span class="form-control form-control-height w-50 show-quantity">5 <span class="font-weight-bold">pcs</span></span>
+                                    <span class="form-control form-control-height w-50 show-price"><span class="font-weight-bold">$</span>150</span>
+                                    <span class="form-control form-control-height show-description">edf wef wef wefw efw defytygytyttt</span>
                                 </div>
                             </div>
                         </div>
@@ -206,5 +319,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/shipment.js') }}" defer></script>
+    <script src="{{ asset('js/product.js') }}" defer></script>
 @endsection
