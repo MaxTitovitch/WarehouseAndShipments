@@ -1,51 +1,53 @@
 @extends('layouts.app')
 
 @section('title')
-    Inbound shipment
+    Products
 @endsection
 
 @section('content')
-    <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-shipment" data-toggle="modal"
+    <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
             data-target="#modalAdd">Add New
     </button>
 
     <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="type" value="shipments" class="display-none">
+        <input type="hidden" name="type" value="products" class="display-none">
         <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
         <input id="import-submit" type="submit" value="Submit" class="display-none">
         <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>
     </form>
 
     <div class="table-container">
-        <table class="table mt-5">
+        <table class="table" id="dtEntityTable">
             <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Created</th>
-                <th scope="col">UPC</th>
-                <th scope="col">SKU</th>
-                <th scope="col">Brand</th>
-                <th scope="col">Name</th>
-                <th scope="col">In Transit</th>
-                <th scope="col">Reserved</th>
-                <th scope="col">Available</th>
+                <th scope="col" class="th-sm">ID</th>
+                <th scope="col" class="th-sm">Created</th>
+                <th scope="col" class="th-sm">UPC</th>
+                <th scope="col" class="th-sm">SKU</th>
+                <th scope="col" class="th-sm">Brand</th>
+                <th scope="col" class="th-sm">Name</th>
+                <th scope="col" class="th-sm">In Transit</th>
+                <th scope="col" class="th-sm">Reserved</th>
+                <th scope="col" class="th-sm">Available</th>
+                <th scope="col" class="th-sm">Actions</th>
             </tr>
             </thead>
             <tbody>
             @foreach($products as $product)
                 <tr>
                     <th scope="row">{{ $product->id }}</th>
-                    <td>{{ $product->shipped }}</td>
-                    <td>{{ $product->received }}</td>
-                    <td>{{ $product->shipping_company }}</td>
-                    <td>{{ $product->tracking_number }}</td>
-                    <td>{{ $product->comment }}</td>
-                    <td>{{ $product->quantity }}</td>
                     <td>{{ $product->created_at->format('Y-m-d') }}</td>
+                    <td>{{ $product->upc }}</td>
+                    <td>{{ $product->sku }}</td>
+                    <td>{{ $product->brand }}</td>
+                    <td>{{ $product->name }}</td>
+                    <td>{{ $product->in_transit ? "True" : "False" }}</td>
+                    <td>{{ $product->received }}</td>
+                    <td>{{ $product->available ? "True" : "False" }}</td>
                     <td>
-                        <a href="#" class="show-shipment text-dark font-weight-bold show-entity-button">Show</a>
-                        <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $product->id }}">Edit</a>
+                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button">Show</a>
+                        <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button" data-value-id="{{ $product->id }}">Edit</a>
                     </td>
                 </tr>
             @endforeach
@@ -61,7 +63,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddLabel">Add new Inbound Shipment</h5>
+                    <h5 class="modal-title" id="modalAddLabelProduct">Add new product</h5>
                     <button type="button" class="close close-modal-button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -70,58 +72,44 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <label for="tracking_number-number">Tracking number</label>
-                            <input type="text" class="form-control" required maxlength="255" id="tracking_number"
-                                   aria-describedby="ariaDescribedbyHelp" placeholder="Tracking number">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" required maxlength="255" id="name"
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Name">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="shipping_company">Shipping company</label>
-                            <select class="form-control" id="shipping_company">
-                                <option>USPS</option>
-                                <option>FedEx</option>
-                                <option>DHL</option>
-                                <option>UPS</option>
-                            </select>
+                            <label for="brand">Brand</label>
+                            <input type="text" class="form-control" required maxlength="255" id="brand"
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Brand">
+                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="comment">Comment</label>
-                            <input type="text" class="form-control" required maxlength="255" id="comment"
-                                   aria-describedby="commentHelp" placeholder="comment">
+                            <label for="upc">UPC</label>
+                            <input type="text" class="form-control" required maxlength="50" id="upc"
+                                   aria-describedby="commentHelp" placeholder="UPC">
                             <small id="commentHelp" class="form-text text-danger"></small>
                         </div>
-                        @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
-                            <div class="form-group">
-                                <label for="received">Date of receiving</label>
-                                <input type="date" class="form-control" id="received" name="date" placeholder="date"
-                                       aria-describedby="dateHelp">
-                                <small id="dateHelp" class="form-text text-danger"></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="shipped">Date of shipping</label>
-                                <input type="date" class="form-control" id="shipped" name="date" placeholder="date"
-                                       aria-describedby="dateHelp">
-                                <small id="dateHelp" class="form-text text-danger"></small>
-                            </div>
-                        @endif
                         <div class="form-group">
-                            <label for="productFormControlSelect1">Select product</label>
-                            <div class="products-container">
-                                <div class="product-container">
-                                    <select class="form-control product-select"></select>
-                                    <input type="number" class="form-control quantity" placeholder="quantity"
-                                           required min="1" max="10000">
-                                    <a href="#" class="remove-product-select">
-                                        <i class="fa fa-times fa-2x text-dark" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="button-plus mt-2 mr-2">
-                                <a href="#" class="add-product-select">
-                                    <i class="fa fa-2x fa-plus text-dark" aria-hidden="true"></i>
-                                </a>
-                            </div>
+                            <label for="sku">SKU</label>
+                            <input type="text" class="form-control" required maxlength="50" id="sku"
+                                   aria-describedby="commentHelp" placeholder="SKU">
+                            <small id="commentHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="reserved">Date of reserving</label>
+                            <input type="date" class="form-control" id="received" name="reserved" placeholder="date"
+                                   aria-describedby="dateHelp">
+                            <small id="dateHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input"  id="available">
+                            <label for="available" class="custom-control-label">Available</label>
+                            <small id="availabletHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input"  id="in-transit">
+                            <label for="in-transit" class="custom-control-label">In transit</label>
+                            <small id="inTransitHelp" class="form-text text-danger"></small>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -141,7 +129,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="showModalLabel">Inbound shipment</h5>
+                    <h5 class="modal-title" id="showModalLabel">Product</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -149,50 +137,40 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label class="font-weight-bold"  for="showId">ID</label>
-                            <span class="form-control form-control-height " id="showId">  ssd sdf ssd xsdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold"  for="showProductId">ID</label>
+                            <span class="form-control form-control-height " id="showProductId"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showUser">User</label>
-                            <span class="form-control form-control-height " id="showUser">  ssdxdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showProductCreated">Created</label>
+                            <span class="form-control form-control-height " id="showProductCreated"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showShipped">Shipped</label>
-                            <span class="form-control form-control-height " id="showShipped">  ssd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showProductUPC">UPC</label>
+                            <span class="form-control form-control-height " id="showProductUPC"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showReceived">Received</label>
-                            <span class="form-control form-control-height " id="showReceived">  ssf ssd fsd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showProductSKU">SKU</label>
+                            <span class="form-control form-control-height " id="showProductSKU"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showCompany">Shipping company</label>
-                            <span class="form-control form-control-height " id="showCompany">  ssd sdf ssd sdf sdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showProductBrand">Brand</label>
+                            <span class="form-control form-control-height " id="showProductBrand"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showTrackingNumber">Tracking number</label>
-                            <span class="form-control form-control-height " id="showTrackingNumber">  ssdd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showProductName">Name</label>
+                            <span class="form-control form-control-height " id="showProductName"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showComment">Comment</label>
-                            <span class="form-control form-control-height " id="showComment">  ssd sdf ssd sdf sdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showProductTransit">In transit</label>
+                            <span class="form-control form-control-height " id="showProductTransit"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showQuantity">Quantity</label>
-                            <span class="form-control form-control-height " id="showQuantity">  ssd sdf ssd fsd fsd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <label class="font-weight-bold" for="showProductReserved">Reserved</label>
+                            <span class="form-control form-control-height " id="showProductReserved"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showCreated">Created</label>
-                            <span class="form-control form-control-height " id="showCreated">  ssd sdf ssd fsd fsd fsdf sdd fsdf sdfs dfsd f sdf sdf sd f</span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="productFormControlSelect1" class="font-weight-bold">Products</label>
-                            <div class="products-container">
-                                <div class="product-container">
-                                    <span class="form-control form-control-height " id="showProduct"> Chear</span>
-                                    <span class="form-control form-control-height quantity-width" id="showQuantity">15</span>
-                                </div>
-                            </div>
+                            <label class="font-weight-bold" for="showProductAvailable">Available</label>
+                            <span class="form-control form-control-height " id="showProductAvailable"></span>
                         </div>
                     </form>
                 </div>
@@ -205,5 +183,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/shipment.js') }}" defer></script>
+    <script src="{{ asset('js/product.js') }}" defer></script>
 @endsection

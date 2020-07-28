@@ -94,7 +94,7 @@
                         </div>
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
                             <div class="form-group">
-                                <label for="received">Date of receiving</label>
+                                <label for="received">Date of received</label>
                                 <input type="date" class="form-control" id="received" name="date" placeholder="date"
                                        aria-describedby="dateHelp">
                                 <small id="dateHelp" class="form-text text-danger"></small>
