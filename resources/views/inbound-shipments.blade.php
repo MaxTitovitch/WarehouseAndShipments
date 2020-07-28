@@ -46,7 +46,7 @@
                     <td>{{ $shipment->quantity }}</td>
                     <td>{{ $shipment->created_at->format('Y-m-d') }}</td>
                     <td>
-                        <a href="#" class="show-shipment text-dark font-weight-bold show-entity-button">Show</a>
+                        <a href="#" class="show-shipment text-dark font-weight-bold show-entity-button" data-value-id="{{ $shipment->id }}">Show</a>
                         <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $shipment->id }}">Edit</a>
                     </td>
                 </tr>
@@ -188,11 +188,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="productFormControlSelect1" class="font-weight-bold">Products</label>
-                            <div class="products-container">
-                                <div class="product-container">
-                                    <span class="form-control form-control-height " id="showProduct"> Chear</span>
-                                    <span class="form-control form-control-height quantity-width" id="showQuantity">15</span>
+                            <label class="font-weight-bold">Products</label>
+                            <div class="show-products-container">
+                                <div class="show-product-container">
+                                    <span class="form-control form-control-height show-product">Chear</span>
+                                    <span class="form-control form-control-height quantity-width show-quantity">15</span>
                                 </div>
                             </div>
                         </div>

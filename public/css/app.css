@@ -100,6 +100,9 @@ body {
     width: 33%;
 }
 
+.show-product-container {
+    display: flex;
+}
 
 
 
