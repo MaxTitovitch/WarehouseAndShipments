@@ -12,7 +12,7 @@ $('.show-entity-button').click(function (event) {
     $('#showComment')[0].innerText = data.comment
     $('#showComment')[0].innerText = data.comment
     $('#showQuantity')[0].innerText = data.quantity
-    $('#showCreated')[0].innerText = data.created_at
+    $('#showCreated')[0].innerText = data.created_at.split('T')[0]
 
 
     let elements = $('.show-product-container').toArray();
@@ -39,7 +39,8 @@ function createShowProduct (element, product) {
 $('.edit-entity-button').click(function (event) {
   event.preventDefault();
   id = $(this).data('value-id');
-  $('.save-changes')[0].innerText = 'Udpate';
+  $('.save-changes')[0].innerText = 'Update';
+  $('#modalAddLabel')[0].innerText = 'Update Inbound Shipment'
   getEntityAjax(id,(data) => {
       $('#tracking_number')[0].value = data.tracking_number
       $('#shipping_company')[0].value = data.shipping_company
@@ -72,6 +73,7 @@ function getEntityAjax (dataId, success) {
 
 $('.close-modal-button').click(function (event) {
   $('.save-changes')[0].innerText = 'Create'
+  $('#modalAddLabel')[0].innerText = 'Add new Inbound Shipment'
   $('#tracking_number')[0].value = ''
   $('#shipping_company :first').attr('selected', 'true')
   $('#comment')[0].value = ''
