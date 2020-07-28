@@ -47,7 +47,9 @@
                 <td>{{ $shipment->quantity }}</td>
                 <td>{{ $shipment->created_at->format('Y-m-d') }}</td>
                 <td>
-                    <a href="#" class="show-shipment">Show</a>
+                    <a href="#" class="show-shipment" data-toggle="modal" data-target="#showModal">
+                        Show
+                    </a>
                     <a href="#" class="edit-shipment">Edit</a>
                 </td>
             </tr>
@@ -56,14 +58,11 @@
         </tbody>
     </table>
 
-    {{--    @section('content')--}}
-    {{--        @dump($shipments)--}}
-    {{--    @endsection--}}
-
 @endsection
 
 @section('modal')
-    <div class="modal fade" data-backdrop="static" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" data-backdrop="static" id="exampleModal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -136,4 +135,65 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="showModal" tabindex="-1" role="dialog"
+         aria-labelledby="showModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="showModalLabel">Add new</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="showId">ID</label>
+                            <span class="form-control form-control-height " id="showId">  ssd sdf ssd xsdfs dfsd f sdf sdf sd f</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="showUser">User</label>
+                            <span class="form-control form-control-height " id="showUser">  ssdxdfs dfsd f sdf sdf sd f</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="showShipped">Shipped</label>
+                            <span class="form-control form-control-height " id="showShipped">  ssd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="showReceived">Received</label>
+                            <span class="form-control form-control-height " id="showReceived">  ssf ssd fsd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="showCompany">Shipping company</label>
+                            <span class="form-control form-control-height " id="showCompany">  ssd sdf ssd sdf sdfs dfsd f sdf sdf sd f</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="showTrackingNumber">Tracking number</label>
+                            <span class="form-control form-control-height " id="showTrackingNumber">  ssdd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="showComment">Comment</label>
+                            <span class="form-control form-control-height " id="showComment">  ssd sdf ssd sdf sdfs dfsd f sdf sdf sd f</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="showQuantity">Quantity</label>
+                            <span class="form-control form-control-height " id="showQuantity">  ssd sdf ssd fsd fsd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="showCreated">Created</label>
+                            <span class="form-control form-control-height " id="showCreated">  ssd sdf ssd fsd fsd fsdf sdd fsdf sdfs dfsd f sdf sdf sd f</span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
