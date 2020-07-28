@@ -24,7 +24,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-light shadow-sm">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
@@ -76,7 +76,7 @@
     </nav>
     <div class="layout-flex">
         @section('sidebar')
-            <div class="sidenav">
+            <div class="sidenav sidenav-mobile">
                 <a class="dashboard ml-1" href="{{ route('home') }}">DASHBOARD</a>
                 <hr>
                 <a href="{{ route('inbound-shipments') }}">Inbound shipments</a>

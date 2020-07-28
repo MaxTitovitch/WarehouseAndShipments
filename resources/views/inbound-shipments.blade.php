@@ -17,41 +17,43 @@
         <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>
     </form>
 
-    <table class="table mt-5 dashboard-table-div">
-        <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">User</th>
-            <th scope="col">Shipped</th>
-            <th scope="col">Received</th>
-            <th scope="col">Shipping company</th>
-            <th scope="col">Tracking number</th>
-            <th scope="col">Comment</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Created</th>
-            <th scope="col">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($shipments as $shipment)
+    <div class="table-container">
+        <table class="table mt-5 dashboard-table-div">
+            <thead>
             <tr>
-                <th scope="row">{{ $shipment->id }}</th>
-                <td>{{ $shipment->user->name }}</td>
-                <td>{{ $shipment->shipped }}</td>
-                <td>{{ $shipment->received }}</td>
-                <td>{{ $shipment->shipping_company }}</td>
-                <td>{{ $shipment->tracking_number }}</td>
-                <td>{{ $shipment->comment }}</td>
-                <td>{{ $shipment->quantity }}</td>
-                <td>{{ $shipment->created_at->format('Y-m-d') }}</td>
-                <td>
-                    <a href="#" class="show-shipment text-dark font-weight-bold">Show</a>
-                    <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $shipment->id }}">Edit</a>
-                </td>
+                <th scope="col">ID</th>
+                <th scope="col">User</th>
+                <th scope="col">Shipped</th>
+                <th scope="col">Received</th>
+                <th scope="col">Shipping company</th>
+                <th scope="col">Tracking number</th>
+                <th scope="col">Comment</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Created</th>
+                <th scope="col">Action</th>
             </tr>
-        @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            @foreach($shipments as $shipment)
+                <tr>
+                    <th scope="row">{{ $shipment->id }}</th>
+                    <td>{{ $shipment->user->name }}</td>
+                    <td>{{ $shipment->shipped }}</td>
+                    <td>{{ $shipment->received }}</td>
+                    <td>{{ $shipment->shipping_company }}</td>
+                    <td>{{ $shipment->tracking_number }}</td>
+                    <td>{{ $shipment->comment }}</td>
+                    <td>{{ $shipment->quantity }}</td>
+                    <td>{{ $shipment->created_at->format('Y-m-d') }}</td>
+                    <td>
+                        <a href="#" class="show-shipment text-dark font-weight-bold">Show</a>
+                        <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $shipment->id }}">Edit</a>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
 @endsection
 
 @section('modal')

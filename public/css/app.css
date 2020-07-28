@@ -5,15 +5,15 @@ body {
 
 .sidenav {
     min-height: 100vh;
-    max-width: 170px;
-    min-width: 160px;
-    /*position: fixed;*/
     z-index: 1;
-    top: 0;
-    left: 0;
     background-color: #111;
-    overflow-x: hidden;
     padding-top: 20px;
+    max-width: 25%;
+}
+
+.table-container {
+    overflow-x: scroll;
+    width: 100%;
 }
 
 .sidenav a {
@@ -54,7 +54,7 @@ body {
 }
 
 .dashboard-table-div{
-    width: 100%;
+    min-width: 75%;
 }
 
 .choose-file{
@@ -79,6 +79,16 @@ body {
     opacity: 0;
     pointer-events: none;
     cursor: default;
+}
+
+@media screen and (max-width: 767px) {
+    .dashboard-table-div{
+        width: 100%;
+    }
+
+    .sidenav-mobile {
+        display: none!important;
+    }
 }
 
 
