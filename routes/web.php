@@ -21,12 +21,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/products', 'AdminController@products')->name('products');
     Route::get('/orders', 'AdminController@orders')->name('orders');
     Route::get('/users', 'AdminController@users')->middleware('authorisation')->name('users');
-
     Route::post('/parse', 'ImportController@parse')->name('parse');
 });
 
-//Route::group(['middleware' => 'auth', 'prefix' => 'api'], function () {
-Route::group(['prefix' => 'api'], function () {
+Route::group(['middleware' => 'auth', 'prefix' => 'api'], function () {
     Route::group(['middleware' => 'authorisation'], function () {
         Route::resource('user', 'UserController', ['only' => ['index', 'show', 'update', 'destroy']]);
         Route::resource('product', 'ProductController', ['only' => ['index', 'show', 'store', 'update']]);

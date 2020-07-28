@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Shipment;
 use App\Http\Requests\ShipmentRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ShipmentController extends Controller
 {
@@ -14,6 +15,7 @@ class ShipmentController extends Controller
         $shipment->user_id = Auth::id() || 1;
         $this->copyModelFromRequest($shipment, $request);
         $this->syncProducts($shipment, $request);
+        Session::flash('success', 'New Inbound shipment created!');
         return response()->json($shipment, 200);
     }
 
@@ -34,8 +36,10 @@ class ShipmentController extends Controller
         if(Auth::id() === $shipment->user_id) {
             $this->copyModelFromRequest($shipment, $request);
             $this->syncProducts($shipment, $request);
+            Session::flash('success', 'Inbound shipment updated!');
             return response()->json($shipment, 200);
         } else {
+            Session::flash('error', 'It isn\'t your shipment!');
             return response()->json(null, 403);
         }
     }
@@ -57,9 +61,8 @@ class ShipmentController extends Controller
     private function syncProducts(Shipment &$shipment, ShipmentRequest $request) {
         $arrayProducts = [];
         foreach ($request->product_shipments as $product_shipment) {
-            $product_shipment = \GuzzleHttp\json_decode($product_shipment);
-            $shipment->quantity += $product_shipment->quantity;
-            $arrayProducts[$product_shipment->product_id] = ['quantity' => $product_shipment->quantity];
+            $shipment->quantity += $product_shipment['quantity'];
+            $arrayProducts[$product_shipment['product_id']] = ['quantity' => $product_shipment['quantity']];
         }
         $shipment->save();
         $shipment->products()->sync($arrayProducts);
