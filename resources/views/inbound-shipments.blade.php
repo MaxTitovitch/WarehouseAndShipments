@@ -46,7 +46,7 @@
                     <td>{{ $shipment->quantity }}</td>
                     <td>{{ $shipment->created_at->format('Y-m-d') }}</td>
                     <td>
-                        <a href="#" class="show-shipment text-dark font-weight-bold">Show</a>
+                        <a href="#" class="show-shipment text-dark font-weight-bold show-entity-button">Show</a>
                         <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $shipment->id }}">Edit</a>
                     </td>
                 </tr>
@@ -143,7 +143,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="showModalLabel">Add new</h5>
+                    <h5 class="modal-title" id="showModalLabel">Inbound shipment</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -151,46 +151,55 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="showId">ID</label>
+                            <label class="font-weight-bold"  for="showId">ID</label>
                             <span class="form-control form-control-height " id="showId">  ssd sdf ssd xsdfs dfsd f sdf sdf sd f</span>
                         </div>
                         <div class="form-group">
-                            <label for="showUser">User</label>
+                            <label class="font-weight-bold" for="showUser">User</label>
                             <span class="form-control form-control-height " id="showUser">  ssdxdfs dfsd f sdf sdf sd f</span>
                         </div>
                         <div class="form-group">
-                            <label for="showShipped">Shipped</label>
+                            <label class="font-weight-bold" for="showShipped">Shipped</label>
                             <span class="form-control form-control-height " id="showShipped">  ssd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
                         </div>
                         <div class="form-group">
-                            <label for="showReceived">Received</label>
+                            <label class="font-weight-bold" for="showReceived">Received</label>
                             <span class="form-control form-control-height " id="showReceived">  ssf ssd fsd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
                         </div>
                         <div class="form-group">
-                            <label for="showCompany">Shipping company</label>
+                            <label class="font-weight-bold" for="showCompany">Shipping company</label>
                             <span class="form-control form-control-height " id="showCompany">  ssd sdf ssd sdf sdfs dfsd f sdf sdf sd f</span>
                         </div>
                         <div class="form-group">
-                            <label for="showTrackingNumber">Tracking number</label>
+                            <label class="font-weight-bold" for="showTrackingNumber">Tracking number</label>
                             <span class="form-control form-control-height " id="showTrackingNumber">  ssdd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
                         </div>
                         <div class="form-group">
-                            <label for="showComment">Comment</label>
+                            <label class="font-weight-bold" for="showComment">Comment</label>
                             <span class="form-control form-control-height " id="showComment">  ssd sdf ssd sdf sdfs dfsd f sdf sdf sd f</span>
                         </div>
                         <div class="form-group">
-                            <label for="showQuantity">Quantity</label>
+                            <label class="font-weight-bold" for="showQuantity">Quantity</label>
                             <span class="form-control form-control-height " id="showQuantity">  ssd sdf ssd fsd fsd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
                         </div>
                         <div class="form-group">
-                            <label for="showCreated">Created</label>
+                            <label class="font-weight-bold" for="showCreated">Created</label>
                             <span class="form-control form-control-height " id="showCreated">  ssd sdf ssd fsd fsd fsdf sdd fsdf sdfs dfsd f sdf sdf sd f</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productFormControlSelect1" class="font-weight-bold">Products</label>
+                            <div class="products-container">
+                                <div class="product-container">
+                                    <span class="form-control form-control-height " id="showProduct"> Chear</span>
+                                    <span class="form-control form-control-height quantity-width" id="showQuantity">15</span>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Create</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

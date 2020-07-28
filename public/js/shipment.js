@@ -1,4 +1,10 @@
 let id = 0;
+$('.show-entity-button').click(function (event) {
+  event.preventDefault();
+  $('#showModal').modal()
+
+});
+
 $('.edit-entity-button').click(function (event) {
   event.preventDefault();
   id = $(this).data('value-id');
@@ -26,7 +32,7 @@ $('.edit-entity-button').click(function (event) {
       $('#modalAdd').modal()
     }
   })
-})
+});
 
 $('.close-modal-button').click(function (event) {
   $('.save-changes')[0].innerText = 'Create'
