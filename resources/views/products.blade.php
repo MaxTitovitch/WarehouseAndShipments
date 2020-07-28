@@ -18,8 +18,8 @@
     </form>
 
     <div class="table-container">
-        <table class="table" id="dtEntityTable">
-            <thead>
+        <table class="table table-bordered table-striped table-hover" id="dtEntityTable">
+            <thead class="thead-dark">
             <tr>
                 <th scope="col" class="th-sm">ID</th>
                 <th scope="col" class="th-sm">Created</th>
@@ -46,7 +46,7 @@
                     <td>{{ $product->received }}</td>
                     <td>{{ $product->available ? "True" : "False" }}</td>
                     <td>
-                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button">Show</a>
+                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button" data-value-id="{{ $product->id }}">Show</a>
                         <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button" data-value-id="{{ $product->id }}">Edit</a>
                     </td>
                 </tr>
@@ -97,7 +97,7 @@
                         </div>
                         <div class="form-group">
                             <label for="reserved">Date of reserving</label>
-                            <input type="date" class="form-control" id="received" name="reserved" placeholder="date"
+                            <input type="date" class="form-control" id="reserved" name="reserved" placeholder="date"
                                    aria-describedby="dateHelp">
                             <small id="dateHelp" class="form-text text-danger"></small>
                         </div>
@@ -107,8 +107,8 @@
                             <small id="availabletHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input"  id="in-transit">
-                            <label for="in-transit" class="custom-control-label">In transit</label>
+                            <input type="checkbox" class="custom-control-input"  id="in_transit">
+                            <label for="in_transit" class="custom-control-label">In transit</label>
                             <small id="inTransitHelp" class="form-text text-danger"></small>
                         </div>
                     </div>

@@ -1,48 +1,39 @@
-let id = 0, showId = 0;
+let id = 0, showId = 0
 $('.show-entity-button').click(function (event) {
-  event.preventDefault();
-  showId = $(this).data('value-id');
-  getEntityAjax(showId,(data) => {
-    // $('#showId')[0].innerText = data.id
-    // $('#showUser')[0].innerText = data.user.name
-    // $('#showShipped')[0].innerText = data.shipped
-    // $('#showReceived')[0].innerText = data.received
-    // $('#showCompany')[0].innerText = data.shipping_company
-    // $('#showTrackingNumber')[0].innerText = data.tracking_number
-    // $('#showComment')[0].innerText = data.comment
-    // $('#showComment')[0].innerText = data.comment
-    // $('#showQuantity')[0].innerText = data.quantity
-    // $('#showCreated')[0].innerText = data.created_at
+  event.preventDefault()
+  showId = $(this).data('value-id')
+  getEntityAjax(showId, (data) => {
+    $('#showProductId')[0].innerText = data.id
+    $('#showProductCreated')[0].innerText = data.created_at.split('T')[0]
+    $('#showProductUPC')[0].innerText = data.upc
+    $('#showProductSKU')[0].innerText = data.sku
+    $('#showProductBrand')[0].innerText = data.brand
+    $('#showProductName')[0].innerText = data.name
+    $('#showProductTransit')[0].innerText = data.in_transit ? 'True' : 'False'
+    $('#showProductReserved')[0].innerText = data.received
+    $('#showProductAvailable')[0].innerText = data.available ? 'True' : 'False'
 
     $('#showModal').modal()
-  });
-});
+  })
+})
 
-//
-// $('.edit-entity-button').click(function (event) {
-//   event.preventDefault();
-//   id = $(this).data('value-id');
-//   $('.save-changes')[0].innerText = 'Udpate';
-//   getEntityAjax(id,(data) => {
-//       $('#tracking_number')[0].value = data.tracking_number
-//       $('#shipping_company')[0].value = data.shipping_company
-//       $('#comment')[0].value = data.comment
-//       if ($('#received')[0]) {
-//         $('#received')[0].value = data.received
-//       }
-//       if ($('#shipped')[0]) {
-//         $('#shipped')[0].value = data.shipped
-//       }
-//       let element = $('.product-container').eq(0)
-//       addProduct(element, data.products.shift())
-//       for (let i = 0; i < data.products.length; i++) {
-//         let clone = element.clone()
-//         addProduct(clone, data.products[i])
-//         clone.appendTo('.products-container')
-//       }
-//       $('#modalAdd').modal()
-//     });
-// });
+$('.edit-entity-button').click(function (event) {
+  event.preventDefault()
+  id = $(this).data('value-id')
+  $('.save-changes')[0].innerText = 'Update'
+  $('#modalAddLabelProduct')[0].innerText = 'Update product'
+  getEntityAjax(id, (data) => {
+    $('#name')[0].value = data.name
+    $('#brand')[0].value = data.brand
+    $('#upc')[0].value = data.upc
+    $('#sku')[0].value = data.sku
+    $('#reserved')[0].value = data.received
+    $('#available')[0].checked = data.available
+    $('#in_transit')[0].checked = data.in_transit
+
+    $('#modalAdd').modal()
+  })
+})
 
 function getEntityAjax (dataId, success) {
   $.ajax({
@@ -52,87 +43,64 @@ function getEntityAjax (dataId, success) {
   })
 }
 
+$('.close-modal-button').click(function (event) {
+  $('.save-changes')[0].innerText = 'Create'
+  $('#modalAddLabelProduct')[0].innerText = 'Add new product'
 
-// $('.close-modal-button').click(function (event) {
-//   $('.save-changes')[0].innerText = 'Create'
-//   $('#tracking_number')[0].value = ''
-//   $('#shipping_company :first').attr('selected', 'true')
-//   $('#comment')[0].value = ''
-//   if ($('#received')[0]) {
-//     $('#received')[0].value = ''
-//   }
-//   if ($('#shipped')[0]) {
-//     $('#shipped')[0].value = ''
-//   }
-//   $('.product-container:not(:first-child)').toArray().forEach((productsSelect) => {
-//     productsSelect.remove()
-//   })
-//   $('.product-select :first').attr('selected', 'true')
-//   $('.product-container').find('.quantity')[0].value = '';
-//
-//   $('.is-invalid').toArray().forEach((element) => {
-//     $(element).removeClass('is-invalid');
-//   });
-//   $('.form-text').toArray().forEach((element) => {
-//     element.innerText = '';
-//   });
-// })
-//
-// function addProduct (element, product) {
-//   element.find('.product-select')[0].value = product.id
-//   element.find('.quantity')[0].value = product.pivot.quantity
-// }
-//
-// function createProductShipment () {
-//   let container = [];
-//   $('.product-container').toArray().forEach((productContainer) => {
-//     container.push({
-//       "product_id" : $(productContainer).find('.product-select')[0].value,
-//       "quantity": $(productContainer).find('.quantity')[0].value
-//     });
-//   });
-//   return container;
-// }
-//
-//
-// $('.form-submit').submit(function (event) {
-//   if (true) {
-//     event.preventDefault()
-//     let entity = {
-//       _token: $('.modal [name="_token"]')[0].value,
-//       tracking_number: $('#tracking_number')[0].value,
-//       shipping_company: $('#shipping_company')[0].value,
-//       comment: $('#comment')[0].value,
-//       product_shipments: createProductShipment(),
-//     }
-//     if ($('#received')[0]) {
-//       entity.received = $('#received')[0].value
-//     }
-//     if ($('#shipped')[0]) {
-//       entity.shipped = $('#shipped')[0].value
-//     }
-//     if($('.save-changes')[0].innerText === 'Create') {
-//       sendEntityAjax(entity, "POST");
-//     } else {
-//       sendEntityAjax(entity, "PUT", `/${id}`);
-//     }
-//   }
-// })
-//
-// function sendEntityAjax (data, type, entityPath = '') {
-//   $.ajax({
-//     type,
-//     data,
-//     url: `/api/shipment${entityPath}`,
-//     success: (data) => {
-//       window.location.reload()
-//     },
-//     error: (errorEvent) => {
-//       let errors = errorEvent.responseJSON;
-//       Object.keys(errors).forEach((error) => {
-//         $(`#${error}`).eq(0).addClass('is-invalid');
-//         $(`#${error}`).eq(0).next('small')[0].innerText = errors[error][0];
-//       });
-//     }
-//   })
-// }
+  $('#name')[0].value = ''
+  $('#brand')[0].value = ''
+  $('#upc')[0].value = ''
+  $('#sku')[0].value = ''
+  $('#reserved')[0].value = ''
+  $('#available')[0].checked = false
+  $('#in_transit')[0].checked = false
+
+
+  $('.is-invalid').toArray().forEach((element) => {
+    $(element).removeClass('is-invalid');
+  });
+  $('.form-text').toArray().forEach((element) => {
+    element.innerText = '';
+  });
+})
+
+$('.form-submit').submit(function (event) {
+  if (true) {
+    event.preventDefault()
+    let entity = {
+      _token: $('.modal [name="_token"]')[0].value,
+      name: $('#name')[0].value,
+      brand: $('#brand')[0].value,
+      upc: $('#upc')[0].value,
+      sku: $('#sku')[0].value,
+      received: $('#reserved')[0].value,
+      available: $('#available')[0].checked ? 1 : 0,
+      in_transit: $('#in_transit')[0].checked ? 1 : 0,
+    }
+    if($('.save-changes')[0].innerText === 'Create') {
+      sendEntityAjax(entity, "POST");
+    } else {
+      sendEntityAjax(entity, "PUT", `/${id}`);
+    }
+  }
+})
+
+function sendEntityAjax (data, type, entityPath = '') {
+  $.ajax({
+    type,
+    data,
+    url: `/api/product${entityPath}`,
+    success: (data) => {
+      window.location.reload()
+    },
+    error: (errorEvent) => {
+      let errors = errorEvent.responseJSON;
+      Object.keys(errors).forEach((error) => {
+        $(`#${error}`).eq(0).addClass('is-invalid');
+        if(error !== 'available' && error !== 'in_transit') {
+          $(`#${error}`).eq(0).next('small')[0].innerText = errors[error][0];
+        }
+      });
+    }
+  })
+}

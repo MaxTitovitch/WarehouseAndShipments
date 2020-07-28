@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -17,6 +18,7 @@ class ProductController extends Controller
     {
         $product = new Product();
         $this->copyModelFromRequest($product, $request);
+        Session::flash('success', 'New Product created!');
         return response()->json($product, 200);
     }
 
@@ -30,6 +32,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $this->copyModelFromRequest($product, $request);
+        Session::flash('success', 'Product updated!');
         return response()->json($product, 200);
     }
 
