@@ -95,6 +95,7 @@ class OrderController extends Controller
     private function copyModelFromRequest(Order $order, $request, $isAppendUnrequired = true) {
         $order->customer = $request->customer;
         $order->comment = $request->comment;
+        $order->company_name = $request->company_name;
         $order->tracking_number = $request->tracking_number;
         $order->packing_selection = $request->packing_selection;
         $order->address = $request->address;

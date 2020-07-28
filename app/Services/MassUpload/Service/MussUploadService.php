@@ -85,17 +85,18 @@ class MussUploadService {
                     $order = new Order();
                     $order->customer = $row[0];
                     $order->comment = $row[1];
-                    $order->shipping_company = $row[2];
-                    $order->tracking_number = $row[3];
-                    $order->packing_selection = $row[4];
-                    $order->address = $row[5];
-                    $order->city = $row[6];
-                    $order->zip_postal_code = $row[7];
-                    $order->state_region = $row[8];
-                    $order->country = $row[9];
-                    $order->phone = $row[10];
+                    $order->company_name = $row[2];
+                    $order->shipping_company = $row[3];
+                    $order->tracking_number = $row[4];
+                    $order->packing_selection = $row[5];
+                    $order->address = $row[6];
+                    $order->city = $row[7];
+                    $order->zip_postal_code = $row[8];
+                    $order->state_region = $row[9];
+                    $order->country = $row[10];
+                    $order->phone = $row[11];
                     $order->user_id = Auth::id();
-                    $products = explode('|', $row[11]); $pivot = [];
+                    $products = explode('|', $row[12]); $pivot = [];
                     foreach ($products as $product) {
                         $productFields = explode(':', $product);
                         $id = Product::where('name', $productFields[0])->first()->id;
