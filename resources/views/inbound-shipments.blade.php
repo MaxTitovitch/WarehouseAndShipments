@@ -18,19 +18,19 @@
     </form>
 
     <div class="table-container">
-        <table class="table mt-5 dashboard-table-div">
+        <table class="table" id="dtEntityTable">
             <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">User</th>
-                <th scope="col">Shipped</th>
-                <th scope="col">Received</th>
-                <th scope="col">Shipping company</th>
-                <th scope="col">Tracking number</th>
-                <th scope="col">Comment</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Created</th>
-                <th scope="col">Action</th>
+                <th scope="col" class="th-sm">ID</th>
+                <th scope="col" class="th-sm">User</th>
+                <th scope="col" class="th-sm">Shipped</th>
+                <th scope="col" class="th-sm">Received</th>
+                <th scope="col" class="th-sm">Shipping company</th>
+                <th scope="col" class="th-sm">Tracking number</th>
+                <th scope="col" class="th-sm">Comment</th>
+                <th scope="col" class="th-sm">Quantity</th>
+                <th scope="col" class="th-sm">Created</th>
+                <th scope="col" class="th-sm">Action</th>
             </tr>
             </thead>
             <tbody>

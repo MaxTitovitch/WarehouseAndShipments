@@ -8,7 +8,7 @@ body {
     z-index: 1;
     background-color: #111;
     padding-top: 20px;
-    max-width: 25%;
+    width: 20%;
 }
 
 .table-container {
@@ -54,7 +54,7 @@ body {
 }
 
 .dashboard-table-div{
-    min-width: 75%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -101,8 +101,30 @@ body {
 }
 
 
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+    top: 35%;
+}
 
+.table-container .row {
+    width: 100%;
+}
 
+.dataTables_info {
+    display: none;
+}
+
+#dtEntityTable .th-sm {
+    vertical-align: middle;
+}
 
 
 
