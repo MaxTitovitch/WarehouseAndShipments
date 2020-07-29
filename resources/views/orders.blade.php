@@ -92,7 +92,7 @@
                         </div>
                         <div class="form-group">
                             <label for="tracking_number-number">Tracking number</label>
-                            <input type="text" class="form-control" required maxlength="255" id="tracking_number"
+                            <input type="number" class="form-control" required maxlength="255" id="tracking_number"
                                    aria-describedby="ariaDescribedbyHelp" placeholder="Tracking number">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
@@ -104,7 +104,7 @@
                         </div>
                         <div class="form-group">
                             <label for="shippingCost">Shipping cost</label>
-                            <input type="text" class="form-control" required maxlength="50" id="shippingCost"
+                            <input type="number" class="form-control" required maxlength="50" id="shippingCost"
                                    aria-describedby="commentHelp" placeholder="Shipping cost">
                             <small id="commentHelp" class="form-text text-danger"></small>
                         </div>
@@ -139,7 +139,7 @@
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone</label>
-                            <input type="text" class="form-control" required maxlength="255" id="phone"
+                            <input type="text" pattern="^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$" class="form-control" required maxlength="255" id="phone"
                                    aria-describedby="ariaDescribedbyHelp" placeholder="Phone">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
@@ -319,5 +319,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/product.js') }}" defer></script>
+    <script src="{{ asset('js/order.js') }}" defer></script>
 @endsection
