@@ -92,7 +92,7 @@
                                    aria-describedby="commentHelp" placeholder="comment">
                             <small id="commentHelp" class="form-text text-danger"></small>
                         </div>
-                        @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+                        @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                             <div class="form-group">
                                 <label for="received">Date of received</label>
                                 <input type="date" class="form-control" id="received" name="date" placeholder="date"

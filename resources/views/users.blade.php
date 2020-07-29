@@ -5,10 +5,6 @@
 @endsection
 
 @section('content')
-    <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
-            data-target="#modalAdd">Add New
-    </button>
-
     <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="type" value="products" class="display-none">
@@ -18,11 +14,11 @@
     </form>
 
     <div class="table-container">
-        <table class="table" id="dtEntityTable">
-            <thead>
+        <table class="table table-bordered table-striped table-hover" id="dtEntityTable">
+            <thead class="thead-dark">
             <tr>
                 <th scope="col" class="th-sm">ID</th>
-                <th scope="col" class="th-sm">Name</th>
+                <th scope="col" class="th-sm">Full Name</th>
                 <th scope="col" class="th-sm">Email</th>
                 <th scope="col" class="th-sm">Role</th>
                 <th scope="col" class="th-sm">Balance</th>
@@ -38,11 +34,9 @@
                     <td>{{ $user->role }}</td>
                     <td>{{ $user->balance}}</td>
                     <td>
-                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button">Show</a>
-                        <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button"
-                           data-value-id="{{ $user->id }}">Edit</a>
-                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button">Delete</a>
-                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button">Copy</a>
+                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button" data-value-id="{{ $user->id }}">Show</a>
+                        <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button" data-value-id="{{ $user->id }}">Edit</a>
+                        <a href="#" class="show-product text-dark font-weight-bold delete-entity-button" data-value-id="{{ $user->id }}">Delete</a>
                     </td>
                 </tr>
             @endforeach
@@ -58,7 +52,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddLabelProduct">Add new user</h5>
+                    <h5 class="modal-title" id="modalAddLabelProduct">Change user data</h5>
                     <button type="button" class="close close-modal-button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -67,12 +61,12 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <label class="font-weight-bold" for="userName">Name</label>
-                            <span class="form-control form-control-height " id="userName"></span>
+                            <label class="font-weight-bold" for="userName">Full Name</label>
+                            <span class="form-control text-secondary form-control-height" id="userName"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="userEmail">Email</label>
-                            <span class="form-control form-control-height " id="userEmail"></span>
+                            <span class="form-control text-secondary form-control-height" id="userEmail"></span>
                         </div>
                         <div class="form-group">
                             <label for="role" class="font-weight-bold">Role</label>
@@ -93,7 +87,7 @@
                         <button type="button" class="btn btn-outline-secondary close-modal-button" data-dismiss="modal">
                             Close
                         </button>
-                        <button type="submit" class="btn btn-dark save-changes">Create</button>
+                        <button type="submit" class="btn btn-dark save-changes">Change</button>
                     </div>
                 </form>
             </div>
@@ -119,7 +113,7 @@
                             <span class="form-control form-control-height " id="showUserID"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showUserName">Name</label>
+                            <label class="font-weight-bold" for="showUserName">Full Name</label>
                             <span class="form-control form-control-height " id="showUserName"></span>
                         </div>
                         <div class="form-group">

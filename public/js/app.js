@@ -1,14 +1,3 @@
-$(document).ready(function () {
-    $('#dtEntityTable').DataTable({
-        "paging": false,
-        columnDefs: [{
-            orderable: false,
-            targets: 8
-        }]
-    });
-    $('.dataTables_length').addClass('bs-select');
-});
-
 let products = [];
 $(document).ready(() => {
   $.ajax({
@@ -16,7 +5,9 @@ $(document).ready(() => {
     url: "/api/product",
     success: (data) => {
       products = data;
-      addProducts($('.product-select')[0]);
+      if($('.product-select').toArray().length !== 0) {
+        addProducts($('.product-select')[0]);
+      }
     }
   });
 });

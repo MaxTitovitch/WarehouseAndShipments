@@ -85,7 +85,7 @@
                 <a href="{{ route('products') }}">Products</a>
                 <a href="{{ route('orders') }}">Orders</a>
                 @if(\Illuminate\Support\Facades\Auth::user())
-                    @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+                    @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                         <a href="{{ route('users') }}">Users</a>
                     @endif
                 @endif

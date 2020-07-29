@@ -18,8 +18,8 @@
     </form>
 
     <div class="table-container">
-        <table class="table" id="dtEntityTable">
-            <thead>
+        <table class="table table-bordered table-striped table-hover" id="dtEntityTable">
+            <thead class="thead-dark">
             <tr>
                 <th scope="col" class="th-sm">ID</th>
                 <th scope="col" class="th-sm">Created</th>

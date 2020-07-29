@@ -28,8 +28,8 @@ body {
 }
 
 .main {
-    margin-left: 160px; /* Same as the width of the sidenav */
-    font-size: 28px; /* Increased text to enable scrolling */
+    margin-left: 160px;
+    font-size: 28px;
     padding: 0px 10px;
 }
 
@@ -146,7 +146,7 @@ select.form-control.product-order-select {
 }
 
 #dtEntityTable_wrapper>.row {
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 
 

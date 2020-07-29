@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\UserRequest;
 use App\BalanceHistory;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -26,11 +27,13 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->balance = $request->balance;
         $user->save();
+        Session::flash('success', 'User updated!');
         return response()->json($user, 200);
     }
 
     public function destroy($id)
     {
+        Session::flash('success', 'User deleted!');
         return response()->json(User::destroy($id), 200);
     }
 

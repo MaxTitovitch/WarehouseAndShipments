@@ -1,41 +1,53 @@
+$(document).ready(function () {
+  $('#dtEntityTable').DataTable({
+    "paging": false,
+    columnDefs: [{
+      orderable: false,
+      targets: 8
+    }]
+  });
+  $('.dataTables_length').addClass('bs-select');
+});
+
 let id = 0, showId = 0;
 $('.show-entity-button').click(function (event) {
   event.preventDefault();
-  // showId = $(this).data('value-id');
-  // getEntityAjax(showId,(data) => {
-  //   $('#showId')[0].innerText = data.id
-  //   $('#showUser')[0].innerText = data.user.name
-  //   $('#showShipped')[0].innerText = data.shipped
-  //   $('#showReceived')[0].innerText = data.received
-  //   $('#showCompany')[0].innerText = data.shipping_company
-  //   $('#showTrackingNumber')[0].innerText = data.tracking_number
-  //   $('#showComment')[0].innerText = data.comment
-  //   $('#showComment')[0].innerText = data.comment
-  //   $('#showQuantity')[0].innerText = data.quantity
-  //   $('#showCreated')[0].innerText = data.created_at.split('T')[0]
-  //
-  //
-  //   let elements = $('.show-product-container').toArray();
-  //   let element = elements.shift();
-  //   for (let i = 0; i < elements.length; i++) {
-  //     elements[i].remove();
-  //   }
-  //   createShowProduct($(element), data.products.shift())
-  //   data.products.forEach((product) => {
-  //     let clone = $(element).clone();
-  //     createShowProduct (clone, product);
-  //     clone.appendTo('.show-products-container');
-  //   });
+  showId = $(this).data('value-id');
+  getEntityAjax(showId,(data) => {
+    $('#showProductId')[0].innerText = data.id
+    $('#showProductCreated')[0].innerText = data.created_at.split('T')[0]
+    $('#showProductUPC')[0].innerText = data.upc
+    $('#showOrderStatus')[0].innerText = data.status
+    $('#showOrderTrackingNumber')[0].innerText = data.showOrderTrackingNumber
+
+    $('#showTrackingNumber')[0].innerText = data.tracking_number
+    $('#showComment')[0].innerText = data.comment
+    $('#showComment')[0].innerText = data.comment
+    $('#showQuantity')[0].innerText = data.quantity
+    $('#showCreated')[0].innerText = data.created_at.split('T')[0]
+
+
+    let elements = $('.show-product-container').toArray();
+    let element = elements.shift();
+    for (let i = 0; i < elements.length; i++) {
+      elements[i].remove();
+    }
+    createShowProduct($(element), data.products.shift())
+    data.products.forEach((product) => {
+      let clone = $(element).clone();
+      createShowProduct (clone, product);
+      clone.appendTo('.show-products-container');
+    });
 
     $('#showModal').modal()
-  // });
+  });
 });
 //
 // function createShowProduct (element, product) {
 //   element.find('.show-product')[0].innerText = product.name
 //   element.find('.show-quantity')[0].innerText = product.pivot.quantity
 // }
-//
+
 // $('.edit-entity-button').click(function (event) {
 //   event.preventDefault();
 //   id = $(this).data('value-id');

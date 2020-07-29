@@ -18,7 +18,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'role' => 'required|in:user,admin',
+            'role' => 'required|in:User,Admin',
             'balance' => 'required|numeric|min:0|max:99999999'
         ];
     }
