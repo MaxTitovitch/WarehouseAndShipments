@@ -226,16 +226,16 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductId">ID</label>
-                            <span class="form-control form-control-height " id="showProductId"></span>
+                            <label class="font-weight-bold" for="showOrderId">ID</label>
+                            <span class="form-control form-control-height " id="showOrderId"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductCreated">Customer</label>
-                            <span class="form-control form-control-height " id="showProductCreated"></span>
+                            <label class="font-weight-bold" for="showOrderCustomer">Customer</label>
+                            <span class="form-control form-control-height " id="showOrderCustomer"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductUPC">Company Name</label>
-                            <span class="form-control form-control-height " id="showProductUPC"></span>
+                            <label class="font-weight-bold" for="showOrderCompanyName">Company Name</label>
+                            <span class="form-control form-control-height " id="showOrderCompanyName"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showOrderStatus">Status</label>
@@ -246,16 +246,16 @@
                             <span class="form-control form-control-height " id="showOrderTrackingNumber"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductSKU">Address</label>
-                            <span class="form-control form-control-height " id="showProductSKU"></span>
+                            <label class="font-weight-bold" for="showOrderAddress">Address</label>
+                            <span class="form-control form-control-height " id="showOrderAddress"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductSKU">Shipping cost</label>
+                            <label class="font-weight-bold" for="showOrderShippingCost">Shipping cost</label>
                             <span class="form-control form-control-height " id="showOrderShippingCost"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductBrand">City</label>
-                            <span class="form-control form-control-height " id="showProductBrand"></span>
+                            <label class="font-weight-bold" for="showOrderCity">City</label>
+                            <span class="form-control form-control-height " id="showOrderCity"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showOrderShipped">Shipped</label>
@@ -266,32 +266,32 @@
                             <span class="form-control form-control-height " id="showOrderPackingSelection"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductName">Zip code / Postal Code</label>
-                            <span class="form-control form-control-height " id="showProductName"></span>
+                            <label class="font-weight-bold" for="showOrderZipCode">Zip code / Postal Code</label>
+                            <span class="form-control form-control-height " id="showOrderZipCode"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductTransit">State / Region</label>
-                            <span class="form-control form-control-height " id="showProductTransit"></span>
+                            <label class="font-weight-bold" for="showOrderState">State / Region</label>
+                            <span class="form-control form-control-height " id="showOrderState"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductReserved">Country</label>
-                            <span class="form-control form-control-height " id="showProductReserved"></span>
+                            <label class="font-weight-bold" for="showOrderCountry">Country</label>
+                            <span class="form-control form-control-height " id="showOrderCountry"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showOrderCreated">Created</label>
                             <span class="form-control form-control-height " id="showOrderCreated"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductAvailable">Phone</label>
-                            <span class="form-control form-control-height " id="showProductAvailable"></span>
+                            <label class="font-weight-bold" for="showOrderPhone">Phone</label>
+                            <span class="form-control form-control-height " id="showOrderPhone"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showOrderShippingCompany">Shipping company</label>
                             <span class="form-control form-control-height " id="showOrderShippingCompany"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductAvailable">Comment</label>
-                            <span class="form-control form-control-height " id="showProductAvailable"></span>
+                            <label class="font-weight-bold" for="showOrderComment">Comment</label>
+                            <span class="form-control form-control-height " id="showOrderComment"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showOrderUser">User</label>
