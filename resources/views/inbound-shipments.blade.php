@@ -92,7 +92,7 @@
                                    aria-describedby="commentHelp" placeholder="comment">
                             <small id="commentHelp" class="form-text text-danger"></small>
                         </div>
-                        @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+                        @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                             <div class="form-group">
                                 <label for="received">Date of received</label>
                                 <input type="date" class="form-control" id="received" name="date" placeholder="date"
@@ -192,7 +192,7 @@
                             <div class="show-products-container">
                                 <div class="show-product-container">
                                     <span class="form-control form-control-height show-product">Chear</span>
-                                    <span class="form-control form-control-height quantity-width show-quantity">15 <span class="font-weight-bold">pcs</span></span>
+                                    <span class="form-control form-control-height quantity-width"><span class="show-quantity"></span><span class="font-weight-bold"> pcs</span></span>
                                 </div>
                             </div>
                         </div>

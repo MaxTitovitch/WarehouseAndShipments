@@ -18,8 +18,8 @@
     </form>
 
     <div class="table-container">
-        <table class="table" id="dtEntityTable">
-            <thead>
+        <table class="table table-bordered table-striped table-hover" id="dtEntityTable">
+            <thead class="thead-dark">
             <tr>
                 <th scope="col" class="th-sm">ID</th>
                 <th scope="col" class="th-sm">Created</th>
@@ -44,11 +44,10 @@
                     <td>{{ $order->tracking_number }}</td>
                     <td>{{ $order->shipped }}</td>
                     <td>
-                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button">Show</a>
-                        <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button"
-                           data-value-id="{{ $order->id }}">Edit</a>
-                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button">Delete</a>
-                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button">Copy</a>
+                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button" data-value-id="{{ $order->id }}">Show</a>
+                        <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button" data-value-id="{{ $order->id }}">Edit</a>
+                        <a href="#" class="show-product text-dark font-weight-bold delete-entity-button" data-value-id="{{ $order->id }}">Delete</a>
+                        <a href="#" class="show-product text-dark font-weight-bold copy-entity-button" data-value-id="{{ $order->id }}">Copy</a>
                     </td>
                 </tr>
             @endforeach
@@ -64,7 +63,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddLabelProduct">Add new order</h5>
+                    <h5 class="modal-title" id="modalAddLabel">Add new Order</h5>
                     <button type="button" class="close close-modal-button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -79,8 +78,8 @@
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="companyName">Company Name</label>
-                            <input type="text" class="form-control" required maxlength="255" id="companyName"
+                            <label for="company_name">Company Name</label>
+                            <input type="text" class="form-control" required maxlength="255" id="company_name"
                                    aria-describedby="ariaDescribedbyHelp" placeholder="Company Name">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
@@ -91,8 +90,8 @@
                             <small id="commentHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="tracking_number-number">Tracking number</label>
-                            <input type="number" class="form-control" required maxlength="255" id="tracking_number"
+                            <label for="tracking_number">Tracking number</label>
+                            <input type="text" class="form-control" required maxlength="255" id="tracking_number"
                                    aria-describedby="ariaDescribedbyHelp" placeholder="Tracking number">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
@@ -102,21 +101,23 @@
                                    aria-describedby="commentHelp" placeholder="City">
                             <small id="commentHelp" class="form-text text-danger"></small>
                         </div>
-                        <div class="form-group">
-                            <label for="shippingCost">Shipping cost</label>
-                            <input type="number" class="form-control" required maxlength="50" id="shippingCost"
-                                   aria-describedby="commentHelp" placeholder="Shipping cost">
-                            <small id="commentHelp" class="form-text text-danger"></small>
-                        </div>
+                        @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
+                            <div class="form-group">
+                                <label for="shippingCost">Shipping cost</label>
+                                <input type="number" class="form-control" required maxlength="50" id="shipping_cost"
+                                       aria-describedby="commentHelp" placeholder="Shipping cost">
+                                <small id="commentHelp" class="form-text text-danger"></small>
+                            </div>
+                        @endif
                         <div class="form-group">
                             <label for="zipCode">Zip code / Postal Code</label>
-                            <input type="text" class="form-control" id="zipCode" placeholder="Zip code / Postal Code"
+                            <input type="text" class="form-control" id="zip_postal_code" placeholder="Zip code / Postal Code"
                                    aria-describedby="dateHelp">
                             <small id="dateHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="state">State / Region</label>
-                            <input type="text" class="form-control" id="state" placeholder="State / Region"
+                            <label for="state_region">State / Region</label>
+                            <input type="text" class="form-control" id="state_region" placeholder="State / Region"
                                    aria-describedby="dateHelp">
                             <small id="dateHelp" class="form-text text-danger"></small>
                         </div>
@@ -124,19 +125,21 @@
                             <label for="country">Country</label>
                             <select class="form-control" id="country"></select>
                         </div>
-                        <div class="form-group">
-                            <label for="shipped">Date of shipping</label>
-                            <input type="date" class="form-control" id="shipped" name="date" placeholder="date"
-                                   aria-describedby="dateHelp">
-                            <small id="dateHelp" class="form-text text-danger"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <select class="form-control" id="status">
-                                <option>Created</option>
-                                <option>Shipped</option>
-                            </select>
-                        </div>
+                        @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
+                            <div class="form-group">
+                                <label for="shipped">Shipped</label>
+                                <input type="date" class="form-control" id="shipped" name="date" placeholder="date"
+                                       aria-describedby="dateHelp">
+                                <small id="dateHelp" class="form-text text-danger"></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select class="form-control" id="status">
+                                    <option>Created</option>
+                                    <option>Shipped</option>
+                                </select>
+                            </div>
+                        @endif
                         <div class="form-group">
                             <label for="phone">Phone</label>
                             <input type="text" pattern="^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$" class="form-control" required maxlength="255" id="phone"
@@ -159,6 +162,29 @@
                             <small id="dateHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
+                            <label>Products</label>
+                            <div class="products-container">
+                                <div class="product-container product-order-area">
+                                    <select class="form-control product-select product-order-select"></select>
+                                    <a href="#" class="remove-product-select product-order-remove">
+                                        <i class="fa fa-times fa-2x text-dark" aria-hidden="true"></i>
+                                    </a>
+                                    <input type="number" class="form-control quantity product-order-quantity" placeholder="quantity"
+                                           required min="1" max="10000">
+                                    <input type="number" class="form-control price product-order-price" placeholder="price"
+                                                                               min="1" max="10000">
+                                    <textarea style="resize: none; height: 100px" class="form-control description product-order-description" placeholder="Description"
+                                              maxlength="10000"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="button-plus mt-2 mr-2">
+                                <a href="#" class="add-product-select">
+                                    <i class="fa fa-2x fa-plus text-dark" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group" id="packing_selection">
                             <label>Packing selection</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="packing_selection" id="bubblesPack"
@@ -175,29 +201,6 @@
                                 </label>
                             </div>
                             <small id="dateHelp" class="form-text text-danger"></small>
-                        </div>
-                        <div class="form-group">
-                            <label>Products</label>
-                            <div class="products-container">
-                                <div class="product-container product-order-area">
-                                    <select class="form-control product-select product-order-select"></select>
-                                    <a href="#" class="remove-product-select product-order-remove">
-                                        <i class="fa fa-times fa-2x text-dark" aria-hidden="true"></i>
-                                    </a>
-                                    <input type="number" class="form-control quantity product-order-quantity" placeholder="quantity"
-                                           required min="1" max="10000">
-                                    <input type="number" class="form-control price product-order-price" placeholder="price"
-                                                                               min="1" max="10000">
-                                    <textarea style="resize: none; height: 100px" class="form-control description product-order-description" placeholder="Description"
-                                              required maxlength="10000"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="button-plus mt-2 mr-2">
-                                <a href="#" class="add-product-select">
-                                    <i class="fa fa-2x fa-plus text-dark" aria-hidden="true"></i>
-                                </a>
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -301,9 +304,9 @@
                             <label class="font-weight-bold">Products</label>
                             <div class="show-products-container">
                                 <div class="show-product-container product-order-area">
-                                    <span class="form-control form-control-height show-product">Chear</span>
-                                    <span class="form-control form-control-height w-50 show-quantity">5 <span class="font-weight-bold">pcs</span></span>
-                                    <span class="form-control form-control-height w-50 show-price"><span class="font-weight-bold">$</span>150</span>
+                                    <span class="form-control form-control-height show-product"></span>
+                                    <span class="form-control form-control-height w-50"><span class="show-quantity"></span><span class="font-weight-bold"> pcs</span></span>
+                                    <span class="form-control form-control-height w-50"><span class="font-weight-bold">$</span><span class="show-price"></span></span>
                                     <span class="form-control form-control-height show-description">edf wef wef wefw efw defytygytyttt</span>
                                 </div>
                             </div>

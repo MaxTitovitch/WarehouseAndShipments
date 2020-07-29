@@ -1,14 +1,3 @@
-$(document).ready(function () {
-    $('#dtEntityTable').DataTable({
-        "paging": false,
-        columnDefs: [{
-            orderable: false,
-            targets: 8
-        }]
-    });
-    $('.dataTables_length').addClass('bs-select');
-});
-
 let products = [];
 $(document).ready(() => {
   $.ajax({
@@ -16,7 +5,9 @@ $(document).ready(() => {
     url: "/api/product",
     success: (data) => {
       products = data;
-      addProducts($('.product-select')[0]);
+      if($('.product-select').toArray().length !== 0) {
+        addProducts($('.product-select')[0]);
+      }
     }
   });
 });
@@ -51,6 +42,10 @@ $('.add-product-select').click(function (event) {
   event.preventDefault();
   let clone = $(".product-container").eq(0).clone();
   clone.find('.quantity')[0].value = '';
+  if(clone.find('.price')[0])
+    clone.find('.price')[0].value = '';
+  if(clone.find('.description')[0])
+    clone.find('.description')[0].value = '';
   clone.find('.remove-product-select').click(function (event) {
     event.preventDefault();
     $(this).closest('.product-container').eq(0).remove();

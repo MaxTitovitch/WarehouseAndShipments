@@ -26,7 +26,7 @@ class ShipmentController extends Controller
         if(Auth::id() === $shipment->user_id) {
             return response()->json($shipment, 200);
         } else {
-            return response()->json(null, 403);
+            return response()->json(null, 200);
         }
     }
 
@@ -40,7 +40,7 @@ class ShipmentController extends Controller
             return response()->json($shipment, 200);
         } else {
             Session::flash('error', 'It isn\'t your shipment!');
-            return response()->json(null, 403);
+            return response()->json(null, 200);
         }
     }
 

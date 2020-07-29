@@ -5,17 +5,19 @@
 @endsection
 
 @section('content')
-    <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
-            data-target="#modalAdd">Add New
-    </button>
+    @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
+        <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
+                data-target="#modalAdd">Add New
+        </button>
 
-    <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
-        @csrf
-        <input type="hidden" name="type" value="products" class="display-none">
-        <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
-        <input id="import-submit" type="submit" value="Submit" class="display-none">
-        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>
-    </form>
+        <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="type" value="products" class="display-none">
+            <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
+            <input id="import-submit" type="submit" value="Submit" class="display-none">
+            <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>
+        </form>
+    @endif
 
     <div class="table-container">
         <table class="table table-bordered table-striped table-hover" id="dtEntityTable">
@@ -46,8 +48,12 @@
                     <td>{{ $product->received }}</td>
                     <td>{{ $product->available ? "True" : "False" }}</td>
                     <td>
-                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button" data-value-id="{{ $product->id }}">Show</a>
-                        <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button" data-value-id="{{ $product->id }}">Edit</a>
+                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button"
+                           data-value-id="{{ $product->id }}">Show</a>
+                        @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
+                            <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button"
+                               data-value-id="{{ $product->id }}">Edit</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach
@@ -102,18 +108,19 @@
                             <small id="dateHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input"  id="available">
+                            <input type="checkbox" class="custom-control-input" id="available">
                             <label for="available" class="custom-control-label">Available</label>
                             <small id="availabletHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input"  id="in_transit">
+                            <input type="checkbox" class="custom-control-input" id="in_transit">
                             <label for="in_transit" class="custom-control-label">In transit</label>
                             <small id="inTransitHelp" class="form-text text-danger"></small>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary close-modal-button" data-dismiss="modal">Close
+                        <button type="button" class="btn btn-outline-secondary close-modal-button" data-dismiss="modal">
+                            Close
                         </button>
                         <button type="submit" class="btn btn-dark save-changes">Create</button>
                     </div>
@@ -137,7 +144,7 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label class="font-weight-bold"  for="showProductId">ID</label>
+                            <label class="font-weight-bold" for="showProductId">ID</label>
                             <span class="form-control form-control-height " id="showProductId"></span>
                         </div>
                         <div class="form-group">

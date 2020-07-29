@@ -1,3 +1,14 @@
+$(document).ready(function () {
+  $('#dtEntityTable').DataTable({
+    "paging": false,
+    columnDefs: [{
+      orderable: false,
+      targets: 9
+    }]
+  });
+  $('.dataTables_length').addClass('bs-select');
+});
+
 let id = 0, showId = 0;
 $('.show-entity-button').click(function (event) {
   event.preventDefault();

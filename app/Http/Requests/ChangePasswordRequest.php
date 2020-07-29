@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
 
-class UserRequest extends FormRequest
+class ChangePasswordRequest extends FormRequest
 {
 
     public function authorize()
@@ -18,8 +18,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'role' => 'required|in:User,Admin',
-            'balance' => 'required|numeric|min:0|max:99999999'
+            'password' => 'required|password|confirmed', //password_confirmation
         ];
     }
 

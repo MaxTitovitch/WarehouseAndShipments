@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
 
-class UserRequest extends FormRequest
+class UserSelfUpdateRequest extends FormRequest
 {
 
     public function authorize()
@@ -18,8 +18,8 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'role' => 'required|in:User,Admin',
-            'balance' => 'required|numeric|min:0|max:99999999'
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users'
         ];
     }
 
