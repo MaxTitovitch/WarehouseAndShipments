@@ -46,31 +46,46 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" href="{{ route('login') }}">
+                                <i class="fa fa-sign-in" aria-hidden="true"></i> {{ __('Login') }}
+                            </a>
                         </li>
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ route('register') }}">
+                                    <i class="fa fa-user-o" aria-hidden="true"></i>  {{ __('Register') }}
+                                </a>
                             </li>
                         @endif
                     @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                <i class="fa fa-user-o" aria-hidden="true"></i> {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                            <div class="dropdown-menu bg-dark dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a id="change-user-data" class="dropdown-item text-light" href="#">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Personal information
+                                </a>
+                                <a class="dropdown-item text-light" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i> {{ __('Logout') }}
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
                             </div>
+
                         </li>
+                        <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('inbound-shipments') }}">Inbound shipments</a></li>
+                        <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('products') }}">Products</a></li>
+                        <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('orders') }}">Orders</a></li>
+                        @if(\Illuminate\Support\Facades\Auth::user())
+                            @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
+                                <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('users') }}">Users</a></li>
+                            @endif
+                        @endif
                     @endguest
                 </ul>
             </div>

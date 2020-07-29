@@ -95,6 +95,12 @@ body {
     }
 }
 
+@media screen and (min-width: 768px) {
+    .for-mobile {
+        display: none;
+    }
+}
+
 .quantity-width{
     width: 33%;
 }
@@ -153,6 +159,14 @@ select.form-control.product-order-select {
     font-size: 0.8em;
 }
 
+.navbar .nav-item {
+    background-color: rbga(0,0,0,0);
+}
+
+.dropdown-item.text-light:hover {
+    background-color: rgba(0,0,0,0) !important;
+    color: rgba(255,255,255,.75) !important;
+}
 
 
 
