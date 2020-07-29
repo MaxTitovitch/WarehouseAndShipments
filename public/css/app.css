@@ -154,3 +154,53 @@ select.form-control.product-order-select {
 
 
 
+.dashboard-border-success{
+    border-left-color: #28a745!important;
+    border: 1px solid rgba(0,0,0,.1);
+    border-left-width: 2px;
+}
+
+.dashboard-border-danger{
+    border-left-color: #dc3545!important;
+    border: 1px solid rgba(0,0,0,.1);
+    border-left-width: 2px;
+}
+
+.dashboard-border-primary{
+    border-left-color: #007bff!important;
+    border: 1px solid rgba(0,0,0,.1);
+    border-left-width: 2px;
+}
+
+.dashboard-border-info{
+    border-left-color: #17a2b8!important;
+    border: 1px solid rgba(0,0,0,.1);
+    border-left-width: 2px;
+}
+
+.opacity-image{
+    opacity: 0.5;
+}
+
+.dashboard-boxshadow:hover{
+    box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+    padding: 10px;
+}
+
+.date-range{
+    width: 20%;
+}
+
+.chart-width{
+    width: 100%;
+}
+
+.text-full-size {
+    font-size: 1.1em;
+}
+
+
+
+
+
+

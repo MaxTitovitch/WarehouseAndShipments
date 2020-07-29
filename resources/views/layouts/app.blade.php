@@ -23,6 +23,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
+    @yield('style')
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -81,12 +82,12 @@
             <div class="sidenav sidenav-mobile">
                 <a class="dashboard ml-1" href="{{ route('home') }}">DASHBOARD</a>
                 <hr>
-                <a href="{{ route('inbound-shipments') }}">Inbound shipments</a>
-                <a href="{{ route('products') }}">Products</a>
-                <a href="{{ route('orders') }}">Orders</a>
+                <a href="{{ route('inbound-shipments') }}"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound shipments</a>
+                <a href="{{ route('products') }}"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
+                <a href="{{ route('orders') }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
                 @if(\Illuminate\Support\Facades\Auth::user())
                     @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
-                        <a href="{{ route('users') }}">Users</a>
+                        <a href="{{ route('users') }}"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
                     @endif
                 @endif
             </div>
