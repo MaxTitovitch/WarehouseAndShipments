@@ -192,7 +192,7 @@
                             <div class="show-products-container">
                                 <div class="show-product-container">
                                     <span class="form-control form-control-height show-product">Chear</span>
-                                    <span class="form-control form-control-height quantity-width show-quantity">15 <span class="font-weight-bold">pcs</span></span>
+                                    <span class="form-control form-control-height quantity-width"><span class="show-quantity"></span><span class="font-weight-bold"> pcs</span></span>
                                 </div>
                             </div>
                         </div>

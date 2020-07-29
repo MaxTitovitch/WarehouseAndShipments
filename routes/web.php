@@ -33,4 +33,5 @@ Route::group(['middleware' => 'auth', 'prefix' => 'api'], function () {
     Route::resource('order', 'OrderController', ['only' => ['show', 'store', 'update', 'destroy']]);
     Route::post('/order/{order}', 'OrderController@copy')->name('order.copy');
     Route::get('/chart-data', 'AdminController@chartData')->name('chart-data');
+    Route::get('/countries', 'AdminController@countries');
 });

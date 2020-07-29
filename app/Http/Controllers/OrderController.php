@@ -7,6 +7,7 @@ use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\BalanceHistory;
+use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
@@ -21,9 +22,11 @@ class OrderController extends Controller
             $balanceHistory->save();
             $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
             $user->save();
+            Session::flash('success', 'New Order created!');
             return response()->json($order, 200);
         } else {
-            return response()->json(['error' => 'Недостаточно средств'], 403);
+            Session::flash('error', 'Insufficient funds on the balance sheet!');
+            return response()->json(['error' => 'Недостаточно средств'], 200);
             $order->delete();
         }
     }
@@ -34,7 +37,7 @@ class OrderController extends Controller
         if(Auth::id() === $order->user_id) {
             return response()->json($order, 200);
         } else {
-            return response()->json(null, 403);
+            return response()->json(null, 200);
         }
     }
 
@@ -49,12 +52,15 @@ class OrderController extends Controller
                 $balanceHistory->save();
                 $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
                 $user->save();
+                Session::flash('success', 'Order updated!');
                 return response()->json($order, 200);
             } else {
-                return response()->json(['error' => 'Недостаточно средств'], 403);
+                Session::flash('error', 'Insufficient funds on the balance sheet!');
+                return response()->json(['error' => 'Недостаточно средств'], 200);
             }
         } else {
-            return response()->json(null, 403);
+            Session::flash('error', 'It isn\'t your order!');
+            return response()->json(null, 200);
         }
     }
 
@@ -72,12 +78,15 @@ class OrderController extends Controller
                 $balanceHistory->save();
                 $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
                 $user->save();
+                Session::flash('success', 'Order copied!');
                 return response()->json($order, 200);
             } else {
-                return response()->json(['error' => 'Недостаточно средств'], 403);
+                Session::flash('error', 'Insufficient funds on the balance sheet!');
+                return response()->json(['error' => 'Недостаточно средств'], 200);
             }
         } else {
-            return response()->json(null, 403);
+            Session::flash('error', 'It isn\'t your order!');
+            return response()->json(null, 200);
         }
     }
 
@@ -86,9 +95,11 @@ class OrderController extends Controller
         $order = Order::find($id);
         if(Auth::id() === $order->user_id) {
             $order->products()->sync([]);
+            Session::flash('success', 'Order deleted!');
             return response()->json(Order::destroy($id), 200);
         } else {
-            return response()->json(null, 403);
+            Session::flash('error', 'It isn\'t your order!');
+            return response()->json(null, 200);
         }
     }
 
@@ -119,11 +130,10 @@ class OrderController extends Controller
     private function syncProducts(Order $order, $order_products) {
         $arrayProducts = [];
         foreach ($order_products as $order_product) {
-            $order_product =  \GuzzleHttp\json_decode($order_product);
-            $arrayProducts[$order_product->product_id] = [
-                'quantity' => $order_product->quantity,
-                'price' => $order_product->price ?? null,
-                'description' => $order_product->description ?? null
+            $arrayProducts[$order_product['product_id']] = [
+                'quantity' => $order_product['quantity'],
+                'price' => $order_product['price'] ?? null,
+                'description' => $order_product['description'] ?? null
             ];
         }
         $order->save();
@@ -175,8 +185,7 @@ class OrderController extends Controller
     private function calculateBalance(OrderRequest $request) {
         $newBalance = $request->shipping_cost ?? 0;
         foreach ($request->order_products as $order_product) {
-            $order_product =  \GuzzleHttp\json_decode($order_product);
-            $newBalance += ( $order_product->price ?? 0 ) * $order_product->quantity;
+            $newBalance += ( $order_product['price'] ?? 0 ) * $order_product['quantity'];
         }
         return $newBalance;
     }

@@ -149,7 +149,9 @@ select.form-control.product-order-select {
     overflow-x: auto;
 }
 
-
+.show-description {
+    font-size: 0.8em;
+}
 
 
 

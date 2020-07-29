@@ -9,6 +9,7 @@ use App\Product;
 use App\Order;
 use Illuminate\Support\Facades\Auth;
 use App\BalanceHistory;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -21,6 +22,11 @@ class AdminController extends Controller
             'turnover' => $this->getUserTurnover($user),
         ];
         return view('index')->with(['statistic' => $statistic]);
+    }
+
+    public function countries() {
+        $data = Storage::get('countries.json');;
+        return response()->json($data, 200);
     }
 
     public function inboundShipments() {
