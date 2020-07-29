@@ -7,6 +7,11 @@ use App\User;
 use App\Http\Requests\UserRequest;
 use App\BalanceHistory;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserSelfUpdateRequest;
+use App\Http\Requests\ChangePasswordRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserController extends Controller
 {
@@ -29,6 +34,39 @@ class UserController extends Controller
         $user->save();
         Session::flash('success', 'User updated!');
         return response()->json($user, 200);
+    }
+
+    public function updateSelf(UserSelfUpdateRequest $request, $id)
+    {
+        $user = User::find($id);
+        if(Auth::user()->id = $user->id) {
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
+            Session::flash('success', 'Personal info updated!');
+            return response()->json($user, 200);
+        } else {
+            Session::flash('error', 'It isn\'t your account!');
+            return response()->json(null, 200);
+        }
+    }
+
+    public function changePassword(ChangePasswordRequest $request, $id)
+    {
+        $user = User::find($id);
+        if(Auth::user()->id = $user->id) {
+            if($user->password === Hash::make($request->password_last)) {
+                $user->password = Hash::make($request->password);
+                $user->save();
+                Session::flash('success', 'Password changed!');
+                return response()->json($user, 200);
+            } else {
+                throw new HttpResponseException(response()->json(['password_last', ['It isn\t your last password']], 403));
+            }
+        } else {
+            Session::flash('error', 'It isn\'t your account!');
+            return response()->json(null, 200);
+        }
     }
 
     public function destroy($id)
