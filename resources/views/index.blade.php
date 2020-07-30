@@ -72,7 +72,7 @@
                 <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
                 <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
                 @if(\Illuminate\Support\Facades\Auth::user())
-                    @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+                    @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                         <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
                     @endif
                 @endif
