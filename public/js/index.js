@@ -2,53 +2,90 @@ $('.input-daterange input').each(function() {
     $(this).datepicker('clearDates');
 });
 
-
-$('#date-range').eq(0).daterangepicker({
-    opens: 'right'
-});
-
 google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChartBalance);
-google.charts.setOnLoadCallback(drawChart);
+getChartData();
 
-function drawChartBalance() {
-    var data = google.visualization.arrayToDataTable([
-        ['Year', 'Balance'],
-        ['2004',  1000],
-        ['2005',  1170],
-        ['2006',  660],
-        ['2007',  1030]
-    ]);
+function convertDate (date) {
+    date = new Date(date);
+    let month = (date.getMonth() + 1) + ''
+    let day = date.getDate() + ''
+    return `${month.length !== 1 ? month : '0' + month}/${day.length !== 1 ? day : '0' + day}/${date.getFullYear()}`;
+}
 
-    var options = {
-        title: 'Balance',
-        curveType: 'function',
-        legend: { position: 'bottom' }
-    };
+function getChartData (dates = null) {
+    $.ajax({
+        data: dates,
+        type: 'GET',
+        url: `/api/chart-data`,
+        success: (data) => {
+            showChartBalance(data)
+            showChart(data);
+            $('#date-range')[0].value =  data.dates.date_start + ' - ' + data.dates.date_end;
+            $('#date-range').eq(0).daterangepicker({
+                opens: 'right',
+                startDate: convertDate(data.dates.date_start),
+                endDate: convertDate(data.dates.date_end)
+            }, function(start, end, label) {
+                $('#date-range')[0].value =  start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD');
+                getChartData({
+                    date_start: $('#date-range')[0].value.split(' - ')[0],
+                    date_end: $('#date-range')[0].value.split(' - ')[1],
+                });
+            });
+        },
+        error: (data) => {
+            console.log(data)
+        }
+    })
+}
 
-    var chart = new google.visualization.LineChart(document.getElementById('curve_chart_balance'));
+function showChartBalance (data) {
+    google.charts.setOnLoadCallback(drawChartBalance);
+    let balance = data.balance;
 
-    chart.draw(data, options);
+    function drawChartBalance () {
+        let arrayData = [['Date', 'Balance']];
+        Object.keys(balance).forEach((key) => {
+            arrayData.push([
+              key, balance[key]
+            ]);
+        })
+        var data = google.visualization.arrayToDataTable(arrayData);
+
+        var options = {
+            title: 'Balance',
+            curveType: 'function',
+            legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart_balance'));
+
+        chart.draw(data, options);
+    }
 }
 
 
 
-function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-        ['Year', 'Orders', 'Shipments'],
-        ['2004',  1000,      400],
-        ['2005',  1170,      460],
-        ['2006',  660,       1120],
-        ['2007',  1030,      540]
-    ]);
+function showChart (data) {
+    google.charts.setOnLoadCallback(drawChart);
+    let ordersShipments = data.ordersShipments;
 
-    var options = {
-        title: 'Orders and Shipments',
-        curveType: 'function',
-        legend: { position: 'bottom' }
-    };
+    function drawChart() {
+        let arrayData = [['Date', 'Orders', 'Shipments']];
+        Object.keys(ordersShipments).forEach((key) => {
+            arrayData.push([
+                key, ordersShipments[key]['orders'],ordersShipments[key]['shipments']
+            ]);
+        })
+        var data = google.visualization.arrayToDataTable(arrayData);
 
-    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        var options = {
+            title: 'Orders and Shipments',
+            curveType: 'function',
+            legend: { position: 'bottom' }
+        };
 
-    chart.draw(data, options);
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        chart.draw(data, options);
+    }
 }
