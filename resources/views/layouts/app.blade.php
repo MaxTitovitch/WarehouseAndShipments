@@ -133,69 +133,70 @@
         @yield('content')
     </div>
 </div>
+@if(\Illuminate\Support\Facades\Auth::user() != null)
+    <div class="modal fade" data-backdrop="static" id="change-user-data" tabindex="-1" role="dialog"
+         aria-labelledby="modalAddLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAddLabelProduct">Change user data</h5>
+                    <button type="button" class="close close-modal-personal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="personal-id" class="display-none">{{ \Illuminate\Support\Facades\Auth::id() }}</span>
+                    <form class="form-submit" id="updateUserData">
+                        @csrf
+                        <div class="form-group">
+                            <label for="personal-name" class="font-weight-bold">Name</label>
+                            <input type="text" class="form-control" required id="personal-name" maxlength="255"
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Name" value="{{ \Illuminate\Support\Facades\Auth::user()->name }}">
+                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="personal-email" class="font-weight-bold">Email</label>
+                            <input type="text" class="form-control" required id="personal-email" maxlength="255"
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Email" value="{{ \Illuminate\Support\Facades\Auth::user()->email }}">
+                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-block">Change</button>
+                    </form>
 
-<div class="modal fade" data-backdrop="static" id="change-user-data" tabindex="-1" role="dialog"
-     aria-labelledby="modalAddLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalAddLabelProduct">Change user data</h5>
-                <button type="button" class="close close-modal-button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-submit">
-                    @csrf
-                    <div class="form-group">
-                        <label for="personalName" class="font-weight-bold">Name</label>
-                        <input type="text" class="form-control" required id="personalName"
-                               aria-describedby="ariaDescribedbyHelp" placeholder="Name">
-                        <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label for="personalEmail" class="font-weight-bold">Email</label>
-                        <input type="text" class="form-control" required id="personalEmail"
-                               aria-describedby="ariaDescribedbyHelp" placeholder="Email">
-                        <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
-                    </div>
-                    <button type="submit" class="display-none" id="submitUserData"></button>
-                    <button type="button" class="btn btn-dark btn-block" id="updateUserData">Change</button>
-                </form>
+                    <form class="form-submit" id="changePassword">
+                        @csrf
+                        <div class="form-group">
+                            <label for="personal-last_password" class="font-weight-bold">Previous password</label>
+                            <input type="password" class="form-control" required id="personal-last_password"
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Previous password" minlength="8" maxlength="255">
+                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="personal-password" class="font-weight-bold">Password</label>
+                            <input type="password" class="form-control" required id="personal-password"
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Password" minlength="8" maxlength="255">
+                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="personal-password_confirmation" class="font-weight-bold">Confirm password</label>
+                            <input type="password" class="form-control" required id="personal-password_confirmation"
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Confirm password" minlength="8"  maxlength="255">
+                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-block">Change password</button>
+                    </form>
+                </div>
 
-                <form class="form-submit">
-                    @csrf
-                    <div class="form-group">
-                        <label for="personalLastPassword" class="font-weight-bold">Previous password</label>
-                        <input type="password" class="form-control" required id="personalLastPassword"
-                               aria-describedby="ariaDescribedbyHelp" placeholder="Previous password">
-                        <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label for="personalPassword" class="font-weight-bold">Password</label>
-                        <input type="password" class="form-control" required id="personalPassword"
-                               aria-describedby="ariaDescribedbyHelp" placeholder="Password">
-                        <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label for="personalPasswordConfirmation" class="font-weight-bold">Confirm password</label>
-                        <input type="password" class="form-control" required id="personalPasswordConfirmation"
-                               aria-describedby="ariaDescribedbyHelp" placeholder="Confirm password">
-                        <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
-                    </div>
-                    <button type="button" class="btn btn-dark btn-block" id="changePassword">Change password</button>
-                </form>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary close-modal-button" data-dismiss="modal">
-                    Close
-                </button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary close-modal-personal" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+@endif
 
 @yield('modal')
 

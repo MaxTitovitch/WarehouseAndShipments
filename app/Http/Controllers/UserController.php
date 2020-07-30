@@ -43,6 +43,7 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->save();
+            Auth::attempt(['email' => $user->email, 'password' => $user->password]);
             Session::flash('success', 'Personal info updated!');
             return response()->json($user, 200);
         } else {
@@ -55,13 +56,14 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if(Auth::user()->id = $user->id) {
-            if($user->password === Hash::make($request->password_last)) {
+            if(Hash::check($request->last_password, $user->password)){
                 $user->password = Hash::make($request->password);
                 $user->save();
+                Auth::attempt(['email' => $user->email, 'password' => $user->password]);
                 Session::flash('success', 'Password changed!');
                 return response()->json($user, 200);
             } else {
-                throw new HttpResponseException(response()->json(['password_last', ['It isn\t your last password']], 403));
+                throw new HttpResponseException(response()->json(['last_password' => ['It isn\'t your last password']], 403));
             }
         } else {
             Session::flash('error', 'It isn\'t your account!');
