@@ -52,7 +52,7 @@ class AdminController extends Controller
     public function chartData(Request $request) {
         $dates = $this->getDates($request);
         $statistic = [
-            'orders-shipments' => $this->getOrdersAndShipments($dates),
+            'ordersShipments' => $this->getOrdersAndShipments($dates),
             'balance' => $this->getBalanceHistory($dates),
             'dates' => $dates
         ];
@@ -77,8 +77,8 @@ class AdminController extends Controller
             if($date_end > date("Y-m-d")) {
                 $date_end = date("Y-m-d");
             }
-            if($date_start < date('Y-m-d', '2000-01-01')) {
-                $date_start = date("Y-m-d", '2000-01-01');
+            if($date_start < date('Y-m-d', strtotime('2000-01-01'))) {
+                $date_start = date("Y-m-d", strtotime('2000-01-01'));
             }
             if($date_start > $date_end) {
                 $date_start = date("Y-m-d", mktime(0, 0, 0, date('m', strtotime($date_end)) - 1));
@@ -96,9 +96,7 @@ class AdminController extends Controller
         $result = [];
         foreach ($histories as $history) {
             $date = explode(' ', $history->created_at)[0];
-            if(!empty($result[$date])) {
-                $result[$date] += (double)$history->current_balance;
-            } else {
+            if(empty($result[$date])) {
                 $result[$date] = (double)$history->current_balance;
             }
         }
