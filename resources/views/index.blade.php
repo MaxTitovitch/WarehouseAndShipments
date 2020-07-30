@@ -43,8 +43,8 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-5 ml-1">
-            <input type="text" class="form-control date-range " id="date-range" value="02-16-2012">
+        <div class="row mt-5 ml-1 filter-display">
+            <input type="text" class="form-control date-range" id="date-range" placeholder="Select date">
             <button type="button" class="btn btn-dark ml-2" id="button-filter">Filter</button>
         </div>
 
@@ -57,11 +57,11 @@
         </div>
 
         <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-md-6">
                 <div id="curve_chart" style="width: 100%; height: 500px"></div>
             </div>
 
-            <div class="col-6">
+            <div class="col-12 col-md-6">
                 <div id="curve_chart_balance" style="width: 100%; height: 500px"></div>
             </div>
         </div>
@@ -72,7 +72,7 @@
                 <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
                 <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
                 @if(\Illuminate\Support\Facades\Auth::user())
-                    @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+                    @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                         <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
                     @endif
                 @endif
