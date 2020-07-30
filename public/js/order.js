@@ -25,6 +25,7 @@ $(document).ready(function () {
         option.value = element.name;
         countrySelect.appendChild(option);
       })
+        $(countrySelect).val($(countrySelect).find(':first')[0].value).trigger('change');
     }
   });
 
