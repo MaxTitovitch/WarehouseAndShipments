@@ -85,22 +85,6 @@ body {
     display: table!important;
 }
 
-@media screen and (max-width: 767px) {
-    .dashboard-table-div{
-        width: 100%;
-    }
-
-    .sidenav-mobile {
-        display: none!important;
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .for-mobile {
-        display: none;
-    }
-}
-
 .quantity-width{
     width: 33%;
 }
@@ -163,6 +147,10 @@ select.form-control.product-order-select {
     background-color: rbga(0,0,0,0);
 }
 
+.dropdown-item.text-light {
+    opacity: .5;
+}
+
 .dropdown-item.text-light:hover {
     background-color: rgba(0,0,0,0) !important;
     color: rgba(255,255,255,.75) !important;
@@ -216,6 +204,26 @@ select.form-control.product-order-select {
 }
 
 
+@media screen and (max-width: 767px) {
+    .dashboard-table-div{
+        width: 100%;
+    }
+
+    .sidenav-mobile {
+        display: none!important;
+    }
+
+    .date-range{
+        width: 50%;
+    }
+
+}
+
+@media screen and (min-width: 768px) {
+    .for-mobile {
+        display: none;
+    }
+}
 
 
 
