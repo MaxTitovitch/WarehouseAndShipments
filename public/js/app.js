@@ -1,15 +1,17 @@
 let products = [];
 $(document).ready(() => {
-  $.ajax({
-    type: "GET",
-    url: "/api/product",
-    success: (data) => {
-      products = data;
-      if($('.product-select').toArray().length !== 0) {
-        addProducts($('.product-select')[0]);
-      }
+    if(location.pathname ==='/orders' || location.pathname === '/inbound-shipments') {
+        $.ajax({
+            type: "GET",
+            url: "/api/product",
+            success: (data) => {
+                products = data;
+                if ($('.product-select').toArray().length !== 0) {
+                    addProducts($('.product-select')[0]);
+                }
+            },
+        });
     }
-  });
 });
 
 function addProducts(productSelect) {
