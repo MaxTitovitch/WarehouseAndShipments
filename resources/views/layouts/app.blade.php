@@ -103,16 +103,15 @@
 </nav>
 <div class="layout-flex">
     @section('sidebar')
-        <div class="sidenav sidenav-mobile">
-            <a class="dashboard ml-1" href="{{ route('home') }}">DASHBOARD</a>
-            <hr>
-            <a href="{{ route('inbound-shipments') }}"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound
+        <div class="sidenav sidenav-mobile bg-dark ">
+            <a class="dashboard text-white" href="{{ route('home') }}"><i class="fa fa-tachometer mr-1" aria-hidden="true"></i>DASHBOARD</a>
+            <a href="{{ route('inbound-shipments') }}" class="text-white"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound
                 shipments</a>
-            <a href="{{ route('products') }}"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
-            <a href="{{ route('orders') }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
+            <a href="{{ route('products') }}" class="text-white"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
+            <a href="{{ route('orders') }}" class="text-white"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
             @if(\Illuminate\Support\Facades\Auth::user())
                 @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
-                    <a href="{{ route('users') }}"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+                    <a href="{{ route('users') }}" class="text-white"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
                 @endif
             @endif
         </div>
