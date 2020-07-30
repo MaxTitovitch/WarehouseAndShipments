@@ -19,9 +19,9 @@ class CreateProductsTable extends Migration
             $table->string('brand', 255);
             $table->string('upc', 50);
             $table->string('sku', 50);
-            $table->date('received')->nullable();
-            $table->boolean('available')->default(true);
-            $table->boolean('in_transit')->default(false);
+            $table->integer('received')->default(0);
+            $table->integer('available')->default(0);
+            $table->integer('in_transit')->default(0);
             $table->timestamps();
         });
     }

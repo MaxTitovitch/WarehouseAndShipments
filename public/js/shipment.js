@@ -169,6 +169,7 @@ function sendEntityAjax (data, type, entityPath = '') {
     },
     error: (errorEvent) => {
       let errors = errorEvent.responseJSON;
+      console.log(errorEvent)
       Object.keys(errors).forEach((error) => {
         $(`#${error}`).eq(0).addClass('is-invalid');
         $(`#${error}`).eq(0).next('small')[0].innerText = errors[error][0];

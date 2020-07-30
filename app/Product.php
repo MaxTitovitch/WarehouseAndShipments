@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-        'name', 'brand', 'upc',  'sku', 'received', 'Available', 'in_transit'
+        'name', 'brand', 'upc',  'sku', 'received', 'available', 'in_transit'
     ];
 
     public function shipments() {

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+    Dashboard
+@endsection
+
 @section('content')
     {{--    @dump($statistic)--}}
     {{--    {{ csrf_field() }}--}}
@@ -9,7 +13,7 @@
                 <div class="p-3 dashboard-border-success rounded-left dashboard-boxshadow">
                     <div class="font-weight-bold text-success">Balance(current)</div>
                     <div class="mt-3">
-                        <span class=" display-4">$150</span>
+                        <span class="h1">${{ $statistic['balance'] }}</span>
                         <i class="fa fa-money float-right fa-4x text-secondary opacity-image" aria-hidden="true"></i>
                     </div>
                 </div>
@@ -18,7 +22,7 @@
                 <div class="p-3 dashboard-border-primary rounded-left dashboard-boxshadow">
                     <div class="font-weight-bold text-primary">Orders</div>
                     <div class="mt-3">
-                        <span class=" display-4">4</span>
+                        <span class="h1">{{ $statistic['orders'] }}</span>
                         <i class="fa fa-shopping-basket float-right fa-4x text-secondary opacity-image"
                            aria-hidden="true"></i>
                     </div>
@@ -28,7 +32,7 @@
                 <div class="p-3 dashboard-border-danger rounded-left dashboard-boxshadow">
                     <div class="font-weight-bold text-danger">Shipments</div>
                     <div class="mt-3">
-                        <span class=" display-4">15</span>
+                        <span class="h1">{{ $statistic['shipments'] }}</span>
                         <i class="fa fa-truck float-right fa-4x text-secondary opacity-image" aria-hidden="true"></i>
                     </div>
                 </div>
@@ -37,7 +41,7 @@
                 <div class="p-3 dashboard-border-info rounded-left dashboard-boxshadow">
                     <div class="font-weight-bold text-info">Turnover</div>
                     <div class="mt-3">
-                        <span class=" display-4">$8000</span>
+                        <span class="h1">${{ $statistic['turnover'] }}</span>
                         <i class="fa fa-refresh float-right fa-4x text-secondary opacity-image" aria-hidden="true"></i>
                     </div>
                 </div>

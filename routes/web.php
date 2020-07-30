@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/parse', 'ImportController@parse')->name('parse');
 });
 
+
 Route::group(['middleware' => 'auth', 'prefix' => 'api'], function () {
     Route::group(['middleware' => 'authorisation'], function () {
         Route::resource('user', 'UserController', ['only' => ['index', 'show', 'update', 'destroy']]);

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\BalanceHistory;
 use Illuminate\Support\Facades\Session;
+use App\Product;
 
 class OrderController extends Controller
 {
@@ -22,6 +23,7 @@ class OrderController extends Controller
             $balanceHistory->save();
             $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
             $user->save();
+            $this->updateProducts();
             Session::flash('success', 'New Order created!');
             return response()->json($order, 200);
         } else {
@@ -52,6 +54,7 @@ class OrderController extends Controller
                 $balanceHistory->save();
                 $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
                 $user->save();
+                $this->updateProducts();
                 Session::flash('success', 'Order updated!');
                 return response()->json($order, 200);
             } else {
@@ -78,6 +81,7 @@ class OrderController extends Controller
                 $balanceHistory->save();
                 $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
                 $user->save();
+                $this->updateProducts();
                 Session::flash('success', 'Order copied!');
                 return response()->json($order, 200);
             } else {
@@ -95,6 +99,7 @@ class OrderController extends Controller
         $order = Order::find($id);
         if(Auth::id() === $order->user_id) {
             $order->products()->sync([]);
+            $this->updateProducts();
             Session::flash('success', 'Order deleted!');
             return response()->json(Order::destroy($id), 200);
         } else {
@@ -202,6 +207,19 @@ class OrderController extends Controller
         $newBalance = $this->calculateBalance($request);
         $lastBalance = $this->calculateCopyBalance($lastOrder);
         return $newBalance - $lastBalance;
+    }
+
+    private function updateProducts() {
+        foreach (Product::with('orders')->get() as $product) {
+            $product->received = 0;
+            foreach ($product->orders as $orders) {
+                if($orders->status == 'Created') {
+                    $product->received += $orders->pivot->quantity;
+                }
+            }
+            $product->save();
+        }
+
     }
 
 }

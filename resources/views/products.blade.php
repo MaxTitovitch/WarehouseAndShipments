@@ -44,9 +44,9 @@
                     <td>{{ $product->sku }}</td>
                     <td>{{ $product->brand }}</td>
                     <td>{{ $product->name }}</td>
-                    <td>{{ $product->in_transit ? "True" : "False" }}</td>
+                    <td>{{ $product->in_transit}}</td>
                     <td>{{ $product->received }}</td>
-                    <td>{{ $product->available ? "True" : "False" }}</td>
+                    <td>{{ $product->available }}</td>
                     <td>
                         <a href="#" class="show-product text-dark font-weight-bold show-entity-button"
                            data-value-id="{{ $product->id }}">Show</a>
@@ -101,22 +101,22 @@
                                    aria-describedby="commentHelp" placeholder="SKU">
                             <small id="commentHelp" class="form-text text-danger"></small>
                         </div>
-                        <div class="form-group">
-                            <label for="reserved">Date of reserving</label>
-                            <input type="date" class="form-control" id="reserved" name="reserved" placeholder="date"
-                                   aria-describedby="dateHelp">
-                            <small id="dateHelp" class="form-text text-danger"></small>
-                        </div>
-                        <div class="form-group custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="available">
-                            <label for="available" class="custom-control-label">Available</label>
-                            <small id="availabletHelp" class="form-text text-danger"></small>
-                        </div>
-                        <div class="form-group custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="in_transit">
-                            <label for="in_transit" class="custom-control-label">In transit</label>
-                            <small id="inTransitHelp" class="form-text text-danger"></small>
-                        </div>
+{{--                        <div class="form-group">--}}
+{{--                            <label for="reserved">Date of reserving</label>--}}
+{{--                            <input type="date" class="form-control" id="reserved" name="reserved" placeholder="date"--}}
+{{--                                   aria-describedby="dateHelp">--}}
+{{--                            <small id="dateHelp" class="form-text text-danger"></small>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group custom-control custom-switch">--}}
+{{--                            <input type="checkbox" class="custom-control-input" id="available">--}}
+{{--                            <label for="available" class="custom-control-label">Available</label>--}}
+{{--                            <small id="availabletHelp" class="form-text text-danger"></small>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group custom-control custom-switch">--}}
+{{--                            <input type="checkbox" class="custom-control-input" id="in_transit">--}}
+{{--                            <label for="in_transit" class="custom-control-label">In transit</label>--}}
+{{--                            <small id="inTransitHelp" class="form-text text-danger"></small>--}}
+{{--                        </div>--}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary close-modal-button" data-dismiss="modal">

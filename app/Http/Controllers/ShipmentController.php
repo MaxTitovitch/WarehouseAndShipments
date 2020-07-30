@@ -6,6 +6,7 @@ use App\Shipment;
 use App\Http\Requests\ShipmentRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Product;
 
 class ShipmentController extends Controller
 {
@@ -15,6 +16,7 @@ class ShipmentController extends Controller
         $shipment->user_id = Auth::id() || 1;
         $this->copyModelFromRequest($shipment, $request);
         $this->syncProducts($shipment, $request);
+        $this->updateProducts();
         Session::flash('success', 'New Inbound shipment created!');
         return response()->json($shipment, 200);
     }
@@ -37,6 +39,7 @@ class ShipmentController extends Controller
             $this->copyModelFromRequest($shipment, $request);
             $this->syncProducts($shipment, $request);
             Session::flash('success', 'Inbound shipment updated!');
+            $this->updateProducts();
             return response()->json($shipment, 200);
         } else {
             Session::flash('error', 'It isn\'t your shipment!');
@@ -66,5 +69,21 @@ class ShipmentController extends Controller
         }
         $shipment->save();
         $shipment->products()->sync($arrayProducts);
+    }
+
+    private function updateProducts( ) {
+        foreach (Product::with('shipments')->get() as $product) {
+            $product->in_transit = 0;
+            $product->available = 0;
+            foreach ($product->shipments as $shipment) {
+                if($shipment->received == null) {
+                    $product->in_transit += $shipment->pivot->quantity;
+                } else {
+                    $product->available += $shipment->pivot->quantity;
+                }
+            }
+            $product->save();
+        }
+
     }
 }

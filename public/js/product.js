@@ -20,9 +20,9 @@ $('.show-entity-button').click(function (event) {
     $('#showProductSKU')[0].innerText = data.sku
     $('#showProductBrand')[0].innerText = data.brand
     $('#showProductName')[0].innerText = data.name
-    $('#showProductTransit')[0].innerText = data.in_transit ? 'True' : 'False'
+    $('#showProductTransit')[0].innerText = data.in_transit
     $('#showProductReserved')[0].innerText = data.received
-    $('#showProductAvailable')[0].innerText = data.available ? 'True' : 'False'
+    $('#showProductAvailable')[0].innerText = data.available
 
     $('#showModal').modal()
   })
@@ -38,9 +38,9 @@ $('.edit-entity-button').click(function (event) {
     $('#brand')[0].value = data.brand
     $('#upc')[0].value = data.upc
     $('#sku')[0].value = data.sku
-    $('#reserved')[0].value = data.received
-    $('#available')[0].checked = data.available
-    $('#in_transit')[0].checked = data.in_transit
+    // $('#reserved')[0].value = data.received
+    // $('#available')[0].checked = data.available
+    // $('#in_transit')[0].checked = data.in_transit
 
     $('#modalAdd').modal()
   })
@@ -62,9 +62,9 @@ $('.close-modal-button').click(function (event) {
   $('#brand')[0].value = ''
   $('#upc')[0].value = ''
   $('#sku')[0].value = ''
-  $('#reserved')[0].value = ''
-  $('#available')[0].checked = false
-  $('#in_transit')[0].checked = false
+  // $('#reserved')[0].value = ''
+  // $('#available')[0].checked = false
+  // $('#in_transit')[0].checked = false
 
 
   $('.is-invalid').toArray().forEach((element) => {

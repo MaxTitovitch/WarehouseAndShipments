@@ -16,12 +16,32 @@ class AdminController extends Controller
     public function index() {
         $user = Auth::user();
         $statistic = [
-            'balance' => $user->balance,
-            'orders' => $user->orders->count(),
-            'shipments' => $user->shipments->count(),
+            'balance' => (int)$user->balance,
+            'orders' => $this->getOrders($user->orders),
+            'shipments' => $this->getShipments($user->shipments),
             'turnover' => $this->getUserTurnover($user),
         ];
         return view('index')->with(['statistic' => $statistic]);
+    }
+
+    private function getOrders($orders) {
+        $quantity = 0;
+        foreach ($orders as $order) {
+            if($order->status === 'Created') {
+                $quantity++;
+            }
+        }
+        return $quantity;
+    }
+
+    private function getShipments($orders) {
+        $quantity = 0;
+        foreach ($orders as $order) {
+            if($order->received === null) {
+                $quantity++;
+            }
+        }
+        return $quantity;
     }
 
     public function countries() {

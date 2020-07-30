@@ -5,11 +5,12 @@ $(document).ready(() => {
             type: "GET",
             url: "/api/product",
             success: (data) => {
+              console.log(data)
                 products = data;
                 if ($('.product-select').toArray().length !== 0) {
                     addProducts($('.product-select')[0]);
                 }
-                $(".product-order-select").val($(".product-order-select").find(':first')[0].value).trigger('change');
+                $(".product-select").val($(".product-select").find(':first')[0].value).trigger('change');
             },
         });
     }

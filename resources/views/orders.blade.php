@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Products
+    Orders
 @endsection
 
 @section('content')
@@ -130,6 +130,13 @@
                             <label for="country">Country</label>
                             <select class="form-control custom-select" id="country"></select>
                         </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="text" pattern="^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$"
+                                   class="form-control" required maxlength="255" id="phone"
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Phone">
+                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
+                        </div>
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                             <div class="form-group">
                                 <label for="shipped">Shipped</label>
@@ -145,13 +152,6 @@
                                 </select>
                             </div>
                         @endif
-                        <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input type="text" pattern="^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$"
-                                   class="form-control" required maxlength="255" id="phone"
-                                   aria-describedby="ariaDescribedbyHelp" placeholder="Phone">
-                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
-                        </div>
                         <div class="form-group">
                             <label for="shipping_company">Shipping company</label>
                             <select class="form-control" id="shipping_company">
@@ -291,12 +291,12 @@
                             <span class="form-control form-control-height " id="showOrderCountry"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderCreated">Created</label>
-                            <span class="form-control form-control-height " id="showOrderCreated"></span>
-                        </div>
-                        <div class="form-group">
                             <label class="font-weight-bold" for="showOrderPhone">Phone</label>
                             <span class="form-control form-control-height " id="showOrderPhone"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="showOrderCreated">Created</label>
+                            <span class="form-control form-control-height " id="showOrderCreated"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showOrderShippingCompany">Shipping company</label>

@@ -22,9 +22,6 @@ class ProductRequest extends FormRequest
             'brand' => 'required|string|max:255',
             'upc' => 'required|string|max:50',
             'sku' => 'required|string|max:50',
-            'received' => 'date|nullable',
-            'available' => 'boolean',
-            'in_transit' => 'boolean'
         ];
     }
 
