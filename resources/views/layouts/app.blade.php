@@ -160,6 +160,7 @@
                                aria-describedby="ariaDescribedbyHelp" placeholder="Email">
                         <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                     </div>
+                    <button type="submit" class="display-none" id="submitUserData"></button>
                     <button type="button" class="btn btn-dark btn-block" id="updateUserData">Change</button>
                 </form>
 

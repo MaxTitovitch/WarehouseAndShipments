@@ -53,5 +53,8 @@ $('.add-product-select').click(function (event) {
   clone.appendTo(".products-container");
 });
 
+$('#updateUserData').click(function (event) {
+  event.preventDefault();
 
+});
 
