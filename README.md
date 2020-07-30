@@ -11,6 +11,5 @@ This is a warehouse logistics management system
 3) Run `php artisan migrate` command
 4) Run `php artisan db:seed` command
 5) Run `php artisan key:generate` command 
-6) Run `php artisan storage:link` command
 
 # Written by: `Laravel` `JS` `Bootstrap`

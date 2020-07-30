@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'api'], function () {
         Route::resource('user', 'UserController', ['only' => ['index', 'show', 'update', 'destroy']]);
         Route::resource('product', 'ProductController', ['only' => ['index', 'show', 'store', 'update']]);
     });
+    Route::put('/user/add-balance/{user}', 'UserController@addBalance')->name('user.add-balance');
     Route::put('/user/update/{user}', 'UserController@updateSelf')->name('user.self-update');
     Route::put('/user/change-password/{user}', 'UserController@changePassword')->name('user.changePassword');
     Route::resource('shipment', 'ShipmentController', ['only' => ['show', 'store', 'update']]);

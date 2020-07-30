@@ -31,6 +31,9 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-light shadow-sm">
     <div class="container-fluid">
+        <a class="navbar-brand show-menu" href="#">
+            <i class="fa fa-align-justify" aria-hidden="true"></i>
+        </a>
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
@@ -105,15 +108,26 @@
 </nav>
 <div class="layout-flex">
     @section('sidebar')
-        <div class="sidenav sidenav-mobile bg-dark ">
-            <a class="dashboard text-white" href="{{ route('home') }}"><i class="fa fa-tachometer mr-1" aria-hidden="true"></i>DASHBOARD</a>
-            <a href="{{ route('inbound-shipments') }}" class="text-white"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound
-                shipments</a>
-            <a href="{{ route('products') }}" class="text-white"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
-            <a href="{{ route('orders') }}" class="text-white"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
+        <div class="sidenav sidenav-mobile bg-dark section-big">
+            <a class="dashboard text-white" href="{{ route('home') }}"><i class="fa fa-tachometer mr-1" aria-hidden="true"></i><span class="full-text"> DASHBOARD</span></a>
+            <a href="{{ route('inbound-shipments') }}" class="text-white"><i class="fa fa-list-alt" aria-hidden="true"></i> <span class="full-text">Inbound
+                    shipments</span></a>
+            <a href="{{ route('products') }}" class="text-white"><i class="fa fa-cube" aria-hidden="true"></i> <span class="full-text">Products</span></a>
+            <a href="{{ route('orders') }}" class="text-white"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="full-text">Orders</span></a>
             @if(\Illuminate\Support\Facades\Auth::user())
                 @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
-                    <a href="{{ route('users') }}" class="text-white"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+                    <a href="{{ route('users') }}" class="text-white"><i class="fa fa-users" aria-hidden="true"></i> <span class="full-text">Users</span></a>
+                @endif
+            @endif
+        </div>
+        <div class="sidenav sidenav-mobile bg-dark section-small">
+            <a class="dashboard text-white text-center" href="{{ route('home') }}"><i class="fa fa-tachometer mr-1" aria-hidden="true"></i></a>
+            <a href="{{ route('inbound-shipments') }}" class="text-white text-center"><i class="fa fa-list-alt" aria-hidden="true"></i></a>
+            <a href="{{ route('products') }}" class="text-white text-center"><i class="fa fa-cube" aria-hidden="true"></i></a>
+            <a href="{{ route('orders') }}" class="text-white text-center"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+            @if(\Illuminate\Support\Facades\Auth::user())
+                @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
+                    <a href="{{ route('users') }}" class="text-white text-center"><i class="fa fa-users" aria-hidden="true"></i></a>
                 @endif
             @endif
         </div>

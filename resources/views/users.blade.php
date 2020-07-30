@@ -30,7 +30,8 @@
                         <a href="#" class="show-product text-dark font-weight-bold show-entity-button" data-value-id="{{ $user->id }}">Show</a>
                         <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button" data-value-id="{{ $user->id }}">Edit</a>
                         <a href="#" class="show-product text-dark font-weight-bold delete-entity-button" data-value-id="{{ $user->id }}">Delete</a>
-                        <a href="#" class="show-product text-dark font-weight-bold balance-entity-button" data-value-id="{{ $user->id }}">Balance</a>
+                        <a href="#" class="show-product text-dark font-weight-bold balance-entity-button" data-value-id="{{ $user->id }}"
+                           data-value-name="{{ $user->name }}">Balance</a>
                     </td>
                 </tr>
             @endforeach
@@ -143,6 +144,42 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalBalance" tabindex="-1" role="dialog"
+         aria-labelledby="modalBalanceLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalBalanceLabel">Adding a Credit to a user</h5>
+                    <button type="button" class="close close-modal-button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="form-submit" id="formBalance">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="userNameBalance">Full Name</label>
+                            <span class="form-control text-secondary form-control-height" id="userNameBalance"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="creditAmount" class="font-weight-bold">Credit amount</label>
+                            <input type="number" class="form-control" required maxlength="255" min="1" max="10000" id="creditAmount"
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Credit amount">
+                            <small id="creditAmountSmall" class="form-text text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary close-modal-button" data-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-dark save-changes">Add Credit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -31,6 +31,14 @@ $('.show-entity-button').click(function (event) {
   })
 })
 
+let balanceAddId = 0;
+$('.balance-entity-button').click(function (event) {
+  event.preventDefault();
+  balanceAddId = $(this).data('value-id');
+  $('#userNameBalance')[0].innerText = $(this).data('value-name');
+  $('#modalBalance').modal();
+})
+
 function addHistory(container, history) {
     let tr = document.createElement('tr');
     let tBalance = document.createElement('td');
@@ -87,6 +95,15 @@ $('.form-submit').submit(function (event) {
       balance: $('#balance')[0].value,
     }
     sendEntityAjax(entity, "PUT", `/${id}`);
+})
+
+$('#formBalance').submit(function (event) {
+    event.preventDefault();
+    let entity = {
+      _token: $('.modal [name="_token"]')[0].value,
+      balance: $('#creditAmount')[0].value,
+    }
+    sendEntityAjax(entity, "PUT", `/add-balance/${balanceAddId}`);
 })
 
 

@@ -1,3 +1,20 @@
+let display = localStorage.getItem("display");
+changeDisplayShow();
+
+$('.show-menu').click((event) => {
+  event.preventDefault();
+  display = display === 'none' ? 'block' : 'none';
+  changeDisplayShow();
+  localStorage.setItem("display", display);
+});
+
+function changeDisplayShow () {
+  $('.section-big').css({ display: display });
+  $('.dashboard-table-div').css({ width: display === 'none' ? '95%' : '80%' });
+  $('.section-small').css({ display: display === 'none' ? 'block' : 'none' });
+  return display;
+}
+
 let products = [];
 $(document).ready(() => {
     if(location.pathname ==='/orders' || location.pathname === '/inbound-shipments') {

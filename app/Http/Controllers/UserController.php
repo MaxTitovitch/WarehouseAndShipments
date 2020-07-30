@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserSelfUpdateRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Requests\AddBalanceRequest;
 
 class UserController extends Controller
 {
@@ -31,6 +32,16 @@ class UserController extends Controller
         $this->createBalanceHistory($user, $request->balance);
         $user->role = $request->role;
         $user->balance = $request->balance;
+        $user->save();
+        Session::flash('success', 'User updated!');
+        return response()->json($user, 200);
+    }
+
+    public function addBalance(AddBalanceRequest $request, $id)
+    {
+        $user = User::find($id);
+        $this->createBalanceHistory($user, $request->balance + $user->balance);
+        $user->balance += $request->balance;
         $user->save();
         Session::flash('success', 'User updated!');
         return response()->json($user, 200);

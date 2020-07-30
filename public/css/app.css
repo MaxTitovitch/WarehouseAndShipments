@@ -248,4 +248,19 @@ select.form-control.product-order-select {
     display: none;
 }
 
+.section-small {
+    display: none;
+    width: 5%;
+}
 
+.section-big {
+    display: none;
+}
+
+.section-big-area {
+    width: 95% !important;
+}
+
+.show-menu:hover {
+    opacity: .7;
+}
