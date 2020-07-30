@@ -163,7 +163,7 @@
                     <button type="button" class="btn btn-dark btn-block" id="updateUserData">Change</button>
                 </form>
 
-                <form class="form-submit">
+                <form class="form-submit mt-4">
                     @csrf
                     <div class="form-group">
                         <label for="personalLastPassword" class="font-weight-bold">Previous password</label>
