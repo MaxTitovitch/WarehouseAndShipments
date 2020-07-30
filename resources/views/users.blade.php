@@ -132,31 +132,16 @@
                             <label class="font-weight-bold" for="showUserCreated">Created</label>
                             <span class="form-control form-control-height " id="showUserCreated"></span>
                         </div>
-                        <table class="table">
-                            <thead>
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead class="thead-dark">
                             <tr>
-                                <th>ID</th>
                                 <th>Balance</th>
                                 <th>Transaction cost</th>
                                 <th>Type</th>
                                 <th>Created</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            @foreach($user->balanceHistories as $balance_history)
-                                <tr>
-                                    <th scope="row">{{ $user->id }}</th>
-                                    <td>{{ $balance_history->current_balance }}</td>
-                                    <td>{{ $balance_history->transition_cost }}</td>
-                                    <td><span class="{{ $balance_history->type == "Credit" ? 'text-success' : 'text-danger'}}">{{ $balance_history->type }}</span></td>
-                                    <td>{{ $balance_history->created_at->format('Y-m-d') }}</td>
-                                    <td>
-                                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button" data-value-id="{{ $balance_history->id }}">Show</a>
-                                        <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button" data-value-id="{{ $balance_history->id }}">Edit</a>
-                                        <a href="#" class="show-product text-dark font-weight-bold delete-entity-button" data-value-id="{{ $balance_history->id }}">Delete</a>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            <tbody id="balanceHistoryArea">
                             </tbody>
                         </table>
                     </form>

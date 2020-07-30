@@ -14,16 +14,39 @@ $('.show-entity-button').click(function (event) {
   event.preventDefault()
   showId = $(this).data('value-id')
   getEntityAjax(showId, (data) => {
-    $('#showUserID')[0].innerText = data.id
-    $('#showUserName')[0].innerText = data.name
-    $('#showUserEmail')[0].innerText = data.email
-    $('#showUserRole')[0].innerText = data.role
-    $('#showUserBalance')[0].innerText = data.balance
-    $('#showUserCreated')[0].innerText = data.created_at.split('T')[0]
+      // console.log(data)
+    $('#showUserID')[0].innerText = data.id;
+    $('#showUserName')[0].innerText = data.name;
+    $('#showUserEmail')[0].innerText = data.email;
+    $('#showUserRole')[0].innerText = data.role;
+    $('#showUserBalance')[0].innerText = data.balance;
+    $('#showUserCreated')[0].innerText = data.created_at.split('T')[0];
+    $('#balanceHistoryArea').eq(0).empty();
+    data.balance_histories.forEach((history) =>{
+        addHistory( $('#balanceHistoryArea')[0], history)
+    });
 
     $('#showModal').modal()
   })
 })
+
+function addHistory(container, history) {
+    let tr = document.createElement('tr');
+    let tBalance = document.createElement('td');
+    tBalance.innerHTML = '<span class="font-weight-bold">$</span>' + history.current_balance;
+    tr.appendChild(tBalance);
+    let tTransitionCost = document.createElement('td');
+    tTransitionCost.innerHTML = '<span class="font-weight-bold">$</span>' + history.transaction_cost;
+    tr.appendChild(tTransitionCost);
+    let tType = document.createElement('td');
+    tType.innerText = history.type;
+    tType.classList.add(history.type === "Credit" ? 'text-success' : 'text-danger')
+    tr.appendChild(tType);
+    let tCreated = document.createElement('td');
+    tCreated.innerText = history.created_at.split('T')[0];
+    tr.appendChild(tCreated);
+    container.appendChild(tr);
+}
 
 $('.edit-entity-button').click(function (event) {
   event.preventDefault()
