@@ -102,9 +102,9 @@ $('.close-modal-personal').click(function (event) {
 
   $('#personal-name')[0].value = lastUser.name
   $('#personal-email')[0].value = lastUser.email
-  $('#personal-last-password')[0].value = ''
+  $('#personal-last_password')[0].value = ''
   $('#personal-password')[0].value = ''
-  $('#personal-password-confirmation')[0].value = ''
+  $('#personal-password_confirmation')[0].value = ''
   closeModalErrors();
 
 })

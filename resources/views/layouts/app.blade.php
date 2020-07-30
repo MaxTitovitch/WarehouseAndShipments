@@ -133,6 +133,7 @@
         @yield('content')
     </div>
 </div>
+
 @if(\Illuminate\Support\Facades\Auth::user() != null)
     <div class="modal fade" data-backdrop="static" id="change-user-data" tabindex="-1" role="dialog"
          aria-labelledby="modalAddLabel"
@@ -164,7 +165,7 @@
                         <button type="submit" class="btn btn-dark btn-block">Change</button>
                     </form>
 
-                    <form class="form-submit" id="changePassword">
+                    <form class="form-submit mt-5" id="changePassword">
                         @csrf
                         <div class="form-group">
                             <label for="personal-last_password" class="font-weight-bold">Previous password</label>
