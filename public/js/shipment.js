@@ -1,3 +1,8 @@
+
+$(".product-select").select2( {
+    placeholder: "Select Product"
+} );
+
 $(document).ready(function () {
   $('#dtEntityTable').DataTable({
     "paging": false,
@@ -63,6 +68,7 @@ $('.edit-entity-button').click(function (event) {
         $('#shipped')[0].value = data.shipped
       }
       let element = $('.product-container').eq(0)
+      element.next().remove();
       addProduct(element, data.products.shift())
       for (let i = 0; i < data.products.length; i++) {
         let clone = element.clone()
@@ -109,7 +115,11 @@ $('.close-modal-button').click(function (event) {
 })
 
 function addProduct (element, product) {
-  element.find('.product-select')[0].value = product.id
+    element.find('.product-select').eq(0).select2({
+        placeholder: "Select Product2",
+    });
+    element.find('.product-select').eq(0).val(product.id).trigger('change')
+  // element.find('.product-select')[0].value = product.id
   element.find('.quantity')[0].value = product.pivot.quantity
 }
 

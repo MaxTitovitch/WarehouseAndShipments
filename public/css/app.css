@@ -225,6 +225,26 @@ select.form-control.product-order-select {
     }
 }
 
+#country+.select2.select2-container {
+    width: 100% !important;
+}
+.select2.select2-container .select2-selection {
+    height: calc(1.5em + .75rem + 2px) !important;
+}
 
+.product-order-select+.select2.select2-container {
+    width: 90% !important;
+}
+
+.form-control.quantity {
+    width: 20% !important;
+}
+.product-select+.select2.select2-container {
+    width: 75% !important;
+}
+
+.select2.select2-container+.select2.select2-container {
+    display: none;
+}
 
 

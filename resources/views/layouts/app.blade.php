@@ -25,6 +25,8 @@
     <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
     @yield('style')
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
+
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-light shadow-sm">

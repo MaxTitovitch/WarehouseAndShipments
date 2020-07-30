@@ -44,10 +44,14 @@
                     <td>{{ $order->tracking_number }}</td>
                     <td>{{ $order->shipped }}</td>
                     <td>
-                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button" data-value-id="{{ $order->id }}">Show</a>
-                        <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button" data-value-id="{{ $order->id }}">Edit</a>
-                        <a href="#" class="show-product text-dark font-weight-bold delete-entity-button" data-value-id="{{ $order->id }}">Delete</a>
-                        <a href="#" class="show-product text-dark font-weight-bold copy-entity-button" data-value-id="{{ $order->id }}">Copy</a>
+                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button"
+                           data-value-id="{{ $order->id }}">Show</a>
+                        <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button"
+                           data-value-id="{{ $order->id }}">Edit</a>
+                        <a href="#" class="show-product text-dark font-weight-bold delete-entity-button"
+                           data-value-id="{{ $order->id }}">Delete</a>
+                        <a href="#" class="show-product text-dark font-weight-bold copy-entity-button"
+                           data-value-id="{{ $order->id }}">Copy</a>
                     </td>
                 </tr>
             @endforeach
@@ -104,14 +108,15 @@
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                             <div class="form-group">
                                 <label for="shippingCost">Shipping cost</label>
-                                <input type="number" class="form-control" required maxlength="50" id="shipping_cost"
+                                <input type="number" class="form-control" maxlength="50" id="shipping_cost"
                                        aria-describedby="commentHelp" placeholder="Shipping cost">
                                 <small id="commentHelp" class="form-text text-danger"></small>
                             </div>
                         @endif
                         <div class="form-group">
                             <label for="zipCode">Zip code / Postal Code</label>
-                            <input type="text" class="form-control" id="zip_postal_code" placeholder="Zip code / Postal Code"
+                            <input type="text" class="form-control" id="zip_postal_code"
+                                   placeholder="Zip code / Postal Code"
                                    aria-describedby="dateHelp">
                             <small id="dateHelp" class="form-text text-danger"></small>
                         </div>
@@ -123,7 +128,7 @@
                         </div>
                         <div class="form-group">
                             <label for="country">Country</label>
-                            <select class="form-control" id="country"></select>
+                            <select class="form-control custom-select" id="country"></select>
                         </div>
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                             <div class="form-group">
@@ -142,7 +147,8 @@
                         @endif
                         <div class="form-group">
                             <label for="phone">Phone</label>
-                            <input type="text" pattern="^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$" class="form-control" required maxlength="255" id="phone"
+                            <input type="text" pattern="^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$"
+                                   class="form-control" required maxlength="255" id="phone"
                                    aria-describedby="ariaDescribedbyHelp" placeholder="Phone">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
@@ -169,11 +175,15 @@
                                     <a href="#" class="remove-product-select product-order-remove">
                                         <i class="fa fa-times fa-2x text-dark" aria-hidden="true"></i>
                                     </a>
-                                    <input type="number" class="form-control quantity product-order-quantity" placeholder="quantity"
+                                    <input type="number" class="form-control quantity product-order-quantity"
+                                           placeholder="quantity"
                                            required min="1" max="10000">
-                                    <input type="number" class="form-control price product-order-price" placeholder="price"
-                                                                               min="1" max="10000">
-                                    <textarea style="resize: none; height: 100px" class="form-control description product-order-description" placeholder="Description"
+                                    <input type="number" class="form-control price product-order-price"
+                                           placeholder="price"
+                                           min="1" max="10000">
+                                    <textarea style="resize: none; height: 100px"
+                                              class="form-control description product-order-description"
+                                              placeholder="Description"
                                               maxlength="10000"></textarea>
                                 </div>
                             </div>
@@ -305,8 +315,11 @@
                             <div class="show-products-container">
                                 <div class="show-product-container product-order-area">
                                     <span class="form-control form-control-height show-product"></span>
-                                    <span class="form-control form-control-height w-50"><span class="show-quantity"></span><span class="font-weight-bold"> pcs</span></span>
-                                    <span class="form-control form-control-height w-50"><span class="font-weight-bold">$</span><span class="show-price"></span></span>
+                                    <span class="form-control form-control-height w-50"><span
+                                            class="show-quantity"></span><span
+                                            class="font-weight-bold"> pcs</span></span>
+                                    <span class="form-control form-control-height w-50"><span
+                                            class="font-weight-bold">$</span><span class="show-price"></span></span>
                                     <span class="form-control form-control-height show-description">edf wef wef wefw efw defytygytyttt</span>
                                 </div>
                             </div>
@@ -323,4 +336,5 @@
 
 @section('scripts')
     <script src="{{ asset('js/order.js') }}" defer></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
 @endsection

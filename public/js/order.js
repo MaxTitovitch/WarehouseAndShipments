@@ -1,3 +1,11 @@
+$("#country").select2( {
+    placeholder: "Select Country",
+} );
+
+$(".product-order-select").select2( {
+    placeholder: "Select Product"
+} );
+
 $(document).ready(function () {
   $('#dtEntityTable').DataTable({
     "paging": false,
@@ -21,6 +29,7 @@ $(document).ready(function () {
   });
 
 });
+
 
 let id = 0, showId = 0;
 $('.show-entity-button').click(function (event) {
@@ -52,7 +61,7 @@ $('.show-entity-button').click(function (event) {
     for (let i = 0; i < elements.length; i++) {
       elements[i].remove();
     }
-    createShowProduct($(element), data.products.shift())
+    createShowProduct($(element), data.products.shift());
     data.products.forEach((product) => {
       let clone = $(element).clone();
       createShowProduct (clone, product);
@@ -78,7 +87,7 @@ $('.edit-entity-button').click(function (event) {
   getEntityAjax(id,(data) => {
       $('#customer')[0].value = data.customer
       $('#company_name')[0].value = data.company_name
-      $('#country')[0].value = data.country
+      $('#country').eq(0).val(data.country).trigger('change');
       $('#address')[0].value = data.address
       $('#tracking_number')[0].value = data.tracking_number
       $('#city')[0].value = data.city
@@ -99,7 +108,8 @@ $('.edit-entity-button').click(function (event) {
         $('#status')[0].value = data.status
       }
 
-      let element = $('.product-container').eq(0)
+      let element = $('.product-container').eq(0);
+      element.next().remove();
       addProduct(element, data.products.shift())
       for (let i = 0; i < data.products.length; i++) {
         let clone = element.clone()
@@ -146,9 +156,10 @@ $('.close-modal-button').click(function (event) {
   }
 
   $('.product-container:not(:first-child)').toArray().forEach((productsSelect) => {
-    productsSelect.remove()
+      $(productsSelect).next().remove();
+      productsSelect.remove();
   })
-  $('.product-select :first').attr('selected', 'true')
+  $('.product-select :first').attr('selected', 'true');
   $('.product-container').find('.quantity')[0].value = '';
   $('.product-container').find('.price')[0].value = '';
   $('.product-container').find('.description')[0].value = '';
@@ -162,10 +173,13 @@ $('.close-modal-button').click(function (event) {
 })
 
 function addProduct (element, product) {
-  element.find('.product-select')[0].value = product.id
-  element.find('.product-order-quantity')[0].value = product.pivot.quantity
-  element.find('.product-order-price')[0].value = product.pivot.price
-  element.find('.product-order-description')[0].value = product.pivot.description
+    element.find('.product-select').eq(0).select2({
+        placeholder: "Select Product2",
+    });
+    element.find('.product-select').eq(0).val(product.id).trigger('change')
+    element.find('.product-order-quantity')[0].value = product.pivot.quantity
+    element.find('.product-order-price')[0].value = product.pivot.price
+    element.find('.product-order-description')[0].value = product.pivot.description
 }
 
 function createOrderProducts () {
@@ -243,8 +257,18 @@ function sendEntityAjax (data, type, entityPath = '') {
       let errors = errorEvent.responseJSON;
       Object.keys(errors).forEach((error) => {
         $(`#${error}`).eq(0).addClass('is-invalid');
-        $(`#${error}`).eq(0).next('small')[0].innerText = errors[error][0];
+        $(`#${error}`).eq(0).parent().find('small')[0].innerText = errors[error][0];
       });
     }
   })
 }
+
+
+
+
+
+
+
+
+
+
