@@ -108,7 +108,7 @@
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                             <div class="form-group">
                                 <label for="shippingCost">Shipping cost</label>
-                                <input type="number" class="form-control" maxlength="50" id="shipping_cost"
+                                <input type="number" class="form-control" min="1" max="1000000" id="shipping_cost"
                                        aria-describedby="commentHelp" placeholder="Shipping cost">
                                 <small id="commentHelp" class="form-text text-danger"></small>
                             </div>
