@@ -84,9 +84,9 @@ $('.form-submit').submit(function (event) {
       brand: $('#brand')[0].value,
       upc: $('#upc')[0].value,
       sku: $('#sku')[0].value,
-      received: $('#reserved')[0].value,
-      available: $('#available')[0].checked ? 1 : 0,
-      in_transit: $('#in_transit')[0].checked ? 1 : 0,
+      // received: $('#reserved')[0].value,
+      // available: $('#available')[0].checked ? 1 : 0,
+      // in_transit: $('#in_transit')[0].checked ? 1 : 0,
     }
     if($('.save-changes')[0].innerText === 'Create') {
       sendEntityAjax(entity, "POST");
@@ -105,6 +105,7 @@ function sendEntityAjax (data, type, entityPath = '') {
       window.location.reload()
     },
     error: (errorEvent) => {
+      console.log(errorEvent)
       let errors = errorEvent.responseJSON;
       Object.keys(errors).forEach((error) => {
         $(`#${error}`).eq(0).addClass('is-invalid');

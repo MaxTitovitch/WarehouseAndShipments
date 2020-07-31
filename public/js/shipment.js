@@ -36,18 +36,21 @@ $('.show-entity-button').click(function (event) {
     for (let i = 0; i < elements.length; i++) {
       elements[i].remove();
     }
-    createShowProduct($(element), data.products.shift())
-    data.products.forEach((product) => {
-      let clone = $(element).clone();
-      createShowProduct (clone, product);
-      clone.appendTo('.show-products-container');
-    });
+    if(data.products.length > 0) {
+      createShowProduct($(element), data.products.shift())
+      data.products.forEach((product) => {
+        let clone = $(element).clone();
+        createShowProduct(clone, product);
+        clone.appendTo('.show-products-container');
+      });
+    }
 
     $('#showModal').modal()
   });
 });
 
 function createShowProduct (element, product) {
+  console.log(product)
   element.find('.show-product')[0].innerText = product.name
   element.find('.show-quantity')[0].innerText = product.pivot.quantity
 }
@@ -69,11 +72,13 @@ $('.edit-entity-button').click(function (event) {
       }
       let element = $('.product-container').eq(0)
       element.next().remove();
-      addProduct(element, data.products.shift())
-      for (let i = 0; i < data.products.length; i++) {
-        let clone = element.clone()
-        addProduct(clone, data.products[i])
-        clone.appendTo('.products-container')
+      if(data.products.length > 0) {
+        addProduct(element, data.products.shift())
+        for (let i = 0; i < data.products.length; i++) {
+          let clone = element.clone()
+          addProduct(clone, data.products[i])
+          clone.appendTo('.products-container')
+        }
       }
       $('#modalAdd').modal()
     });

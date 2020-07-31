@@ -13,7 +13,7 @@ class ShipmentController extends Controller
     public function store(ShipmentRequest $request)
     {
         $shipment = new Shipment();
-        $shipment->user_id = Auth::id() || 1;
+        $shipment->user_id = Auth::id();
         $this->copyModelFromRequest($shipment, $request);
         $this->syncProducts($shipment, $request);
         $this->updateProducts();

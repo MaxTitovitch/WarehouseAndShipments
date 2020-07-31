@@ -18,20 +18,22 @@ function getChartData (dates = null) {
         type: 'GET',
         url: `/api/chart-data`,
         success: (data) => {
-            showChartBalance(data)
-            showChart(data);
-            $('#date-range')[0].value =  data.dates.date_start + ' - ' + data.dates.date_end;
-            $('#date-range').eq(0).daterangepicker({
-                opens: 'right',
-                startDate: convertDate(data.dates.date_start),
-                endDate: convertDate(data.dates.date_end)
-            }, function(start, end, label) {
-                $('#date-range')[0].value =  start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD');
-                getChartData({
-                    date_start: $('#date-range')[0].value.split(' - ')[0],
-                    date_end: $('#date-range')[0].value.split(' - ')[1],
+            if(Object.keys(data.balance).length > 0 && Object.keys(data.ordersShipments).length > 0) {
+                showChartBalance(data)
+                showChart(data);
+                $('#date-range')[0].value = data.dates.date_start + ' - ' + data.dates.date_end;
+                $('#date-range').eq(0).daterangepicker({
+                    opens: 'right',
+                    startDate: convertDate(data.dates.date_start),
+                    endDate: convertDate(data.dates.date_end)
+                }, function (start, end, label) {
+                    $('#date-range')[0].value = start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD');
+                    getChartData({
+                        date_start: $('#date-range')[0].value.split(' - ')[0],
+                        date_end: $('#date-range')[0].value.split(' - ')[1],
+                    });
                 });
-            });
+            }
         },
         error: (data) => {
             console.log(data)

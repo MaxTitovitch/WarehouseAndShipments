@@ -50,7 +50,11 @@ class AdminController extends Controller
     }
 
     public function inboundShipments() {
-        $shipments = Shipment::with('user')->get();
+        if (Auth::user()->role === 'Admin') {
+            $shipments = Shipment::with('user')->get();
+        } else {
+            $shipments = Shipment::where('user_id', Auth::id())->with('user')->get();
+        }
         return view('inbound-shipments')->with(['shipments' => $shipments]);
     }
 
@@ -65,7 +69,12 @@ class AdminController extends Controller
     }
 
     public function orders() {
-        $orders = Order::with('user')->get();
+        if (Auth::user()->role === 'Admin') {
+            $orders = Order::with('user')->get();
+        } else {
+
+            $orders = Order::where('user_id', Auth::id())->with('user')->get();
+        }
         return view('orders')->with(['orders' => $orders]);
     }
 

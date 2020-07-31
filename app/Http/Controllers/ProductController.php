@@ -41,9 +41,9 @@ class ProductController extends Controller
         $product->brand = $request->brand;
         $product->upc = $request->upc;
         $product->sku = $request->sku;
-        $product->received = $request->received;
-        $product->available = $request->available;
-        $product->in_transit = $request->in_transit;
+//        $product->received = $request->received;
+//        $product->available = $request->available;
+//        $product->in_transit = $request->in_transit;
         $product->save();
     }
 }
