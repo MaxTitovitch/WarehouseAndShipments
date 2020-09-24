@@ -88,8 +88,8 @@
                         </div>
                         <div class="form-group">
                             <label for="comment">Comment</label>
-                            <input type="text" class="form-control" required maxlength="255" id="comment"
-                                   aria-describedby="commentHelp" placeholder="comment">
+                            <textarea class="form-control" maxlength="255" id="comment"
+                                      aria-describedby="commentHelp" placeholder="comment"></textarea>
                             <small id="commentHelp" class="form-text text-danger"></small>
                         </div>
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
@@ -99,13 +99,13 @@
                                        aria-describedby="dateHelp">
                                 <small id="dateHelp" class="form-text text-danger"></small>
                             </div>
-                            <div class="form-group">
-                                <label for="shipped">Date of shipping</label>
-                                <input type="date" class="form-control" id="shipped" name="date" placeholder="date"
-                                       aria-describedby="dateHelp">
-                                <small id="dateHelp" class="form-text text-danger"></small>
-                            </div>
                         @endif
+                        <div class="form-group">
+                            <label for="shipped">Date of shipping</label>
+                            <input type="date" class="form-control" id="shipped" name="date" placeholder="date"
+                                   aria-describedby="dateHelp">
+                            <small id="dateHelp" class="form-text text-danger"></small>
+                        </div>
                         <div class="form-group">
                             <label for="productFormControlSelect1">Select product</label>
                             <div class="products-container">

@@ -17,7 +17,7 @@ class CreateShipmentsTable extends Migration
             $table->id();
             $table->string('tracking_number', 255);
             $table->enum('shipping_company', ['USPS', 'FedEx', 'DHL', 'UPS']);
-            $table->string('comment', 255);
+            $table->string('comment', 255)->nullable();
             $table->unsignedInteger('quantity');
             $table->date('received')->nullable();
             $table->date('shipped')->nullable();

@@ -36,7 +36,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::with(['user', 'products'])->find($id);
-        if(Auth::id() === $order->user_id) {
+        if(Auth::id() === $order->user_id || Auth::user()->role == 'Admin') {
             return response()->json($order, 200);
         } else {
             return response()->json(null, 200);

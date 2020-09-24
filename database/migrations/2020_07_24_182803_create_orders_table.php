@@ -16,8 +16,8 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('customer', 255);
-            $table->string('comment', 255);
-            $table->string('company_name', 255);
+            $table->string('comment', 255)->nullable();
+            $table->string('company_name', 255)->nullable();
             $table->enum('status', ['Created', 'Shipped'])->default('Created');
             $table->decimal('shipping_cost', 10, 2)->nullable();
             $table->string('tracking_number', 255);

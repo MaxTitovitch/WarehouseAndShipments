@@ -5,19 +5,17 @@
 @endsection
 
 @section('content')
-    @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
-        <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
-                data-target="#modalAdd">Add New
-        </button>
+    <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
+            data-target="#modalAdd">Add New
+    </button>
 
-        <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
-            @csrf
-            <input type="hidden" name="type" value="products" class="display-none">
-            <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
-            <input id="import-submit" type="submit" value="Submit" class="display-none">
-            <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>
-        </form>
-    @endif
+    <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
+        @csrf
+        <input type="hidden" name="type" value="products" class="display-none">
+        <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
+        <input id="import-submit" type="submit" value="Submit" class="display-none">
+        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>
+    </form>
 
     <div class="table-container">
         <table class="table table-bordered table-striped table-hover" id="dtEntityTable">

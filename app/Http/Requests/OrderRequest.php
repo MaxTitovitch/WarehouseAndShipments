@@ -19,8 +19,8 @@ class OrderRequest extends FormRequest
     {
         return [
             'customer' => 'required|string|max:255',
-            'comment' => 'required|string|max:255',
-            'company_name' => 'required|string|max:255',
+            'comment' => 'string|max:255',
+            'company_name' => 'string|max:255',
             'shipping_company' => 'required|in:USPS,FedEx,DHL,UPS',
             'tracking_number' => 'required|string|max:255',
             'packing_selection' => 'required|in:Bubbles Pack,Carton',

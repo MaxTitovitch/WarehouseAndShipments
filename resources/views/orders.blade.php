@@ -83,7 +83,7 @@
                         </div>
                         <div class="form-group">
                             <label for="company_name">Company Name</label>
-                            <input type="text" class="form-control" required maxlength="255" id="company_name"
+                            <input type="text" class="form-control" maxlength="255" id="company_name"
                                    aria-describedby="ariaDescribedbyHelp" placeholder="Company Name">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
@@ -163,8 +163,8 @@
                         </div>
                         <div class="form-group">
                             <label for="comment">Comment</label>
-                            <input type="text" class="form-control" id="comment" placeholder="Comment"
-                                   aria-describedby="dateHelp">
+                            <textarea class="form-control" id="comment" placeholder="Comment"
+                                      aria-describedby="dateHelp" maxlength="255"></textarea>
                             <small id="dateHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
