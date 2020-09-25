@@ -19,7 +19,7 @@ class AddBalanceRequest extends FormRequest
     {
         return [
             'balance' => 'required|numeric|min:-99999999|max:99999999',
-            'comment' => 'string|max:255',
+            'comment' => 'max:255',
         ];
     }
 

@@ -23,6 +23,7 @@ class OrderController extends Controller
             $balanceHistory->save();
             $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
             $user->save();
+            $order->user->sendOrderNotification($order);
             $this->updateProducts();
             Session::flash('success', 'New Order created!');
             return response()->json($order, 200);
@@ -50,11 +51,13 @@ class OrderController extends Controller
         if($user->id === $order->user_id || $user->role === 'Admin') {
             if($balanceHistory = $this->updateBalanceHistory($request, $user, $order)) {
                 $this->copyModelFromRequest($order, $request);
+                $order->save();
                 $this->syncProducts($order, $request->order_products);
                 $balanceHistory->save();
                 $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
                 $user->save();
                 $this->updateProducts();
+                $order->user->sendOrderNotification($order);
                 Session::flash('success', 'Order updated!');
                 return response()->json($order, 200);
             } else {
@@ -100,6 +103,7 @@ class OrderController extends Controller
         if(Auth::id() === $order->user_id) {
             $order->products()->sync([]);
             $this->updateProducts();
+            $order->user->sendOrderNotification($order);
             Session::flash('success', 'Order deleted!');
             return response()->json(Order::destroy($id), 200);
         } else {

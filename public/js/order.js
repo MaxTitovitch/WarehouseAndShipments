@@ -222,7 +222,7 @@ $('.form-submit').submit(function (event) {
       order_products: createOrderProducts(),
     }
     if ($('#tracking_number')[0]) {
-        tracking_number: $('#tracking_number')[0].value
+        entity.tracking_number = $('#tracking_number')[0].value
     }
     if ($('#shipping_cost')[0]) {
       entity.shipping_cost = $('#shipping_cost')[0].value

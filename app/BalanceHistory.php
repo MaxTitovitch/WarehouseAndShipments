@@ -13,4 +13,13 @@ class BalanceHistory extends Model
     public function user() {
         return $this->belongsTo('App\User');
     }
+
+    public function save(array $options = [])
+    {
+        $answer =  parent::save($options);
+        $this->user->sendBalanceNotification($this);
+        return $answer;
+    }
+
+
 }

@@ -98,7 +98,7 @@
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                             <div class="form-group">
                                 <label for="tracking_number">Tracking number</label>
-                                <input type="text" class="form-control" required maxlength="255" id="tracking_number"
+                                <input type="text" class="form-control" maxlength="255" id="tracking_number"
                                        aria-describedby="ariaDescribedbyHelp" placeholder="Tracking number">
                                 <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                             </div>
