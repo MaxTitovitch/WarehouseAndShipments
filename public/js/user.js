@@ -17,6 +17,7 @@ $('.show-entity-button').click(function (event) {
   getEntityAjax(showId, (data) => {
       // console.log(data)
     $('#showUserID')[0].innerText = data.id;
+    $('#showUserSuite')[0].innerText = data.suite;
     $('#showUserName')[0].innerText = data.name;
     $('#showUserEmail')[0].innerText = data.email;
     $('#showUserRole')[0].innerText = data.role;

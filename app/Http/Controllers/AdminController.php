@@ -136,10 +136,17 @@ class AdminController extends Controller
     }
 
     private function getOrdersAndShipments($dates) {
-        $orders = Order::whereRaw("created_at >= \"${dates['date_start']} 00:00:00\" ")
-            ->whereRaw("created_at <= \"${dates['date_end']} 23:59:59\"")->where('user_id', Auth::id())->orderBy('created_at')->get();
-        $shipments = Shipment::whereRaw("created_at >= \"${dates['date_start']} 00:00:00\" ")
-            ->whereRaw("created_at <= \"${dates['date_end']} 23:59:59\"")->where('user_id', Auth::id())->orderBy('created_at')->get();
+        if(Auth::user()->role != 'Admin') {
+            $orders = Order::whereRaw("created_at >= \"${dates['date_start']} 00:00:00\" ")
+                ->whereRaw("created_at <= \"${dates['date_end']} 23:59:59\"")->where('user_id', Auth::id())->orderBy('created_at')->get();
+            $shipments = Shipment::whereRaw("created_at >= \"${dates['date_start']} 00:00:00\" ")
+                ->whereRaw("created_at <= \"${dates['date_end']} 23:59:59\"")->where('user_id', Auth::id())->orderBy('created_at')->get();
+        } else {
+            $orders = Order::whereRaw("created_at >= \"${dates['date_start']} 00:00:00\" ")
+                ->whereRaw("created_at <= \"${dates['date_end']} 23:59:59\"")->orderBy('created_at')->get();
+            $shipments = Shipment::whereRaw("created_at >= \"${dates['date_start']} 00:00:00\" ")
+                ->whereRaw("created_at <= \"${dates['date_end']} 23:59:59\"")->orderBy('created_at')->get();
+        }
         $result = [];
         $this->addOneDataType($result, $orders, 'orders', 'shipments');
         $this->addOneDataType($result, $shipments, 'shipments', 'orders');

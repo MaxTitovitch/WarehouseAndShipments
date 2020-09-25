@@ -21,6 +21,7 @@ function getChartData (dates = null) {
             if(Object.keys(data.balance).length > 0 && Object.keys(data.ordersShipments).length > 0) {
                 showChartBalance(data)
                 showChart(data);
+                console.log(data)
                 $('#date-range')[0].value = data.dates.date_start + ' - ' + data.dates.date_end;
                 $('#date-range').eq(0).daterangepicker({
                     opens: 'right',

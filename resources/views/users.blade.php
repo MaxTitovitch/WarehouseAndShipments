@@ -11,6 +11,7 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col" class="th-sm">ID</th>
+                <th scope="col" class="th-sm">Suite</th>
                 <th scope="col" class="th-sm">Full Name</th>
                 <th scope="col" class="th-sm">Email</th>
                 <th scope="col" class="th-sm">Role</th>
@@ -22,6 +23,7 @@
             @foreach($users as $user)
                 <tr>
                     <th scope="row">{{ $user->id }}</th>
+                    <td>{{ $user->suite }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>
@@ -106,6 +108,10 @@
                         <div class="form-group">
                             <label class="font-weight-bold" for="showUserID">ID</label>
                             <span class="form-control form-control-height " id="showUserID"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="showUserSuite">Suite</label>
+                            <span class="form-control form-control-height " id="showUserSuite"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showUserName">Full Name</label>
