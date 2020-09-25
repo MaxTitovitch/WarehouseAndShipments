@@ -16,6 +16,7 @@
         <input id="import-submit" type="submit" value="Submit" class="display-none">
         <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>
     </form>
+    <a href="{{route('exportProducts')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
 
     <div class="table-container">
         <table class="table table-bordered table-striped table-hover" id="dtEntityTable">

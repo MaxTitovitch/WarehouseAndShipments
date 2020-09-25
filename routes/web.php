@@ -22,6 +22,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/orders', 'AdminController@orders')->name('orders');
     Route::get('/users', 'AdminController@users')->middleware('authorisation')->name('users');
     Route::post('/parse', 'ImportController@parse')->name('parse');
+    Route::get('/export/products', 'ExportController@exportProducts')->name('exportProducts');
+    Route::get('/export/orders', 'ExportController@exportOrders')->name('exportOrders');
+    Route::get('/export/shipments', 'ExportController@exportShipments')->name('exportShipments');
 });
 
 

@@ -22,7 +22,6 @@ $(document).ready(() => {
             type: "GET",
             url: "/api/product",
             success: (data) => {
-              console.log(data)
                 products = data;
                 if ($('.product-select').toArray().length !== 0) {
                     addProducts($('.product-select')[0]);
@@ -118,7 +117,6 @@ function sendEntityPutAjax (data, entityPath = '') {
       closeModalErrors();
       let errors = errorEvent.responseJSON;
       Object.keys(errors).forEach((error) => {
-        console.log(errorEvent)
         $(`#personal-${error}`).eq(0).addClass('is-invalid');
         $(`#personal-${error}`).eq(0).next('small')[0].innerText = errors[error][0];
       });
