@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
@@ -18,13 +19,15 @@ class ProductController extends Controller
     {
         $product = new Product();
         $this->copyModelFromRequest($product, $request);
+        $product->user_id = Auth::id();
+        $product->save();
         Session::flash('success', 'New Product created!');
         return response()->json($product, 200);
     }
 
     public function show($id)
     {
-        return response()->json(Product::find($id), 200);
+        return response()->json(Product::with('user')->find($id), 200);
     }
 
 

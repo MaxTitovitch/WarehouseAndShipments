@@ -19,7 +19,7 @@ class ShipmentRequest extends FormRequest
     {
         return [
             'tracking_number' => 'required|string|max:255',
-            'shipping_company' => 'required|in:USPS,FedEx,DHL,UPS',
+            'shipping_company' => 'required|in:USPS,FedEx,DHL,UPS,APC',
             'comment' => 'string|max:255',
             'received' => 'date|nullable',
             'shipped' => 'date|nullable',

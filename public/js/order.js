@@ -91,7 +91,10 @@ $('.edit-entity-button').click(function (event) {
       $('#company_name')[0].value = data.company_name
       $('#country').eq(0).val(data.country).trigger('change');
       $('#address')[0].value = data.address
-      $('#tracking_number')[0].value = data.tracking_number
+
+      if ($('#tracking_number')[0]) {
+          $('#tracking_number')[0].value = data.tracking_number
+      }
       $('#city')[0].value = data.city
       $('#zip_postal_code')[0].value = data.zip_postal_code
       $('#state_region')[0].value = data.state_region
@@ -178,10 +181,12 @@ function addProduct (element, product) {
     element.find('.product-select').eq(0).select2({
         placeholder: "Select Product2",
     });
-    element.find('.product-select').eq(0).val(product.id).trigger('change')
-    element.find('.product-order-quantity')[0].value = product.pivot.quantity
-    element.find('.product-order-price')[0].value = product.pivot.price
-    element.find('.product-order-description')[0].value = product.pivot.description
+    if(product) {
+        element.find('.product-select').eq(0).val(product.id).trigger('change')
+        element.find('.product-order-quantity')[0].value = product.pivot.quantity
+        element.find('.product-order-price')[0].value = product.pivot.price
+        element.find('.product-order-description')[0].value = product.pivot.description
+    }
 }
 
 function createOrderProducts () {
@@ -207,7 +212,6 @@ $('.form-submit').submit(function (event) {
       country: $('#country')[0].value,
       company_name: $('#company_name')[0].value,
       address: $('#address')[0].value,
-      tracking_number: $('#tracking_number')[0].value,
       city: $('#city')[0].value,
       zip_postal_code: $('#zip_postal_code')[0].value,
       state_region: $('#state_region')[0].value,
@@ -216,6 +220,9 @@ $('.form-submit').submit(function (event) {
       comment: $('#comment')[0].value,
       packing_selection: $('#packing_selection :checked')[0].value,
       order_products: createOrderProducts(),
+    }
+    if ($('#tracking_number')[0]) {
+        tracking_number: $('#tracking_number')[0].value
     }
     if ($('#shipping_cost')[0]) {
       entity.shipping_cost = $('#shipping_cost')[0].value
@@ -257,6 +264,7 @@ function sendEntityAjax (data, type, entityPath = '') {
     },
     error: (errorEvent) => {
       let errors = errorEvent.responseJSON;
+        console.log(errors)
       Object.keys(errors).forEach((error) => {
         $(`#${error}`).eq(0).addClass('is-invalid');
         $(`#${error}`).eq(0).parent().find('small')[0].innerText = errors[error][0];

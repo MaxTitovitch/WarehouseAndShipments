@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('company_name', 255)->nullable();
             $table->enum('status', ['Created', 'Shipped'])->default('Created');
             $table->decimal('shipping_cost', 10, 2)->nullable();
-            $table->string('tracking_number', 255);
+            $table->string('tracking_number', 255)->nullable();
             $table->date('shipped')->nullable();
             $table->enum('packing_selection', ['Bubbles Pack', 'Carton']);
             $table->string('address', 255);
@@ -29,7 +29,7 @@ class CreateOrdersTable extends Migration
             $table->string('state_region', 255);
             $table->string('country', 255);
             $table->string('phone', 30);
-            $table->enum('shipping_company', ['USPS', 'FedEx', 'DHL', 'UPS']);
+            $table->enum('shipping_company', ['USPS', 'FedEx', 'DHL', 'UPS', 'APC']);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
 

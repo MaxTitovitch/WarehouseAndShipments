@@ -112,7 +112,6 @@ class OrderController extends Controller
         $order->customer = $request->customer;
         $order->comment = $request->comment;
         $order->company_name = $request->company_name;
-        $order->tracking_number = $request->tracking_number;
         $order->packing_selection = $request->packing_selection;
         $order->address = $request->address;
         $order->city = $request->city;
@@ -121,6 +120,9 @@ class OrderController extends Controller
         $order->country = $request->country;
         $order->phone = $request->phone;
         $order->shipping_company = $request->shipping_company;
+        if(isset($request->tracking_number) && $isAppendUnrequired) {
+            $order->tracking_number = $request->tracking_number;
+        }
         if(isset($request->status) && $isAppendUnrequired) {
             $order->status = $request->status;
         }
@@ -166,6 +168,7 @@ class OrderController extends Controller
             $balanceHistory->current_balance = $user->balance - $transactionCost;
             $balanceHistory->transaction_cost = $transactionCost;
             $balanceHistory->type = 'Debit';
+            $balanceHistory->comment = 'Delivery payment';
             return $balanceHistory;
         } else {
             return false;
@@ -189,17 +192,17 @@ class OrderController extends Controller
 
     private function calculateBalance(OrderRequest $request) {
         $newBalance = $request->shipping_cost ?? 0;
-        foreach ($request->order_products as $order_product) {
-            $newBalance += ( $order_product['price'] ?? 0 ) * $order_product['quantity'];
-        }
+//        foreach ($request->order_products as $order_product) {
+//            $newBalance += ( $order_product['price'] ?? 0 ) * $order_product['quantity'];
+//        }
         return $newBalance;
     }
 
     private function calculateCopyBalance(Order $order, $isWithShippingCost = true) {
         $newBalance = $isWithShippingCost ? ($order->shipping_cost ?? 0) : 0;
-        foreach ($order->products as $product) {
-            $newBalance += ( $product->pivot->price ?? 0 ) * $product->pivot->quantity;
-        }
+//        foreach ($order->products as $product) {
+//            $newBalance += ( $product->pivot->price ?? 0 ) * $product->pivot->quantity;
+//        }
         return $newBalance;
     }
 

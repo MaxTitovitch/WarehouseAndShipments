@@ -15,12 +15,19 @@ class AdminController extends Controller
 {
     public function index() {
         $user = Auth::user();
-        $statistic = [
-            'balance' => (int)$user->balance,
-            'orders' => $this->getOrders($user->orders),
-            'shipments' => $this->getShipments($user->shipments),
-            'turnover' => $this->getUserTurnover($user),
-        ];
+        if($user->role == 'Admin') {
+            $statistic = [
+                'balance' => $this->getBalance(),
+                'orders' => $this->getOrders(Order::all()),
+                'shipments' => $this->getShipments(Shipment::all())
+            ];
+        } else {
+            $statistic = [
+                'balance' => (int)$user->balance,
+                'orders' => $this->getOrders($user->orders),
+                'shipments' => $this->getShipments($user->shipments)
+            ];
+        }
         return view('index')->with(['statistic' => $statistic]);
     }
 
@@ -64,7 +71,11 @@ class AdminController extends Controller
     }
 
     public function products() {
-        $products = Product::orderBy('id', 'desc')->get();
+        if (Auth::user()->role === 'Admin') {
+            $products = Product::orderBy('id', 'desc')->get();
+        } else {
+            $products = Product::where('user_id', Auth::id())->orderBy('id', 'desc')->get();
+        }
         return view('products')->with(['products' => $products]);
     }
 
@@ -87,14 +98,6 @@ class AdminController extends Controller
         ];
         return response()->json($statistic, 200);
 
-    }
-
-    private function getUserTurnover($user) {
-        $turnover = 0;
-        foreach ($user->balanceHistories as $history) {
-            $turnover += $history->transaction_cost;
-        }
-        return $turnover;
     }
 
     private function getDates(Request $request) {
@@ -166,6 +169,14 @@ class AdminController extends Controller
             }
             $last = $result[$key][$currentName];
         }
+    }
+
+    private function getBalance() {
+        $balance = 0;
+        foreach (User::all() as $user) {
+            $balance += (int)$user->balance;
+        }
+        return $balance;
     }
 
 }

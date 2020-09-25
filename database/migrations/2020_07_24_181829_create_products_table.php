@@ -22,7 +22,11 @@ class CreateProductsTable extends Migration
             $table->integer('received')->default(0);
             $table->integer('available')->default(0);
             $table->integer('in_transit')->default(0);
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL')->onUpdate('SET NULL');
+
         });
     }
 

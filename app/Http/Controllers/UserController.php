@@ -29,9 +29,9 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         $user = User::find($id);
-        $this->createBalanceHistory($user, $request->balance);
+//        $this->createBalanceHistory($user, $request->balance);
         $user->role = $request->role;
-        $user->balance = $request->balance;
+
         $user->save();
         Session::flash('success', 'User updated!');
         return response()->json($user, 200);
@@ -40,7 +40,7 @@ class UserController extends Controller
     public function addBalance(AddBalanceRequest $request, $id)
     {
         $user = User::find($id);
-        $this->createBalanceHistory($user, $request->balance + $user->balance);
+        $this->createBalanceHistory($user, $request->balance + $user->balance, $request->comment);
         $user->balance += $request->balance;
         $user->save();
         Session::flash('success', 'User updated!');
@@ -88,13 +88,14 @@ class UserController extends Controller
         return response()->json(User::destroy($id), 200);
     }
 
-    private function createBalanceHistory(User $user, $newBalance) {
+    private function createBalanceHistory(User $user, $newBalance, $comment = '') {
         if($user->balance != $newBalance) {
             $balanceHistory = new BalanceHistory();
             $balanceHistory->user_id = $user->id;
             $balanceHistory->current_balance = $newBalance;
             $balanceHistory->transaction_cost = abs($user->balance - $newBalance);
             $balanceHistory->type = $user->balance - $newBalance > 0 ? 'Debit' : 'Credit';
+            $balanceHistory->comment = $comment;
             $balanceHistory->save();
         }
     }

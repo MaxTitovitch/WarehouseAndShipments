@@ -30,6 +30,7 @@
                 <th scope="col" class="th-sm">In Transit</th>
                 <th scope="col" class="th-sm">Reserved</th>
                 <th scope="col" class="th-sm">Available</th>
+                <th scope="col" class="th-sm">User</th>
                 <th scope="col" class="th-sm">Actions</th>
             </tr>
             </thead>
@@ -45,13 +46,13 @@
                     <td>{{ $product->in_transit}}</td>
                     <td>{{ $product->received }}</td>
                     <td>{{ $product->available }}</td>
+                    <td>{{ $product->user->name  }}</td>
                     <td>
                         <a href="#" class="show-product text-dark font-weight-bold show-entity-button"
                            data-value-id="{{ $product->id }}">Show</a>
-                        @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                             <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button"
                                data-value-id="{{ $product->id }}">Edit</a>
-                        @endif
+
                     </td>
                 </tr>
             @endforeach
@@ -176,6 +177,10 @@
                         <div class="form-group">
                             <label class="font-weight-bold" for="showProductAvailable">Available</label>
                             <span class="form-control form-control-height " id="showProductAvailable"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="showProductUser">User</label>
+                            <span class="form-control form-control-height " id="showProductUser"></span>
                         </div>
                     </form>
                 </div>

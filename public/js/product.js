@@ -24,6 +24,9 @@ $('.show-entity-button').click(function (event) {
     $('#showProductTransit')[0].innerText = data.in_transit
     $('#showProductReserved')[0].innerText = data.received
     $('#showProductAvailable')[0].innerText = data.available
+      if(data.user) {
+          $('#showProductUser')[0].innerText = data.user.name
+      }
 
     $('#showModal').modal()
   })

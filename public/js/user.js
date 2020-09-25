@@ -52,6 +52,9 @@ function addHistory(container, history) {
     tType.innerText = history.type;
     tType.classList.add(history.type === "Credit" ? 'text-success' : 'text-danger')
     tr.appendChild(tType);
+    let tComment = document.createElement('td');
+    tComment.innerText = history.comment;
+    tr.appendChild(tComment);
     let tCreated = document.createElement('td');
     tCreated.innerText = history.created_at.split('T')[0];
     tr.appendChild(tCreated);
@@ -65,7 +68,7 @@ $('.edit-entity-button').click(function (event) {
     $('#userName')[0].innerText = data.name
     $('#userEmail')[0].innerText = data.email
     $('#role')[0].value = data.role
-    $('#balance')[0].value = data.balance
+    // $('#balance')[0].value = data.balance
 
     $('#modalAdd').modal()
   })
@@ -93,7 +96,7 @@ $('.form-submit').submit(function (event) {
     let entity = {
       _token: $('.modal [name="_token"]')[0].value,
       role: $('#role')[0].value,
-      balance: $('#balance')[0].value,
+      // balance: $('#balance')[0].value,
     }
     sendEntityAjax(entity, "PUT", `/${id}`);
 })
@@ -103,6 +106,7 @@ $('#formBalance').submit(function (event) {
     let entity = {
       _token: $('.modal [name="_token"]')[0].value,
       balance: $('#creditAmount')[0].value,
+      comment: $('#creditComment')[0].value,
     }
     sendEntityAjax(entity, "PUT", `/add-balance/${balanceAddId}`);
 })

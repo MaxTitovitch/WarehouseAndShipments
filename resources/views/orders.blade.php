@@ -93,12 +93,14 @@
                                    aria-describedby="commentHelp" placeholder="Address">
                             <small id="commentHelp" class="form-text text-danger"></small>
                         </div>
-                        <div class="form-group">
-                            <label for="tracking_number">Tracking number</label>
-                            <input type="text" class="form-control" required maxlength="255" id="tracking_number"
-                                   aria-describedby="ariaDescribedbyHelp" placeholder="Tracking number">
-                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
-                        </div>
+                        @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
+                            <div class="form-group">
+                                <label for="tracking_number">Tracking number</label>
+                                <input type="text" class="form-control" required maxlength="255" id="tracking_number"
+                                       aria-describedby="ariaDescribedbyHelp" placeholder="Tracking number">
+                                <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
+                            </div>
+                        @endif
                         <div class="form-group">
                             <label for="city">City</label>
                             <input type="text" class="form-control" required maxlength="50" id="city"
@@ -159,11 +161,12 @@
                                 <option>FedEx</option>
                                 <option>DHL</option>
                                 <option>UPS</option>
+                                <option>APC</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="comment">Comment</label>
-                            <textarea class="form-control" id="comment" placeholder="Comment"
+                            <textarea rows="5" class="form-control" id="comment" placeholder="Comment"
                                       aria-describedby="dateHelp" maxlength="255"></textarea>
                             <small id="dateHelp" class="form-text text-danger"></small>
                         </div>
@@ -181,7 +184,7 @@
                                     <input type="number" class="form-control price product-order-price"
                                            placeholder="price"
                                            min="1" max="10000">
-                                    <textarea style="resize: none; height: 100px"
+                                    <textarea rows="1" style="resize: none;"
                                               class="form-control description product-order-description"
                                               placeholder="Description"
                                               maxlength="10000"></textarea>

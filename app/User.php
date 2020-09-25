@@ -33,4 +33,9 @@ class User extends Authenticatable
     public function balanceHistories() {
         return $this->hasMany('App\BalanceHistory');
     }
+
+
+    public function products() {
+        return $this->hasMany('App\Product');
+    }
 }

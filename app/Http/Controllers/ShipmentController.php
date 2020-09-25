@@ -25,7 +25,7 @@ class ShipmentController extends Controller
     {
 
         $shipment = Shipment::with(['user', 'products'])->find($id);
-        if(Auth::id() === $shipment->user_id) {
+        if(Auth::id() === $shipment->user_id || Auth::user()->role == 'Admin') {
             return response()->json($shipment, 200);
         } else {
             return response()->json(null, 200);
@@ -35,7 +35,7 @@ class ShipmentController extends Controller
     public function update(ShipmentRequest $request, $id)
     {
         $shipment = Shipment::find($id);
-        if(Auth::id() === $shipment->user_id) {
+        if(Auth::id() === $shipment->user_id || Auth::user()->role == 'Admin') {
             $this->copyModelFromRequest($shipment, $request);
             $this->syncProducts($shipment, $request);
             Session::flash('success', 'Inbound shipment updated!');

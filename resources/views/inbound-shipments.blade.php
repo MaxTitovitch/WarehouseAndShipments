@@ -84,11 +84,12 @@
                                 <option>FedEx</option>
                                 <option>DHL</option>
                                 <option>UPS</option>
+                                <option>APC</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="comment">Comment</label>
-                            <textarea class="form-control" maxlength="255" id="comment"
+                            <textarea rows="5" class="form-control" maxlength="255" id="comment"
                                       aria-describedby="commentHelp" placeholder="comment"></textarea>
                             <small id="commentHelp" class="form-text text-danger"></small>
                         </div>

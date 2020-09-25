@@ -70,12 +70,12 @@
                                 <option>Admin</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="balance" class="font-weight-bold">Balance</label>
-                            <input type="number" class="form-control" required maxlength="255" min="1" max="10000" id="balance"
-                                   aria-describedby="ariaDescribedbyHelp" placeholder="Balance">
-                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
-                        </div>
+{{--                        <div class="form-group">--}}
+{{--                            <label for="balance" class="font-weight-bold">Balance</label>--}}
+{{--                            <input type="number" class="form-control" required maxlength="255" min="1" max="10000" id="balance"--}}
+{{--                                   aria-describedby="ariaDescribedbyHelp" placeholder="Balance">--}}
+{{--                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>--}}
+{{--                        </div>--}}
 
                     </div>
                     <div class="modal-footer">
@@ -93,7 +93,7 @@
     <div class="modal fade" id="showModal" tabindex="-1" role="dialog"
          aria-labelledby="showModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="showModalLabel">Order</h5>
@@ -133,6 +133,7 @@
                                 <th>Balance</th>
                                 <th>Transaction cost</th>
                                 <th>Type</th>
+                                <th>Comment</th>
                                 <th>Created</th>
                             </tr>
                             </thead>
@@ -168,16 +169,22 @@
                         </div>
                         <div class="form-group">
                             <label for="creditAmount" class="font-weight-bold">Credit amount</label>
-                            <input type="number" class="form-control" required maxlength="255" min="1" max="10000" id="creditAmount"
+                            <input type="number" class="form-control" required maxlength="255" min="-100000" max="100000" id="creditAmount"
                                    aria-describedby="ariaDescribedbyHelp" placeholder="Credit amount">
                             <small id="creditAmountSmall" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="creditComment" class="font-weight-bold">Comment</label>
+                            <textarea class="form-control" maxlength="255" id="creditComment"
+                                      aria-describedby="ariaDescribedbyHelp" placeholder="Comment"></textarea>
+                            <small id="creditCommentSmall" class="form-text text-danger"></small>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary close-modal-button" data-dismiss="modal">
                             Close
                         </button>
-                        <button type="submit" class="btn btn-dark save-changes">Add Credit</button>
+                        <button type="submit" class="btn btn-dark save-changes">Update Balance</button>
                     </div>
                 </form>
             </div>

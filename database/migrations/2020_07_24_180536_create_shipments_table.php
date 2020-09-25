@@ -16,7 +16,7 @@ class CreateShipmentsTable extends Migration
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
             $table->string('tracking_number', 255);
-            $table->enum('shipping_company', ['USPS', 'FedEx', 'DHL', 'UPS']);
+            $table->enum('shipping_company', ['USPS', 'FedEx', 'DHL', 'UPS', 'APC']);
             $table->string('comment', 255)->nullable();
             $table->unsignedInteger('quantity');
             $table->date('received')->nullable();

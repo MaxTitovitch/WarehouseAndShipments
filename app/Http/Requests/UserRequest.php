@@ -19,7 +19,6 @@ class UserRequest extends FormRequest
     {
         return [
             'role' => 'required|in:User,Admin',
-            'balance' => 'required|numeric|min:0|max:99999999'
         ];
     }
 
