@@ -48,6 +48,7 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         $user = User::find($request->user_id ?? Auth::id());
+//        $user = User::find($request->user_id ?? Auth::id());
         if($user->id === $order->user_id || $user->role === 'Admin') {
             if($balanceHistory = $this->updateBalanceHistory($request, $user, $order)) {
                 $this->copyModelFromRequest($order, $request);
@@ -74,9 +75,9 @@ class OrderController extends Controller
     {
         $order = new Order();
         $cloneableOrder = Order::find($id);
-        $user = User::find($order->user_id);
+        $user = User::find($cloneableOrder->user_id);
         $authUser = User::find(Auth::id());
-        if($authUser->id === $order->user_id || $authUser->role === 'Admin') {
+        if($authUser->id === $cloneableOrder->user_id || $authUser->role === 'Admin') {
             if($balanceHistory = $this->createBalanceHistory($this->calculateCopyBalance($cloneableOrder, false), $user)) {
                 $order->user_id = Auth::id();
                 $this->copyModelFromRequest($order, $cloneableOrder, false);

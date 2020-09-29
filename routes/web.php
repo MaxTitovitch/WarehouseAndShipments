@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'AdminController@index')->name('home');
     Route::get('/inbound-shipments', 'AdminController@inboundShipments')->name('inbound-shipments');

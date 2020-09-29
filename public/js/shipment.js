@@ -166,6 +166,10 @@ $('.form-submit').submit(function (event) {
 })
 
 function sendEntityAjax (data, type, entityPath = '') {
+    if(type === 'PUT' || type === 'DELETE'){
+        data['_method'] = type;
+        type = 'POST';
+    }
   $.ajax({
     type,
     data,

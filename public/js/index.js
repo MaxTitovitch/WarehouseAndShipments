@@ -2,6 +2,10 @@ $('.input-daterange input').each(function() {
     $(this).datepicker('clearDates');
 });
 
+$('#button-filter').click(function (event){
+    location.href = '/?'
+});
+
 google.charts.load('current', {'packages':['corechart']});
 getChartData();
 
@@ -18,6 +22,7 @@ function getChartData (dates = null) {
         type: 'GET',
         url: `/api/chart-data`,
         success: (data) => {
+            console.log(data)
             if(Object.keys(data.balance).length > 0 && Object.keys(data.ordersShipments).length > 0) {
                 showChartBalance(data)
                 showChart(data);

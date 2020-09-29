@@ -116,8 +116,9 @@ $('#changePassword').submit(function (event) {
 })
 
 function sendEntityPutAjax (data, entityPath = '') {
+  data['_method'] = 'PUT';
   $.ajax({
-    type: 'PUT',
+    type: 'POST',
     data,
     url: `/api/${entityPath}`,
     success: (data) => {
@@ -125,6 +126,7 @@ function sendEntityPutAjax (data, entityPath = '') {
     },
     error: (errorEvent) => {
       closeModalErrors();
+      console.log(errorEvent)
       let errors = errorEvent.responseJSON;
       Object.keys(errors).forEach((error) => {
         $(`#personal-${error}`).eq(0).addClass('is-invalid');
