@@ -65,14 +65,18 @@
                         </li>
                     @endif
                 @else
-                    <li class="nav-item dropdown">
+                    <li class="nav-item main-drop dropdown ">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <i class="fa fa-user-o" aria-hidden="true"></i> {{ Auth::user()->name }} <span
-                                class="caret"></span>
+                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                            {{ Auth::user()->name }}
+                            <span class="caret"></span>
                         </a>
 
-                        <div class="dropdown-menu bg-dark dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu bg-dark dropdown-menu-right " aria-labelledby="navbarDropdown">
+                            <span class="dropdown-item text-light user-suite disabled">
+                               ID: {{ Auth::user()->suite }}
+                            </span>
                             <a id="" data-toggle="modal" data-target="#change-user-data"
                                class="dropdown-item text-light" href="#">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Personal information

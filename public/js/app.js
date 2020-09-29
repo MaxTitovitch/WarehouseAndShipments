@@ -1,4 +1,8 @@
-let display = localStorage.getItem("display");
+let display = localStorage.getItem("display")
+if(!display){
+    display = 'none';
+    localStorage.setItem("display", display);
+}
 changeDisplayShow();
 
 $('.show-menu').click((event) => {
@@ -6,6 +10,12 @@ $('.show-menu').click((event) => {
   display = display === 'none' ? 'block' : 'none';
   changeDisplayShow();
   localStorage.setItem("display", display);
+});
+
+$('.main-drop').click(function (e) {
+    if ($(this).closest('.main-drop').hasClass('show') && e.target.tagName !== 'A') {
+        e.stopPropagation()
+    }
 });
 
 function changeDisplayShow () {

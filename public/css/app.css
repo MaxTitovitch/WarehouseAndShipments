@@ -40,6 +40,11 @@ body {
     }
 }
 
+.user-suite {
+    text-align: center;
+    cursor: default;
+}
+
 .dashboard {
     color: white;
     font-size: 1.5rem;
