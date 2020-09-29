@@ -24,6 +24,7 @@ $('.show-entity-button').click(function (event) {
     $('#showUserBalance')[0].innerText = data.balance;
     $('#showUserCreated')[0].innerText = data.created_at.split('T')[0];
     $('#balanceHistoryArea').eq(0).empty();
+    data.balance_histories = data.balance_histories.reverse().slice(0, 15);
     console.log(data.balance_histories)
     data.balance_histories.forEach((history) =>{
         addHistory( $('#balanceHistoryArea')[0], history)
