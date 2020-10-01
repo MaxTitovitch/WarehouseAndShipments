@@ -48,4 +48,8 @@
 </div>
 @endsection
 
+@section('style')
+    <link href="{{ asset('css/break.css') }}" rel="stylesheet">
+@endsection
+
 @section('sidebar')@endsection
