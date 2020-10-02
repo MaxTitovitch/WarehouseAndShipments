@@ -27,7 +27,6 @@ $('.show-entity-button').click(function (event) {
     $('#showCompany')[0].innerText = data.shipping_company
     $('#showTrackingNumber')[0].innerText = data.tracking_number
     $('#showComment')[0].innerText = data.comment
-    $('#showComment')[0].innerText = data.comment
     $('#showQuantity')[0].innerText = data.quantity
     $('#showCreated')[0].innerText = data.created_at.split('T')[0]
 
