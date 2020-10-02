@@ -113,7 +113,7 @@
 <div class="layout-flex">
     @section('sidebar')
         <div class="sidenav sidenav-mobile bg-dark section-big">
-            <a class="dashboard text-white" href="{{ route('home') }}"><i class="fa fa-tachometer mr-1" aria-hidden="true"></i><span class="full-text"> DASHBOARD</span></a>
+            <a class="dashboard text-white" href="{{ route('home') }}"><i class="fa fa-tachometer mr-1" aria-hidden="true"></i><span class="full-text"> Dashboard</span></a>
             <a href="{{ route('inbound-shipments') }}" class="text-white"><i class="fa fa-list-alt" aria-hidden="true"></i> <span class="full-text">Inbound
                     shipments</span></a>
             <a href="{{ route('products') }}" class="text-white"><i class="fa fa-cube" aria-hidden="true"></i> <span class="full-text">Products</span></a>

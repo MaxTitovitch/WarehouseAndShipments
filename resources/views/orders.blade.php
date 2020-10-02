@@ -14,7 +14,7 @@
         <input type="hidden" name="type" value="products" class="display-none">
         <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
         <input id="import-submit" type="submit" value="Submit" class="display-none">
-        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>
+{{--        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>--}}
     </form>
 
     <a href="{{route('exportOrders')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
@@ -24,13 +24,14 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col" class="th-sm">ID</th>
+                <th scope="col" class="th-sm">User</th>
                 <th scope="col" class="th-sm">Created</th>
-                <th scope="col" class="th-sm">Customer</th>
-                <th scope="col" class="th-sm">Comment</th>
+                <th scope="col" class="th-sm">Shipped</th>
+                <th scope="col" class="th-sm">Tracking number</th>
                 <th scope="col" class="th-sm">Order Status</th>
                 <th scope="col" class="th-sm">Shipping cost</th>
-                <th scope="col" class="th-sm">Tracking number</th>
-                <th scope="col" class="th-sm">Shipped</th>
+                <th scope="col" class="th-sm">Customer</th>
+                <th scope="col" class="th-sm">Comment</th>
                 <th scope="col" class="th-sm">Actions</th>
             </tr>
             </thead>
@@ -38,13 +39,14 @@
             @foreach($orders as $order)
                 <tr>
                     <th scope="row">{{ $order->id }}</th>
+                    <td>{{ $order->user->name }} ({{ $order->user->suite }})</td>
                     <td>{{ $order->created_at->format('Y-m-d') }}</td>
-                    <td>{{ $order->customer }}</td>
-                    <td>{{ $order->comment }}</td>
+                    <td>{{ $order->shipped }}</td>
+                    <td>{{ $order->tracking_number }}</td>
                     <td>{{ $order->status }}</td>
                     <td>{{ $order->shipping_cost }}</td>
-                    <td>{{ $order->tracking_number }}</td>
-                    <td>{{ $order->shipped }}</td>
+                    <td>{{ $order->customer }}</td>
+                    <td>{{ $order->comment }}</td>
                     <td>
                         <a href="#" class="show-product text-dark font-weight-bold show-entity-button"
                            data-value-id="{{ $order->id }}">Show</a>

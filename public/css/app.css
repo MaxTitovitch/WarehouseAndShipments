@@ -1,6 +1,7 @@
 body {
-    font-family: "Lato", sans-serif;
-
+    font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+	
+	font-size: 3.5mm; 
 }
 
 .sidenav {
@@ -9,7 +10,7 @@ body {
     background-color: #111;
     padding-top: 20px;
     width: 20%;
-    border-top: 1px solid gray;
+    border-top: 0px;
 }
 
 .table-container {
@@ -19,7 +20,7 @@ body {
 .sidenav a {
     padding: 6px 8px 6px 16px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 16px;
     color: #818181;
     display: block;
 }
@@ -38,11 +39,6 @@ body {
     .sidenav a {
         font-size: 14px;
     }
-}
-
-.user-suite {
-    text-align: center;
-    cursor: default;
 }
 
 .dashboard {

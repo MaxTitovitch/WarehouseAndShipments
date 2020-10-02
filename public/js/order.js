@@ -1,3 +1,4 @@
+
 $("#country").select2( {
     placeholder: "Select Country",
 } );
@@ -12,7 +13,7 @@ $(document).ready(function () {
     order: [[ 0, "desc" ]],
     columnDefs: [{
       orderable: false,
-      targets: 8
+      targets: 9
     }]
   });
   $.ajax({

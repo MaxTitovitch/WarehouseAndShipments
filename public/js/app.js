@@ -32,6 +32,7 @@ $(document).ready(() => {
             type: "GET",
             url: "/api/product",
             success: (data) => {
+                console.log(data)
                 products = data;
                 if ($('.product-select').toArray().length !== 0) {
                     addProducts($('.product-select')[0]);

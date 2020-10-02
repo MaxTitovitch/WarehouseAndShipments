@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         return response()->json(Product::all(), 200);
     }

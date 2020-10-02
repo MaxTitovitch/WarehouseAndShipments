@@ -14,7 +14,7 @@
         <input type="hidden" name="type" value="shipments" class="display-none">
         <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
         <input id="import-submit" type="submit" value="Submit" class="display-none">
-        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>
+{{--        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>--}}
     </form>
 
     <a href="{{route('exportShipments')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
@@ -25,13 +25,13 @@
             <tr>
                 <th scope="col" class="th-sm">ID</th>
                 <th scope="col" class="th-sm">User</th>
+                <th scope="col" class="th-sm">Created</th>
                 <th scope="col" class="th-sm">Shipped</th>
                 <th scope="col" class="th-sm">Received</th>
-                <th scope="col" class="th-sm">Shipping company</th>
                 <th scope="col" class="th-sm">Tracking number</th>
+                <th scope="col" class="th-sm">Shipping company</th>
                 <th scope="col" class="th-sm">Comment</th>
                 <th scope="col" class="th-sm">Quantity</th>
-                <th scope="col" class="th-sm">Created</th>
                 <th scope="col" class="th-sm">Action</th>
             </tr>
             </thead>
@@ -39,14 +39,14 @@
             @foreach($shipments as $shipment)
                 <tr>
                     <th scope="row">{{ $shipment->id }}</th>
-                    <td>{{ $shipment->user->name }}</td>
+                    <td>{{ $shipment->user->name }} ({{ $shipment->user->suite }})</td>
+                    <td>{{ $shipment->created_at->format('Y-m-d') }}</td>
                     <td>{{ $shipment->shipped }}</td>
                     <td>{{ $shipment->received }}</td>
-                    <td>{{ $shipment->shipping_company }}</td>
                     <td>{{ $shipment->tracking_number }}</td>
+                    <td>{{ $shipment->shipping_company }}</td>
                     <td>{{ $shipment->comment }}</td>
                     <td>{{ $shipment->quantity }}</td>
-                    <td>{{ $shipment->created_at->format('Y-m-d') }}</td>
                     <td>
                         <a href="#" class="show-shipment text-dark font-weight-bold show-entity-button" data-value-id="{{ $shipment->id }}">Show</a>
                         <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $shipment->id }}">Edit</a>

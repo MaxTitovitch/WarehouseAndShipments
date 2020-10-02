@@ -14,7 +14,7 @@
         <input type="hidden" name="type" value="products" class="display-none">
         <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
         <input id="import-submit" type="submit" value="Submit" class="display-none">
-        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>
+{{--        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>--}}
     </form>
     <a href="{{route('exportProducts')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
 
@@ -23,15 +23,15 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col" class="th-sm">ID</th>
+                <th scope="col" class="th-sm">User</th>
                 <th scope="col" class="th-sm">Created</th>
-                <th scope="col" class="th-sm">UPC</th>
-                <th scope="col" class="th-sm">SKU</th>
-                <th scope="col" class="th-sm">Brand</th>
-                <th scope="col" class="th-sm">Name</th>
-                <th scope="col" class="th-sm">In Transit</th>
                 <th scope="col" class="th-sm">Reserved</th>
                 <th scope="col" class="th-sm">Available</th>
-                <th scope="col" class="th-sm">User</th>
+                <th scope="col" class="th-sm">In Transit</th>
+                <th scope="col" class="th-sm">Name</th>
+                <th scope="col" class="th-sm">Brand</th>
+                <th scope="col" class="th-sm">UPC</th>
+                <th scope="col" class="th-sm">SKU</th>
                 <th scope="col" class="th-sm">Actions</th>
             </tr>
             </thead>
@@ -39,15 +39,15 @@
             @foreach($products as $product)
                 <tr>
                     <th scope="row">{{ $product->id }}</th>
+                    <td>{{ $product->user->name }} ({{ $product->user->suite }})</td>
                     <td>{{ $product->created_at->format('Y-m-d') }}</td>
-                    <td>{{ $product->upc }}</td>
-                    <td>{{ $product->sku }}</td>
-                    <td>{{ $product->brand }}</td>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->in_transit}}</td>
                     <td>{{ $product->received }}</td>
                     <td>{{ $product->available }}</td>
-                    <td>{{ $product->user->name  }}</td>
+                    <td>{{ $product->in_transit}}</td>
+                    <td>{{ $product->name }}</td>
+                    <td>{{ $product->brand }}</td>
+                    <td>{{ $product->upc }}</td>
+                    <td>{{ $product->sku }}</td>
                     <td>
                         <a href="#" class="show-product text-dark font-weight-bold show-entity-button"
                            data-value-id="{{ $product->id }}">Show</a>
