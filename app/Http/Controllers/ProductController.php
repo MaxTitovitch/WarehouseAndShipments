@@ -12,7 +12,21 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        return response()->json(Product::all(), 200);
+        if($request->id) {
+            $products = [];
+            foreach (Product::where('user_id', $request->id)->get() as $product) {
+                $products[] = $product->name;
+            }
+            return response()->json($products, 200);
+        } else if($request->auth) {
+            $products = [];
+            foreach (Product::where('user_id', Auth::id())->get() as $product) {
+                $products[] = $product->name;
+            }
+            return response()->json($products, 200);
+        } else {
+            return response()->json(Product::all(), 200);
+        }
     }
 
     public function store(ProductRequest $request)

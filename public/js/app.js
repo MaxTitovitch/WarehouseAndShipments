@@ -32,7 +32,6 @@ $(document).ready(() => {
             type: "GET",
             url: "/api/product",
             success: (data) => {
-                console.log(data)
                 products = data;
                 if ($('.product-select').toArray().length !== 0) {
                     addProducts($('.product-select')[0]);
@@ -69,27 +68,27 @@ $('[type="date"]').toArray().forEach((element) => {
     element.setAttribute('max', new Date(dateMax).toISOString().split('T')[0]);
 });
 
-$('.add-product-select').click(function (event) {
-  event.preventDefault();
-  let clone = $(".product-container").eq(0).clone();
-  let select = clone.find('.product-select').eq(0);
-  clone.find('.quantity')[0].value = '';
-  if(clone.find('.price')[0]) {
-      clone.find('.price')[0].value = '';
-  }
-  if(clone.find('.description')[0]) {
-      clone.find('.description')[0].value = '';
-  }
-  clone.find('.remove-product-select').click(function (event) {
-    event.preventDefault();
-    $(this).closest('.product-container').eq(0).remove();
-  });
-  clone.appendTo(".products-container");
-  select.next('remove');
-  select.select2( {
-      placeholder: "Select Product"
-  } );
-});
+// $('.add-product-select').click(function (event) {
+//   event.preventDefault();
+//   let clone = $(".product-container").eq(0).clone();
+//   let select = clone.find('.product-select').eq(0);
+//   clone.find('.quantity')[0].value = '';
+//   if(clone.find('.price')[0]) {
+//       clone.find('.price')[0].value = '';
+//   }
+//   if(clone.find('.description')[0]) {
+//       clone.find('.description')[0].value = '';
+//   }
+//   clone.find('.remove-product-select').click(function (event) {
+//     event.preventDefault();
+//     $(this).closest('.product-container').eq(0).remove();
+//   });
+//   clone.appendTo(".products-container");
+//   select.next('remove');
+//   select.select2( {
+//       placeholder: "Select Product"
+//   } );
+// });
 
 let lastUser = {name: $('#personal-name')[0].value, email: $('#personal-email')[0].value};
 
@@ -127,7 +126,6 @@ function sendEntityPutAjax (data, entityPath = '') {
     },
     error: (errorEvent) => {
       closeModalErrors();
-      console.log(errorEvent)
       let errors = errorEvent.responseJSON;
       Object.keys(errors).forEach((error) => {
         $(`#personal-${error}`).eq(0).addClass('is-invalid');

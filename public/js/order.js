@@ -1,4 +1,6 @@
 
+
+
 $("#country").select2( {
     placeholder: "Select Country",
 } );
@@ -59,6 +61,7 @@ $('.show-entity-button').click(function (event) {
     $('#showOrderUser')[0].innerText = data.user.id
 
 
+
     let elements = $('.show-product-container').toArray();
     let element = elements.shift();
     for (let i = 0; i < elements.length; i++) {
@@ -81,6 +84,21 @@ function createShowProduct (element, product) {
   element.find('.show-price')[0].innerText = product.pivot.price
   element.find('.show-description')[0].innerText = product.pivot.description
 }
+
+let handler = function(products){
+    return function(event) {
+        let height = $('.select2-dropdown').css('height');
+        $('.select2-results__option').toArray().forEach(function (option) {
+            if(products.lastIndexOf(option.innerText) === -1) {
+                option.style.display = 'none';
+            } else {
+                option.style.display = 'block';
+            }
+        })
+        $('.select2-dropdown').css({height});
+    }
+}
+let func = function (){}, idProd = 1;
 
 $('.edit-entity-button').click(function (event) {
   event.preventDefault();
@@ -114,17 +132,33 @@ $('.edit-entity-button').click(function (event) {
         $('#status')[0].value = data.status
       }
 
-      let element = $('.product-container').eq(0);
-      element.next().remove();
-      addProduct(element, data.products.shift())
-      for (let i = 0; i < data.products.length; i++) {
-        let clone = element.clone()
-        addProduct(clone, data.products[i])
-        clone.appendTo('.products-container')
-      }
-      $('#modalAdd').modal()
+      $.ajax({
+          type: 'GET',
+          url: `/api/product?id=` + data.user.id,
+          success: function (products){
+              func = handler(products);
+
+              let element = $('.product-container').eq(0);
+              element.next().remove();
+              addProduct(element, data.products.shift(), false)
+              $('.select2-selection').eq(idProd).bind('click', func);
+              idProd += 1;
+              for (let i = 0; i < data.products.length; i++) {
+                  let clone = element.clone()
+                  addProduct(clone, data.products[i])
+                  clone.find('.select2.select2-container.select2-container--default').eq(1).remove()
+                  clone.appendTo('.products-container')
+                  $('.select2-selection').eq(idProd).bind('click', func);
+                  idProd += 1;
+              }
+              $('#modalAdd').modal()
+          }
+      })
+
+
     });
 });
+
 
 function getEntityAjax (dataId, success) {
   $.ajax({
@@ -176,9 +210,11 @@ $('.close-modal-button').click(function (event) {
   $('.form-text').toArray().forEach((element) => {
     element.innerText = '';
   });
+    $('.select2-selection').eq(1).unbind('click', func);
+    idProd = 1
 })
 
-function addProduct (element, product) {
+function addProduct (element, product, isAdd = true) {
     element.find('.product-select').eq(0).select2({
         placeholder: "Select Product2",
     });
@@ -270,7 +306,6 @@ function sendEntityAjax (data, type, entityPath = '') {
     },
     error: (errorEvent) => {
       let errors = errorEvent.responseJSON;
-        console.log(errors)
       Object.keys(errors).forEach((error) => {
         $(`#${error}`).eq(0).addClass('is-invalid');
         $(`#${error}`).eq(0).parent().find('small')[0].innerText = errors[error][0];
@@ -281,10 +316,46 @@ function sendEntityAjax (data, type, entityPath = '') {
 
 
 
+$('.add-product-select').click(function (event) {
+    event.preventDefault();
+    let clone = $(".product-container").eq(0).clone();
+    let select = clone.find('.product-select').eq(0);
+    clone.find('.quantity')[0].value = '';
+    if(clone.find('.price')[0]) {
+        clone.find('.price')[0].value = '';
+    }
+    if(clone.find('.description')[0]) {
+        clone.find('.description')[0].value = '';
+    }
+    clone.find('.remove-product-select').click(function (event) {
+        event.preventDefault();
+        $(this).closest('.product-container').eq(0).remove();
+    });
+    clone.appendTo(".products-container");
+
+    select.next('remove');
+    select.select2( {
+        placeholder: "Select Product"
+    } );
+    clone.find('.select2.select2-container.select2-container--default').eq(1).remove()
+    $('.select2-selection').eq(idProd).bind('click', func);
+    idProd += 1;
+});
 
 
 
-
-
+$('#modalAdd').on('shown.bs.modal', function (e) {
+    if(e.relatedTarget){
+        $.ajax({
+            type: 'GET',
+            url: `/api/product?auth=true`,
+            success: function (products){
+                func = handler(products);
+                $('.select2-selection').eq(idProd).bind('click', func);
+                idProd += 1;
+            }
+        })
+    }
+})
 
 
