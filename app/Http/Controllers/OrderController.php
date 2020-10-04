@@ -15,23 +15,23 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
         $user = User::find($request->user_id ?? Auth::id());
-        if($balanceHistory = $this->createBalanceHistory($this->calculateBalance($request), $user)) {
+//        if($balanceHistory = $this->createBalanceHistory($this->calculateBalance($request), $user)) {
             $order = new Order();
             $order->user_id = $user->id;
             $this->copyModelFromRequest($order, $request);
             $this->syncProducts($order, $request->order_products);
-            $balanceHistory->save();
-            $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
-            $user->save();
-            $order->user->sendOrderNotification($order);
+//            $balanceHistory->save();
+//            $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
+//            $user->save();
+//            $order->user->sendOrderNotification($order);
             $this->updateProducts();
             Session::flash('success', 'New Order created!');
             return response()->json($order, 200);
-        } else {
-            Session::flash('error', 'Insufficient funds on the balance sheet!');
-            return response()->json(['error' => 'Недостаточно средств'], 200);
-            $order->delete();
-        }
+//        } else {
+//            Session::flash('error', 'Insufficient funds on the balance sheet!');
+//            return response()->json(['error' => 'Недостаточно средств'], 200);
+//            $order->delete();
+//        }
     }
 
     public function show($id)
@@ -51,14 +51,18 @@ class OrderController extends Controller
 //        $user = User::find($request->user_id ?? Auth::id());
         if($user->id === $order->user_id || $user->role === 'Admin') {
             if($balanceHistory = $this->updateBalanceHistory($request, $user, $order)) {
+                if ($order->shipped == null && $request->shipped != null) {
+                    $order->user->sendOrderNotification($order);
+                }
                 $this->copyModelFromRequest($order, $request);
                 $order->save();
                 $this->syncProducts($order, $request->order_products);
-                $balanceHistory->save();
-                $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
-                $user->save();
+                if($balanceHistory) {
+                    $balanceHistory->save();
+                    $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
+                    $user->save();
+                }
                 $this->updateProducts();
-                $order->user->sendOrderNotification($order);
                 Session::flash('success', 'Order updated!');
                 return response()->json($order, 200);
             } else {
@@ -78,13 +82,16 @@ class OrderController extends Controller
         $user = User::find($cloneableOrder->user_id);
         $authUser = User::find(Auth::id());
         if($authUser->id === $cloneableOrder->user_id || $authUser->role === 'Admin') {
-            if($balanceHistory = $this->createBalanceHistory($this->calculateCopyBalance($cloneableOrder, false), $user)) {
+            if($balanceHistory = $this->createBalanceHistory($this->calculateCopyBalance($cloneableOrder, false), $user, $order)) {
                 $order->user_id = Auth::id();
                 $this->copyModelFromRequest($order, $cloneableOrder, false);
                 $this->syncCloneProducts($order, $cloneableOrder->products);
-                $balanceHistory->save();
-                $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
-                $user->save();
+
+                if($balanceHistory) {
+                    $balanceHistory->save();
+                    $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
+                    $user->save();
+                }
                 $this->updateProducts();
                 Session::flash('success', 'Order copied!');
                 return response()->json($order, 200);
@@ -104,7 +111,7 @@ class OrderController extends Controller
         if(Auth::id() === $order->user_id) {
             $order->products()->sync([]);
             $this->updateProducts();
-            $order->user->sendOrderNotification($order);
+//            $order->user->sendOrderNotification($order);
             Session::flash('success', 'Order deleted!');
             return response()->json(Order::destroy($id), 200);
         } else {
@@ -137,6 +144,9 @@ class OrderController extends Controller
         if(isset($request->shipped) && $isAppendUnrequired) {
             $order->shipped = $request->shipped;
         }
+        if($order->shipped){
+            $order->status = 'Shipped';
+        }
     }
 
     private function syncProducts(Order $order, $order_products) {
@@ -166,14 +176,14 @@ class OrderController extends Controller
         $order->products()->sync($arrayProducts);
     }
 
-    private function createBalanceHistory($transactionCost, User $user) {
+    private function createBalanceHistory($transactionCost, User $user, $order) {
         if($user->balance - $transactionCost >= 0) {
             $balanceHistory = new BalanceHistory();
             $balanceHistory->user_id = $user->id;
             $balanceHistory->current_balance = $user->balance - $transactionCost;
             $balanceHistory->transaction_cost = $transactionCost;
             $balanceHistory->type = 'Debit';
-            $balanceHistory->comment = 'Delivery payment';
+            $balanceHistory->comment = "Order ID: " . $order->id;
             return $balanceHistory;
         } else {
             return false;
@@ -189,6 +199,7 @@ class OrderController extends Controller
             $balanceHistory->current_balance = $user->balance - $transactionCost;
             $balanceHistory->transaction_cost = abs($transactionCost);
             $balanceHistory->type = $transactionCost > 0 ? 'Debit' : 'Credit';
+            $balanceHistory->comment = "Order ID: {$lastOrder->id}";
             return $balanceHistory;
         } else {
             return false;
@@ -196,19 +207,21 @@ class OrderController extends Controller
     }
 
     private function calculateBalance(OrderRequest $request) {
-        $newBalance = $request->shipping_cost ?? 0;
+//        $newBalance = $request->shipping_cost ?? 0;
 //        foreach ($request->order_products as $order_product) {
 //            $newBalance += ( $order_product['price'] ?? 0 ) * $order_product['quantity'];
 //        }
-        return $newBalance;
+//        return $newBalance;
+        return $request->shipping_cost ?? 0;
     }
 
     private function calculateCopyBalance(Order $order, $isWithShippingCost = true) {
-        $newBalance = $isWithShippingCost ? ($order->shipping_cost ?? 0) : 0;
+//        $newBalance = $isWithShippingCost ? ($order->shipping_cost ?? 0) : 0;
 //        foreach ($order->products as $product) {
 //            $newBalance += ( $product->pivot->price ?? 0 ) * $product->pivot->quantity;
 //        }
-        return $newBalance;
+//        return $newBalance;
+        return $isWithShippingCost ? ($order->shipping_cost ?? 0) : 0;
     }
 
     private function calculateDifferenceBalance(OrderRequest $request, Order $lastOrder) {
@@ -220,9 +233,10 @@ class OrderController extends Controller
     private function updateProducts() {
         foreach (Product::with('orders')->get() as $product) {
             $product->received = 0;
-            foreach ($product->orders as $orders) {
-                if($orders->status == 'Created') {
-                    $product->received += $orders->pivot->quantity;
+            foreach ($product->orders as $order) {
+//                if($orders->status == 'Created') {
+                if($order->shipped != null) {
+                    $product->received += $order->pivot->quantity;
                 }
             }
             $product->save();

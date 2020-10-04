@@ -17,7 +17,7 @@ class ShipmentController extends Controller
         $this->copyModelFromRequest($shipment, $request);
         $this->syncProducts($shipment, $request);
         $this->updateProducts();
-        $shipment->user->sendShipmentNotification($shipment);
+//        $shipment->user->sendShipmentNotification($shipment);
         Session::flash('success', 'New Inbound shipment created!');
         return response()->json($shipment, 200);
     }
@@ -37,11 +37,14 @@ class ShipmentController extends Controller
     {
         $shipment = Shipment::find($id);
         if(Auth::id() === $shipment->user_id || Auth::user()->role == 'Admin') {
+            if ($shipment->received == null && $request->received != null) {
+                $shipment->user->sendShipmentNotification($shipment);
+            }
             $this->copyModelFromRequest($shipment, $request);
             $this->syncProducts($shipment, $request);
             Session::flash('success', 'Inbound shipment updated!');
             $this->updateProducts();
-            $shipment->user->sendShipmentNotification($shipment);
+//            $shipment->user->sendShipmentNotification($shipment);
             return response()->json($shipment, 200);
         } else {
             Session::flash('error', 'It isn\'t your shipment!');
@@ -80,7 +83,7 @@ class ShipmentController extends Controller
             foreach ($product->shipments as $shipment) {
                 if($shipment->received == null) {
                     $product->in_transit += $shipment->pivot->quantity;
-                } else {
+                } if($shipment->shipped == null) {
                     $product->available += $shipment->pivot->quantity;
                 }
             }
