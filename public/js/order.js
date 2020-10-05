@@ -87,15 +87,17 @@ function createShowProduct (element, product) {
 
 let handler = function(products){
     return function(event) {
+        let newFunc = function (){
+                $('.select2-results__option').toArray().forEach(function (option) {
+                    if(products.lastIndexOf(option.innerText) !== -1) {
+                        option.classList.add('hide-it');
+                    }
+                })
+        };
         let height = $('.select2-dropdown').css('height');
-        $('.select2-results__option').toArray().forEach(function (option) {
-            if(products.lastIndexOf(option.innerText) === -1) {
-                option.style.display = 'none';
-            } else {
-                option.style.display = 'block';
-            }
-        })
+        newFunc(event);
         $('.select2-dropdown').css({height});
+        $('.select2-search__field').keydown (setTimeout(function () {newFunc()}, 250));
     }
 }
 let func = function (){}, idProd = 1;

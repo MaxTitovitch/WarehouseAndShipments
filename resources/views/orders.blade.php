@@ -50,8 +50,10 @@
                     <td>
                         <a href="#" class="show-product text-dark font-weight-bold show-entity-button"
                            data-value-id="{{ $order->id }}">Show</a>
-                        <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button"
-                           data-value-id="{{ $order->id }}">Edit</a>
+                        @if(Auth::user()->role == 'Admin' || $order->shipped == null)
+                            <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button"
+                                data-value-id="{{ $order->id }}">Edit</a>
+                        @endif
                         @if($order->status == 'Created')
                         <a href="#" class="show-product text-dark font-weight-bold delete-entity-button"
                            data-value-id="{{ $order->id }}">Delete</a>

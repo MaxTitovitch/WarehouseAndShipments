@@ -83,7 +83,7 @@ class ShipmentController extends Controller
             foreach ($product->shipments as $shipment) {
                 if($shipment->received == null) {
                     $product->in_transit += $shipment->pivot->quantity;
-                } if($shipment->shipped == null) {
+                } if($shipment->received !== null) {
                     $product->available += $shipment->pivot->quantity;
                 }
             }

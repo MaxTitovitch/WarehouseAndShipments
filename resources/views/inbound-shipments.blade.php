@@ -49,7 +49,9 @@
                     <td>{{ $shipment->quantity }}</td>
                     <td>
                         <a href="#" class="show-shipment text-dark font-weight-bold show-entity-button" data-value-id="{{ $shipment->id }}">Show</a>
-                        <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $shipment->id }}">Edit</a>
+                        @if(Auth::user()->role == 'Admin' || $shipment->received == null)
+                            <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $shipment->id }}">Edit</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

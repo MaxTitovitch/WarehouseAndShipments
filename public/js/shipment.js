@@ -56,16 +56,20 @@ function createShowProduct (element, product) {
 }
 
 let handler = function(products){
-    return function(event) {
+    return function() {
+        let newFunc = function (){
+            setTimeout(function () {
+                $('.select2-results__option').toArray().forEach(function (option) {
+                    if(products.lastIndexOf(option.innerText) !== -1) {
+                        option.classList.add('hide-it');
+                    }
+                })
+            }, 250)
+        };
         let height = $('.select2-dropdown').css('height');
-        $('.select2-results__option').toArray().forEach(function (option) {
-            if(products.lastIndexOf(option.innerText) === -1) {
-                option.style.display = 'none';
-            } else {
-                option.style.display = 'block';
-            }
-        })
+        newFunc();
         $('.select2-dropdown').css({height});
+        $('.select2-search__field').keydown (newFunc);
     }
 }
 let func = function (){}, idProd = 0;

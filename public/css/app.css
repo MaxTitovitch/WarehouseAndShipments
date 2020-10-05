@@ -1,7 +1,7 @@
 body {
     font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
-	
-	font-size: 3.5mm; 
+
+	font-size: 3.5mm;
 }
 
 .sidenav {
@@ -284,5 +284,13 @@ select.form-control.product-order-select {
     .sidenav-mobile {
         display: none!important;
     }
+}
+
+.select2-results__option {
+    display: none;
+}
+
+.hide-it {
+    display: block!important;
 }
 
