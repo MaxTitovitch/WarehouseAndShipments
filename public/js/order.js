@@ -88,16 +88,18 @@ function createShowProduct (element, product) {
 let handler = function(products){
     return function(event) {
         let newFunc = function (){
+            setTimeout(function () {
                 $('.select2-results__option').toArray().forEach(function (option) {
                     if(products.lastIndexOf(option.innerText) !== -1) {
                         option.classList.add('hide-it');
                     }
                 })
+            }, 250)
         };
         let height = $('.select2-dropdown').css('height');
-        newFunc(event);
+        newFunc();
         $('.select2-dropdown').css({height});
-        $('.select2-search__field').keydown (setTimeout(function () {newFunc()}, 250));
+        $('.select2-search__field').keydown (newFunc);
     }
 }
 let func = function (){}, idProd = 1;
@@ -178,7 +180,9 @@ $('.close-modal-button').click(function (event) {
   $('#company_name')[0].value = ''
   $('#country')[0].value = $('#country option')[0].innerText
   $('#address')[0].value = ''
-  $('#tracking_number')[0].value = ''
+    if ($('#tracking_number')[0]) {
+        $('#tracking_number')[0].value = ''
+    }
   $('#city')[0].value = ''
   $('#zip_postal_code')[0].value = ''
   $('#state_region')[0].value = ''

@@ -51,7 +51,7 @@ class OrderController extends Controller
 //        $user = User::find($request->user_id ?? Auth::id());
         if($user->id === $order->user_id || $user->role === 'Admin') {
             if($balanceHistory = $this->updateBalanceHistory($request, $user, $order)) {
-                if ($order->shipped == null && $request->shipped != null) {
+                if (!$order->shipped && $request->shipped) {
                     $order->user->sendOrderNotification($order);
                 }
                 $this->copyModelFromRequest($order, $request);

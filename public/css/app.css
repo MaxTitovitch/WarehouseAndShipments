@@ -288,6 +288,8 @@ select.form-control.product-order-select {
 
 .select2-results__option {
     display: none;
+    background: white;
+    border: 1px solid #888888;
 }
 
 .hide-it {
