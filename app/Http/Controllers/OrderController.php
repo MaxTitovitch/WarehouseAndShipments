@@ -230,9 +230,19 @@ class OrderController extends Controller
         return $newBalance - $lastBalance;
     }
 
-    private function updateProducts() {
-        foreach (Product::with('orders')->get() as $product) {
+
+    private function updateProducts( ) {
+        foreach (Product::with('shipments')->with('orders')->get() as $product) {
+            $product->in_transit = 0;
+            $product->available = 0;
             $product->received = 0;
+            foreach ($product->shipments as $shipment) {
+                if($shipment->received == null) {
+                    $product->in_transit += $shipment->pivot->quantity;
+                } if($shipment->received !== null) {
+                    $product->available += $shipment->pivot->quantity;
+                }
+            }
             foreach ($product->orders as $order) {
 //                if($orders->status == 'Created') {
                 if($order->shipped != null) {
