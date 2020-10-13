@@ -23,7 +23,9 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col" class="th-sm">ID</th>
-                <th scope="col" class="th-sm">User</th>
+                @if (Auth::user()->role == 'Admin')
+                    <th scope="col" class="th-sm">User</th>
+                @endif
                 <th scope="col" class="th-sm">Created</th>
                 <th scope="col" class="th-sm">Reserved</th>
                 <th scope="col" class="th-sm">Available</th>
@@ -39,7 +41,9 @@
             @foreach($products as $product)
                 <tr>
                     <th scope="row">{{ $product->id }}</th>
-                    <td>{{ $product->user->name }} ({{ $product->user->suite }})</td>
+                    @if (Auth::user()->role == 'Admin')
+                        <td>{{ $product->user->name }} ({{ $product->user->suite }})</td>
+                    @endif
                     <td>{{ $product->created_at->format('Y-m-d') }}</td>
                     <td>{{ $product->received }}</td>
                     <td>{{ $product->available }}</td>

@@ -24,7 +24,9 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col" class="th-sm">ID</th>
-                <th scope="col" class="th-sm">User</th>
+                @if (Auth::user()->role == 'Admin')
+                    <th scope="col" class="th-sm">User</th>
+                @endif
                 <th scope="col" class="th-sm">Created</th>
                 <th scope="col" class="th-sm">Shipped</th>
                 <th scope="col" class="th-sm">Tracking number</th>
@@ -39,7 +41,9 @@
             @foreach($orders as $order)
                 <tr>
                     <th scope="row">{{ $order->id }}</th>
-                    <td>{{ $order->user->name }} ({{ $order->user->suite }})</td>
+                    @if (Auth::user()->role == 'Admin')
+                        <td>{{ $order->user->name }} ({{ $order->user->suite }})</td>
+                    @endif
                     <td>{{ $order->created_at->format('Y-m-d') }}</td>
                     <td>{{ $order->shipped }}</td>
                     <td>{{ $order->tracking_number }}</td>
@@ -154,13 +158,13 @@
                                        aria-describedby="dateHelp">
                                 <small id="dateHelp" class="form-text text-danger"></small>
                             </div>
-                            <div class="form-group">
-                                <label for="status">Status</label>
-                                <select class="form-control" id="status">
-                                    <option>Created</option>
-                                    <option>Shipped</option>
-                                </select>
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label for="status">Status</label>--}}
+{{--                                <select class="form-control" id="status">--}}
+{{--                                    <option>Created</option>--}}
+{{--                                    <option>Shipped</option>--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
                         @endif
                         <div class="form-group" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
                             <label for="shipping_company">Shipping company</label>
@@ -248,94 +252,94 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderId">ID</label>
-                            <span class="form-control form-control-height " id="showOrderId"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderCustomer">Customer</label>
-                            <span class="form-control form-control-height " id="showOrderCustomer"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderCompanyName">Company Name</label>
-                            <span class="form-control form-control-height " id="showOrderCompanyName"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderStatus">Status</label>
-                            <span class="form-control form-control-height " id="showOrderStatus"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderTrackingNumber">Tracking number</label>
-                            <span class="form-control form-control-height " id="showOrderTrackingNumber"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderAddress">Address</label>
-                            <span class="form-control form-control-height " id="showOrderAddress"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderShippingCost">Shipping cost</label>
-                            <span class="form-control form-control-height " id="showOrderShippingCost"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderCity">City</label>
-                            <span class="form-control form-control-height " id="showOrderCity"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderShipped">Shipped</label>
-                            <span class="form-control form-control-height " id="showOrderShipped"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderPackingSelection">Packing Selection</label>
-                            <span class="form-control form-control-height " id="showOrderPackingSelection"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderZipCode">Zip code / Postal Code</label>
-                            <span class="form-control form-control-height " id="showOrderZipCode"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderState">State / Region</label>
-                            <span class="form-control form-control-height " id="showOrderState"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderCountry">Country</label>
-                            <span class="form-control form-control-height " id="showOrderCountry"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderPhone">Phone</label>
-                            <span class="form-control form-control-height " id="showOrderPhone"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderCreated">Created</label>
-                            <span class="form-control form-control-height " id="showOrderCreated"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderShippingCompany">Shipping company</label>
-                            <span class="form-control form-control-height " id="showOrderShippingCompany"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderComment">Comment</label>
-                            <span class="form-control form-control-height " id="showOrderComment"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="showOrderUser">User</label>
-                            <span class="form-control form-control-height " id="showOrderUser"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold">Products</label>
-                            <div class="show-products-container">
-                                <div class="show-product-container product-order-area">
-                                    <span class="form-control form-control-height show-product"></span>
-                                    <span class="form-control form-control-height w-50"><span
-                                            class="show-quantity"></span><span
-                                            class="font-weight-bold"> pcs</span></span>
-                                    <span class="form-control form-control-height w-50"><span
-                                            class="font-weight-bold">$</span><span class="show-price"></span></span>
-                                    <span class="form-control form-control-height show-description">edf wef wef wefw efw defytygytyttt</span>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+{{--                    <form>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderCustomer">Customer</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderCustomer"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderCompanyName">Company Name</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderCompanyName"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderTrackingNumber">Tracking number</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderTrackingNumber"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderAddress">Address</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderAddress"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderShippingCost">Shipping cost</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderShippingCost"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderCity">City</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderCity"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderShipped">Shipped</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderShipped"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderPackingSelection">Packing Selection</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderPackingSelection"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderZipCode">Zip code / Postal Code</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderZipCode"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderState">State / Region</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderState"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderCountry">Country</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderCountry"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderPhone">Phone</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderPhone"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderCreated">Created</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderCreated"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderShippingCompany">Shipping company</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderShippingCompany"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderComment">Comment</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderComment"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold" for="showOrderUser">User</label>--}}
+{{--                            <span class="form-control form-control-height " id="showOrderUser"></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="font-weight-bold">Products</label>--}}
+{{--                            <div class="show-products-container">--}}
+{{--                                <div class="show-product-container product-order-area">--}}
+{{--                                    <span class="form-control form-control-height show-product"></span>--}}
+{{--                                    <span class="form-control form-control-height w-50"><span--}}
+{{--                                            class="show-quantity"></span><span--}}
+{{--                                            class="font-weight-bold"> pcs</span></span>--}}
+{{--                                    <span class="form-control form-control-height w-50"><span--}}
+{{--                                            class="font-weight-bold">$</span><span class="show-price"></span></span>--}}
+{{--                                    <span class="form-control form-control-height show-description">edf wef wef wefw efw defytygytyttt</span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </form>--}}
+                    <p>
+                        <strong>Order ID: </strong><span class="form-control form-control-height " id="showOrderId"></span>,
+                        <strong>Status: </strong><span class="form-control form-control-height " id="showOrderStatus"></span>
+                    </p>
+                    <p>
+                        <strong>User: </strong> <br>
+                        <strong>Status: </strong><span class="form-control form-control-height " id="showOrderStatus"></span>
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>

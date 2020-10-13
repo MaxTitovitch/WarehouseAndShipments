@@ -24,7 +24,9 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col" class="th-sm">ID</th>
-                <th scope="col" class="th-sm">User</th>
+                @if (Auth::user()->role == 'Admin')
+                    <th scope="col" class="th-sm">User</th>
+                @endif
                 <th scope="col" class="th-sm">Created</th>
                 <th scope="col" class="th-sm">Shipped</th>
                 <th scope="col" class="th-sm">Received</th>
@@ -39,7 +41,9 @@
             @foreach($shipments as $shipment)
                 <tr>
                     <th scope="row">{{ $shipment->id }}</th>
-                    <td>{{ $shipment->user->name }} ({{ $shipment->user->suite }})</td>
+                    @if (Auth::user()->role == 'Admin')
+                        <td>{{ $shipment->user->name }} ({{ $shipment->user->suite }})</td>
+                    @endif
                     <td>{{ $shipment->created_at->format('Y-m-d') }}</td>
                     <td>{{ $shipment->shipped }}</td>
                     <td>{{ $shipment->received }}</td>

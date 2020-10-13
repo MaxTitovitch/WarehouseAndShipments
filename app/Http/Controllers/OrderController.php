@@ -146,6 +146,11 @@ class OrderController extends Controller
         }
         if($order->shipped){
             $order->status = 'Shipped';
+        } else {
+            $order->status = 'Created';
+        }
+        if($order->shipped){
+            $order->status = 'Shipped';
         }
     }
 
