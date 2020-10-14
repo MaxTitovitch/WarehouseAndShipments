@@ -58,33 +58,33 @@ class AdminController extends Controller
 
     public function inboundShipments() {
         if (Auth::user()->role === 'Admin') {
-            $shipments = Shipment::with('user')->orderBy('id', 'desc')->paginate(15);
+            $shipments = Shipment::with('user')->orderBy('id', 'desc')->get();
         } else {
-            $shipments = Shipment::where('user_id', Auth::id())->with('user')->orderBy('id', 'desc')->paginate(15);
+            $shipments = Shipment::where('user_id', Auth::id())->with('user')->orderBy('id', 'desc')->get();
         }
         return view('inbound-shipments')->with(['shipments' => $shipments]);
     }
 
     public function users() {
-        $users = User::orderBy('id', 'desc')->paginate(15);
+        $users = User::orderBy('id', 'desc')->get();
         return view('users')->with(['users' => $users]);
     }
 
     public function products() {
         if (Auth::user()->role === 'Admin') {
-            $products = Product::orderBy('id', 'desc')->paginate(15);
+            $products = Product::orderBy('id', 'desc')->get();
         } else {
-            $products = Product::where('user_id', Auth::id())->orderBy('id', 'desc')->paginate(15);
+            $products = Product::where('user_id', Auth::id())->orderBy('id', 'desc')->get();
         }
         return view('products')->with(['products' => $products]);
     }
 
     public function orders() {
         if (Auth::user()->role === 'Admin') {
-            $orders = Order::with('user')->orderBy('id', 'desc')->paginate(15);
+            $orders = Order::with('user')->orderBy('id', 'desc')->get();
         } else {
 
-            $orders = Order::where('user_id', Auth::id())->with('user')->orderBy('id', 'desc')->paginate(15);
+            $orders = Order::where('user_id', Auth::id())->with('user')->orderBy('id', 'desc')->get();
         }
         return view('orders')->with(['orders' => $orders]);
     }

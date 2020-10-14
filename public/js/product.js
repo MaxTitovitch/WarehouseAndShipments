@@ -1,6 +1,6 @@
 $(document).ready(function () {
   $('#dtEntityTable').DataTable({
-    "paging": false,
+    "paging": true,
     order: [[ 0, "desc" ]],
     columnDefs: [{
       orderable: false,

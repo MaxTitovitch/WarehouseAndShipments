@@ -11,7 +11,7 @@ $(".product-order-select").select2( {
 
 $(document).ready(function () {
   $('#dtEntityTable').DataTable({
-    "paging": false,
+    "paging": true,
     order: [[ 0, "desc" ]],
     columnDefs: [{
       orderable: false,
@@ -79,7 +79,8 @@ $('.show-entity-button').click(function (event) {
 });
 
 function createShowProduct (element, product) {
-  element.find('.show-product')[0].innerText = product.name
+  let title = `${product.brand} | ${product.name} | UPC[${product.upc}] | SKU[${product.sku}] | In transit (${product.in_transit}) | Available (${product.available}) | Reserved (${product.reserved})`
+  element.find('.show-product')[0].innerText = product.name;
   element.find('.show-quantity')[0].innerText = product.pivot.quantity
   element.find('.show-price')[0].innerText = product.pivot.price
   element.find('.show-description')[0].innerText = product.pivot.description
@@ -287,8 +288,11 @@ $('.form-submit').submit(function (event) {
 
 $('.delete-entity-button').click(function (event) {
   event.preventDefault();
-  let deleteId = $(this).data('value-id');
-  sendEntityAjax({}, "DELETE", `/${deleteId}`);
+
+    if(confirm('This order will be deleted. Shall we continue?')) {
+        let deleteId = $(this).data('value-id');
+        sendEntityAjax({}, "DELETE", `/${deleteId}`);
+    }
 })
 
 $('.copy-entity-button').click(function (event) {

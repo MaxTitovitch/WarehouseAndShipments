@@ -133,7 +133,7 @@
                             <label class="font-weight-bold" for="showUserCreated">Created</label>
                             <span class="form-control form-control-height " id="showUserCreated"></span>
                         </div>
-                        <table class="table table-bordered table-striped table-hover">
+                        <table class="table table-bordered table-striped table-hover" id="dtEntityTableShow">
                             <thead class="thead-dark">
                             <tr>
                                 <th>Balance</th>

@@ -1,18 +1,21 @@
 $(document).ready(function () {
-  $('#dtEntityTable').DataTable({
-    "paging": false,
-    order: [[ 0, "desc" ]],
-    columnDefs: [{
-      orderable: false,
-      targets: 6
-    }]
-  });
-  $('.dataTables_length').addClass('bs-select');
+    $('#dtEntityTable').DataTable({
+        "paging": true,
+        order: [[ 0, "desc" ]],
+        columnDefs: [{
+          orderable: false,
+          targets: 6
+        }]
+    });
+    $('.dataTables_length').addClass('bs-select');
 });
 
-let id = 0, showId = 0
+let id = 0, showId = 0, table = null;
 $('.show-entity-button').click(function (event) {
   event.preventDefault()
+    if (table) {
+        table.destroy();
+    }
   showId = $(this).data('value-id')
   getEntityAjax(showId, (data) => {
       // console.log(data)
@@ -24,12 +27,17 @@ $('.show-entity-button').click(function (event) {
     $('#showUserBalance')[0].innerText = data.balance;
     $('#showUserCreated')[0].innerText = data.created_at.split('T')[0];
     $('#balanceHistoryArea').eq(0).empty();
-    data.balance_histories = data.balance_histories.reverse().slice(0, 15);
-    console.log(data.balance_histories)
+    // data.balance_histories = data.balance_histories.reverse().slice(0, 15);
+    // console.log(data.balance_histories)
     data.balance_histories.forEach((history) =>{
         addHistory( $('#balanceHistoryArea')[0], history)
     });
-
+      table = $('#dtEntityTableShow').DataTable({
+          "paging": true,
+          retrieve: true,
+          order: [[ 0, "desc" ]],
+      });
+      $('.dataTables_length').addClass('bs-select');
     $('#showModal').modal()
   })
 })
@@ -116,8 +124,10 @@ $('#formBalance').submit(function (event) {
 
 $('.delete-entity-button').click(function (event) {
   event.preventDefault();
-  let deleteId = $(this).data('value-id');
-  sendEntityAjax({}, "DELETE", `/${deleteId}`);
+  if(confirm('This user will be deleted. Shall we continue?')) {
+      let deleteId = $(this).data('value-id');
+      sendEntityAjax({}, "DELETE", `/${deleteId}`);
+  }
 })
 
 function sendEntityAjax (data, type, entityPath = '') {

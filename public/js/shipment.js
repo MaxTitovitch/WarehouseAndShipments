@@ -5,7 +5,7 @@ $(".product-select").select2({
 
 $(document).ready(function () {
   $('#dtEntityTable').DataTable({
-    "paging": false,
+    "paging": true,
     order: [[ 0, "desc" ]],
     columnDefs: [{
       orderable: false,
@@ -50,8 +50,8 @@ $('.show-entity-button').click(function (event) {
 });
 
 function createShowProduct (element, product) {
-  console.log(product)
-  element.find('.show-product')[0].innerText = product.name
+  let title = `${product.brand} | ${product.name} | UPC[${product.upc}] | SKU[${product.sku}] | In transit (${product.in_transit}) | Available (${product.available}) | Reserved (${product.reserved})`
+  element.find('.show-product')[0].innerText = product.name;
   element.find('.show-quantity')[0].innerText = product.pivot.quantity
 }
 
