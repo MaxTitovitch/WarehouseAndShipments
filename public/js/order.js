@@ -10,14 +10,16 @@ $(".product-order-select").select2( {
 } );
 
 $(document).ready(function () {
-  $('#dtEntityTable').DataTable({
-    "paging": true,
-    order: [[ 0, "desc" ]],
-    columnDefs: [{
-      orderable: false,
-      targets: 9
-    }]
-  });
+    if($('#dtEntityTable td').length) {
+        $('#dtEntityTable').DataTable({
+            "paging": true,
+            order: [[0, "desc"]],
+            columnDefs: [{
+                orderable: false,
+                targets: 9
+            }]
+        });
+    }
   $.ajax({
     type: "GET",
     url: "/api/countries",
@@ -58,7 +60,7 @@ $('.show-entity-button').click(function (event) {
     $('#showOrderPhone')[0].innerText = data.phone
     $('#showOrderShippingCompany')[0].innerText = data.shipping_company
     $('#showOrderComment')[0].innerText = data.comment
-    $('#showOrderUser')[0].innerText = data.user.id
+    $('#showOrderUser')[0].innerText = `${data.user.name}, Suite: ${data.user.suite}`;
 
 
 
@@ -79,7 +81,9 @@ $('.show-entity-button').click(function (event) {
 });
 
 function createShowProduct (element, product) {
-  let title = `${product.brand} | ${product.name} | UPC[${product.upc}] | SKU[${product.sku}] | In transit (${product.in_transit}) | Available (${product.available}) | Reserved (${product.reserved})`
+  element.find('.show-upc')[0].innerText = product.upc;
+  element.find('.show-sku')[0].innerText = product.sku;
+  element.find('.show-brand')[0].innerText = product.brand;
   element.find('.show-product')[0].innerText = product.name;
   element.find('.show-quantity')[0].innerText = product.pivot.quantity
   element.find('.show-price')[0].innerText = product.pivot.price

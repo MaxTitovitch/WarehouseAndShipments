@@ -47,9 +47,9 @@ class OrderController extends Controller
     public function update(OrderRequest $request, $id)
     {
         $order = Order::find($id);
-        $user = User::find($request->user_id ?? Auth::id());
-//        $user = User::find($request->user_id ?? Auth::id());
-        if($user->id === $order->user_id || $user->role === 'Admin') {
+        $user = $order->user;
+        $auth = Auth::user();
+        if($user->id === $auth->id || $auth->role === 'Admin') {
             if($balanceHistory = $this->updateBalanceHistory($request, $user, $order)) {
                 if (!$order->shipped && $request->shipped) {
                     $order->user->sendOrderNotification($order);
@@ -58,9 +58,11 @@ class OrderController extends Controller
                 $order->save();
                 $this->syncProducts($order, $request->order_products);
                 if($balanceHistory) {
-                    $balanceHistory->save();
-                    $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
-                    $user->save();
+                    if($balanceHistory->transaction_cost != 0) {
+                        $balanceHistory->save();
+                        $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
+                        $user->save();
+                    }
                 }
                 $this->updateProducts();
                 Session::flash('success', 'Order updated!');

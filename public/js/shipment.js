@@ -4,15 +4,17 @@ $(".product-select").select2({
 });
 
 $(document).ready(function () {
-  $('#dtEntityTable').DataTable({
-    "paging": true,
-    order: [[ 0, "desc" ]],
-    columnDefs: [{
-      orderable: false,
-      targets: 9
-    }]
-  });
-  $('.dataTables_length').addClass('bs-select');
+    if($('#dtEntityTable td').length) {
+        $('#dtEntityTable').DataTable({
+            "paging": true,
+            order: [[0, "desc"]],
+            columnDefs: [{
+                orderable: false,
+                targets: 9
+            }]
+        });
+        $('.dataTables_length').addClass('bs-select');
+    }
 });
 
 let id = 0, showId = 0;

@@ -23,7 +23,9 @@ class UserController extends Controller
 
     public function show($id)
     {
-        return response()->json(User::with('balanceHistories')->find($id), 200);
+        return response()->json(User::with(['balanceHistories' => function($query) {
+            $query->orderBy('created_at', 'DESC');
+        }])->find($id), 200);
     }
 
     public function update(UserRequest $request, $id)
