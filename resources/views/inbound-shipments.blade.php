@@ -118,14 +118,14 @@
                         <div class="form-group">
                             <label for="productFormControlSelect1">Select product</label>
                             <div class="products-container">
-                                <div class="product-container">
-                                    <select class="form-control product-select product-shipment-select"></select>
-                                    <input type="number" class="form-control quantity" placeholder="quantity"
-                                           required min="1" max="10000">
-                                    <a href="#" class="remove-product-select">
-                                        <i class="fa fa-times fa-2x text-dark" aria-hidden="true"></i>
-                                    </a>
-                                </div>
+{{--                                <div class="product-container">--}}
+{{--                                    <select class="form-control product-select product-shipment-select"></select>--}}
+{{--                                    <input type="number" class="form-control quantity" placeholder="quantity"--}}
+{{--                                           required min="1" max="10000">--}}
+{{--                                    <a href="#" class="remove-product-select">--}}
+{{--                                        <i class="fa fa-times fa-2x text-dark" aria-hidden="true"></i>--}}
+{{--                                    </a>--}}
+{{--                                </div>--}}
                             </div>
 
                             <div class="button-plus mt-2 mr-2">
