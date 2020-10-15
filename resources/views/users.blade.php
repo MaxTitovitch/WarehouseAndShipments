@@ -16,6 +16,7 @@
                 <th scope="col" class="th-sm">Email</th>
                 <th scope="col" class="th-sm">Role</th>
                 <th scope="col" class="th-sm">Balance</th>
+                <th scope="col" class="th-sm">Fee</th>
                 <th scope="col" class="th-sm">Actions</th>
             </tr>
             </thead>
@@ -28,6 +29,7 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>
                     <td>{{ $user->balance}}</td>
+                    <td>{{ $user->fee}}</td>
                     <td>
                         <a href="#" class="show-product text-dark font-weight-bold show-entity-button" data-value-id="{{ $user->id }}">Show</a>
                         <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button" data-value-id="{{ $user->id }}">Edit</a>
@@ -72,12 +74,12 @@
                                 <option>Admin</option>
                             </select>
                         </div>
-{{--                        <div class="form-group">--}}
-{{--                            <label for="balance" class="font-weight-bold">Balance</label>--}}
-{{--                            <input type="number" class="form-control" required maxlength="255" min="1" max="10000" id="balance"--}}
-{{--                                   aria-describedby="ariaDescribedbyHelp" placeholder="Balance">--}}
-{{--                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>--}}
-{{--                        </div>--}}
+                        <div class="form-group">
+                            <label for="fee" class="font-weight-bold">Fee</label>
+                            <input type="number" class="form-control" required maxlength="255" min="0" max="10000" id="fee"
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Fee">
+                            <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
+                        </div>
 
                     </div>
                     <div class="modal-footer">
@@ -128,6 +130,10 @@
                         <div class="form-group">
                             <label class="font-weight-bold" for="showUserBalance">Balance</label>
                             <span class="form-control form-control-height " id="showUserBalance"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="showUserFee">Fee</label>
+                            <span class="form-control form-control-height " id="showUserFee"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showUserCreated">Created</label>

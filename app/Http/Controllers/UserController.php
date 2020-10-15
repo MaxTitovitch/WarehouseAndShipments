@@ -33,6 +33,7 @@ class UserController extends Controller
         $user = User::find($id);
 //        $this->createBalanceHistory($user, $request->balance);
         $user->role = $request->role;
+        $user->fee = $request->fee;
 
         $user->save();
         Session::flash('success', 'User updated!');

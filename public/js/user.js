@@ -25,6 +25,7 @@ $('.show-entity-button').click(function (event) {
     $('#showUserEmail')[0].innerText = data.email;
     $('#showUserRole')[0].innerText = data.role;
     $('#showUserBalance')[0].innerText = data.balance;
+    $('#showUserFee')[0].innerText = data.fee;
     $('#showUserCreated')[0].innerText = data.created_at.split('T')[0];
     $('#balanceHistoryArea').eq(0).empty();
     // data.balance_histories = data.balance_histories.reverse();
@@ -78,6 +79,7 @@ $('.edit-entity-button').click(function (event) {
     $('#userName')[0].innerText = data.name
     $('#userEmail')[0].innerText = data.email
     $('#role')[0].value = data.role
+    $('#fee')[0].value = data.fee
     // $('#balance')[0].value = data.balance
 
     $('#modalAdd').modal()
@@ -106,6 +108,7 @@ $('.form-submit').submit(function (event) {
     let entity = {
       _token: $('.modal [name="_token"]')[0].value,
       role: $('#role')[0].value,
+      fee: $('#fee')[0].value,
       // balance: $('#balance')[0].value,
     }
     sendEntityAjax(entity, "PUT", `/${id}`);

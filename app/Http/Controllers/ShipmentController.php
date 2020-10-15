@@ -89,8 +89,8 @@ class ShipmentController extends Controller
                 }
             }
             foreach ($product->orders as $order) {
-//                if($orders->status == 'Created') {
-                if($order->shipped != null) {
+                $product->available -= $order->pivot->quantity;
+                if($order->shipped == null) {
                     $product->received += $order->pivot->quantity;
                 }
             }

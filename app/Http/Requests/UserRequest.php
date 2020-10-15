@@ -19,6 +19,7 @@ class UserRequest extends FormRequest
     {
         return [
             'role' => 'required|in:User,Admin',
+            'fee' => 'required|numeric|min:0|max:99999999',
         ];
     }
 

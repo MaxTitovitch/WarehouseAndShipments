@@ -50,6 +50,9 @@ class OrderController extends Controller
         $user = $order->user;
         $auth = Auth::user();
         if($user->id === $auth->id || $auth->role === 'Admin') {
+            if($auth->role == 'Admin' && $order->shipping_cost == null){
+                $request->shipping_cost += $user->fee;
+            }
             if($balanceHistory = $this->updateBalanceHistory($request, $user, $order)) {
                 if (!$order->shipped && $request->shipped) {
                     $order->user->sendOrderNotification($order);
@@ -84,7 +87,7 @@ class OrderController extends Controller
         $user = User::find($cloneableOrder->user_id);
         $authUser = User::find(Auth::id());
         if($authUser->id === $cloneableOrder->user_id || $authUser->role === 'Admin') {
-            if($balanceHistory = $this->createBalanceHistory($this->calculateCopyBalance($cloneableOrder, false), $user, $order)) {
+            if($balanceHistory = $this->createBalanceHistory($this->calculateCopyBalance($cloneableOrder, $user, false), $user, $order)) {
                 $order->user_id = Auth::id();
                 $this->copyModelFromRequest($order, $cloneableOrder, false);
                 $this->syncCloneProducts($order, $cloneableOrder->products);
@@ -198,7 +201,7 @@ class OrderController extends Controller
     }
 
     private function updateBalanceHistory(OrderRequest $request, User $user, Order $lastOrder) {
-        $transactionCost = $this->calculateDifferenceBalance($request, $lastOrder);
+        $transactionCost = $this->calculateDifferenceBalance($request, $lastOrder, $user);
 
         if($user->balance - $transactionCost >= 0) {
             $balanceHistory = new BalanceHistory();
@@ -213,27 +216,28 @@ class OrderController extends Controller
         }
     }
 
-    private function calculateBalance(OrderRequest $request) {
+    private function calculateBalance(OrderRequest $request, User $user) {
 //        $newBalance = $request->shipping_cost ?? 0;
 //        foreach ($request->order_products as $order_product) {
 //            $newBalance += ( $order_product['price'] ?? 0 ) * $order_product['quantity'];
 //        }
 //        return $newBalance;
-        return $request->shipping_cost ?? 0;
+        return ($request->shipping_cost ?? 0);
     }
 
-    private function calculateCopyBalance(Order $order, $isWithShippingCost = true) {
+    private function calculateCopyBalance(Order $order, User $user, $isWithShippingCost = true) {
 //        $newBalance = $isWithShippingCost ? ($order->shipping_cost ?? 0) : 0;
 //        foreach ($order->products as $product) {
 //            $newBalance += ( $product->pivot->price ?? 0 ) * $product->pivot->quantity;
 //        }
 //        return $newBalance;
-        return $isWithShippingCost ? ($order->shipping_cost ?? 0) : 0;
+//        return ($isWithShippingCost ? ($order->shipping_cost ?? 0) : 0) + $user->fee;
+        return ($order->shipping_cost ?? 0);
     }
 
-    private function calculateDifferenceBalance(OrderRequest $request, Order $lastOrder) {
-        $newBalance = $this->calculateBalance($request);
-        $lastBalance = $this->calculateCopyBalance($lastOrder);
+    private function calculateDifferenceBalance(OrderRequest $request, Order $lastOrder, User $user) {
+        $newBalance = $this->calculateBalance($request, $user);
+        $lastBalance = $this->calculateCopyBalance($lastOrder, $user);
         return $newBalance - $lastBalance;
     }
 
@@ -251,8 +255,8 @@ class OrderController extends Controller
                 }
             }
             foreach ($product->orders as $order) {
-//                if($orders->status == 'Created') {
-                if($order->shipped != null) {
+                $product->available -= $order->pivot->quantity;
+                if($order->shipped == null) {
                     $product->received += $order->pivot->quantity;
                 }
             }
