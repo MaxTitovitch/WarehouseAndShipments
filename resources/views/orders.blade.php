@@ -76,7 +76,7 @@
     <div class="modal fade" data-backdrop="static" id="modalAdd" tabindex="-1" role="dialog"
          aria-labelledby="modalAddLabel"
          aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalAddLabel">Add new Order</h5>
@@ -185,22 +185,22 @@
                         <div class="form-group" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
                             <label>Products</label>
                             <div class="products-container">
-                                <div class="product-container product-order-area">
-                                    <select class="form-control product-select product-order-select"></select>
-                                    <a href="#" class="remove-product-select product-order-remove">
-                                        <i class="fa fa-times fa-2x text-dark" aria-hidden="true"></i>
-                                    </a>
-                                    <input type="number" class="form-control quantity product-order-quantity"
-                                           placeholder="quantity"
-                                           required min="1" max="10000">
-                                    <input type="number" class="form-control price product-order-price"
-                                           placeholder="price"
-                                           min="1" max="10000">
-                                    <textarea rows="1" style="resize: none;"
-                                              class="form-control description product-order-description"
-                                              placeholder="Description"
-                                              maxlength="10000"></textarea>
-                                </div>
+{{--                                <div class="product-container product-order-area">--}}
+{{--                                    <select class="form-control product-select product-order-select"></select>--}}
+{{--                                    <a href="#" class="remove-product-select product-order-remove">--}}
+{{--                                        <i class="fa fa-times fa-2x text-dark" aria-hidden="true"></i>--}}
+{{--                                    </a>--}}
+{{--                                    <input type="number" class="form-control quantity product-order-quantity"--}}
+{{--                                           placeholder="quantity"--}}
+{{--                                           required min="1" max="10000">--}}
+{{--                                    <input type="number" class="form-control price product-order-price"--}}
+{{--                                           placeholder="price"--}}
+{{--                                           min="1" max="10000">--}}
+{{--                                    <textarea rows="1" style="resize: none;"--}}
+{{--                                              class="form-control description product-order-description"--}}
+{{--                                              placeholder="Description"--}}
+{{--                                              maxlength="10000"></textarea>--}}
+{{--                                </div>--}}
                             </div>
 
                             <div class="button-plus mt-2 mr-2">

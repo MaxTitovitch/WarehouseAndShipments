@@ -10,7 +10,7 @@ $(document).ready(function () {
             order: [[0, "desc"]],
             columnDefs: [{
                 orderable: false,
-                targets: 9
+                targets: -1
             }]
         });
         $('.dataTables_length').addClass('bs-select');
