@@ -17,7 +17,9 @@ class BalanceHistory extends Model
     public function save(array $options = [])
     {
         $answer =  parent::save($options);
-        $this->user->sendBalanceNotification($this);
+        if ($this->type == 'Credit') {
+            $this->user->sendBalanceNotification($this);
+        }
         return $answer;
     }
 

@@ -5,9 +5,11 @@
 @endsection
 
 @section('content')
-    <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
-            data-target="#modalAdd">Add New
-    </button>
+    @if(Auth::user()->role != 'Admin')
+        <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
+                data-target="#modalAdd">Add New
+        </button>
+    @endif
 
     <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
         @csrf

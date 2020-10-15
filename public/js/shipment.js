@@ -124,7 +124,7 @@ $('.close-modal-button').click(function (event) {
   if ($('#shipped')[0]) {
     $('#shipped')[0].value = ''
   }
-    $('.product-container').toArray().forEach((productsSelect) => {
+    $('#modalAdd .product-container').toArray().forEach((productsSelect) => {
         // $(productsSelect).next().remove();
         productsSelect.remove();
     });
@@ -165,7 +165,7 @@ function addProduct (products, product) {
     productNode.find('.product-select').eq(0).select2({
         placeholder: "Select Product",
     });
-    select.change(function (e) {
+    select.on('select2:select', function (e) {
         $('option').toArray().forEach(function (option) {
             $(option).attr('disabled', false)
         });
@@ -191,7 +191,7 @@ function addProduct (products, product) {
             });
         })
     });
-    select.change();
+    select.trigger('select2:select');
 }
 
 function createProductShipment () {
@@ -282,7 +282,7 @@ $('.add-product-select').click(function (event) {
     select.select2({
         placeholder: "Select Product"
     });
-    select.change(function (e) {
+    select.on('select2:select', function (e) {
         $('option').toArray().forEach(function (option) {
             $(option).attr('disabled', false)
         });
@@ -311,7 +311,7 @@ $('.add-product-select').click(function (event) {
             });
         })
     });
-    select.change();
+    select.trigger('select2:select');
 });
 
 $('#modalAdd').on('shown.bs.modal', function (e) {

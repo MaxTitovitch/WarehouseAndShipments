@@ -5,9 +5,12 @@
 @endsection
 
 @section('content')
+
+    @if(Auth::user()->role != 'Admin')
     <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
             data-target="#modalAdd">Add New
     </button>
+    @endif
 
     <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
         @csrf
@@ -62,8 +65,11 @@
                         <a href="#" class="show-product text-dark font-weight-bold delete-entity-button"
                            data-value-id="{{ $order->id }}">Delete</a>
                         @endif
+
+                        @if(Auth::user()->role != 'Admin')
                         <a href="#" class="show-product text-dark font-weight-bold copy-entity-button"
                            data-value-id="{{ $order->id }}">Copy</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach
@@ -87,19 +93,19 @@
                 <form class="form-submit">
                     <div class="modal-body">
                         @csrf
-                        <div class="form-group" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
+                        <div class="form-group {{ Auth::user()->role == 'Admin' ? 'display-none' : '' }}" >
                             <label for="customer">Customer</label>
                             <input type="text" class="form-control" required maxlength="255" id="customer"
                                    aria-describedby="ariaDescribedbyHelp" placeholder="Customer">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
-                        <div class="form-group" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
+                        <div class="form-group {{ Auth::user()->role == 'Admin' ? 'display-none' : '' }}" >
                             <label for="company_name">Company Name</label>
                             <input type="text" class="form-control" maxlength="255" id="company_name"
                                    aria-describedby="ariaDescribedbyHelp" placeholder="Company Name">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
-                        <div class="form-group" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
+                        <div class="form-group {{ Auth::user()->role == 'Admin' ? 'display-none' : '' }}" >
                             <label for="address">Address</label>
                             <input type="text" class="form-control" required maxlength="50" id="address"
                                    aria-describedby="commentHelp" placeholder="Address">
@@ -109,11 +115,11 @@
                             <div class="form-group">
                                 <label for="tracking_number">Tracking number</label>
                                 <input type="text" class="form-control" maxlength="255" id="tracking_number"
-                                       aria-describedby="ariaDescribedbyHelp" placeholder="Tracking number">
+                                       aria-describedby="ariaDescribedbyHelp" placeholder="Tracking number" required>
                                 <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                             </div>
                         @endif
-                        <div class="form-group" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
+                        <div class="form-group {{ Auth::user()->role == 'Admin' ? 'display-none' : '' }}" >
                             <label for="city">City</label>
                             <input type="text" class="form-control" required maxlength="50" id="city"
                                    aria-describedby="commentHelp" placeholder="City">
@@ -123,31 +129,31 @@
                             <div class="form-group">
                                 <label for="shippingCost">Shipping cost</label>
                                 <input type="number" class="form-control" min="1" max="1000000" id="shipping_cost"
-                                       aria-describedby="commentHelp" placeholder="Shipping cost">
+                                       aria-describedby="commentHelp" placeholder="Shipping cost" required>
                                 <small id="commentHelp" class="form-text text-danger"></small>
                             </div>
                         @endif
-                        <div class="form-group" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
+                        <div class="form-group {{ Auth::user()->role == 'Admin' ? 'display-none' : '' }}" >
                             <label for="zipCode">Zip code / Postal Code</label>
                             <input type="text" class="form-control" id="zip_postal_code"
                                    placeholder="Zip code / Postal Code"
                                    aria-describedby="dateHelp">
                             <small id="dateHelp" class="form-text text-danger"></small>
                         </div>
-                        <div class="form-group" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
+                        <div class="form-group {{ Auth::user()->role == 'Admin' ? 'display-none' : '' }}" >
                             <label for="state_region">State / Region</label>
                             <input type="text" class="form-control" id="state_region" placeholder="State / Region"
                                    aria-describedby="dateHelp">
                             <small id="dateHelp" class="form-text text-danger"></small>
                         </div>
-                        <div class="form-group" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
+                        <div class="form-group {{ Auth::user()->role == 'Admin' ? 'display-none' : '' }}" >
                             <label for="country">Country</label>
                             <select class="form-control custom-select" id="country"></select>
                         </div>
-                        <div class="form-group" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
+                        <div class="form-group {{ Auth::user()->role == 'Admin' ? 'display-none' : '' }}" >
                             <label for="phone">Phone</label>
                             <input type="text" pattern="^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$"
-                                   class="form-control" required maxlength="255" id="phone"
+                                   class="form-control" maxlength="255" id="phone"
                                    aria-describedby="ariaDescribedbyHelp" placeholder="Phone">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
@@ -155,7 +161,7 @@
                             <div class="form-group">
                                 <label for="shipped">Shipped</label>
                                 <input type="date" class="form-control" id="shipped" name="date" placeholder="date"
-                                       aria-describedby="dateHelp">
+                                       aria-describedby="dateHelp" required>
                                 <small id="dateHelp" class="form-text text-danger"></small>
                             </div>
 {{--                            <div class="form-group">--}}
@@ -166,7 +172,7 @@
 {{--                                </select>--}}
 {{--                            </div>--}}
                         @endif
-                        <div class="form-group" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
+                        <div class="form-group {{ Auth::user()->role == 'Admin' ? 'display-none' : '' }}" >
                             <label for="shipping_company">Shipping company</label>
                             <select class="form-control" id="shipping_company">
                                 <option>USPS</option>
@@ -176,13 +182,13 @@
                                 <option>APC</option>
                             </select>
                         </div>
-                        <div class="form-group" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
+                        <div class="form-group {{ Auth::user()->role == 'Admin' ? 'display-none' : '' }}" >
                             <label for="comment">Comment</label>
                             <textarea rows="5" class="form-control" id="comment" placeholder="Comment"
                                       aria-describedby="dateHelp" maxlength="255"></textarea>
                             <small id="dateHelp" class="form-text text-danger"></small>
                         </div>
-                        <div class="form-group" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
+                        <div class="form-group {{ Auth::user()->role == 'Admin' ? 'display-none' : '' }}" >
                             <label>Products</label>
                             <div class="products-container">
 {{--                                <div class="product-container product-order-area">--}}
@@ -209,7 +215,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="form-group" id="packing_selection" style="{{ Auth::user()->role == 'Admin' ? 'display: none;' : '' }}">
+                        <div class="form-group {{ Auth::user()->role == 'Admin' ? 'display-none' : '' }}" id="packing_selection" >
                             <label>Packing selection</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="packing_selection" id="bubblesPack"

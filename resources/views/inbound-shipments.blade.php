@@ -5,9 +5,11 @@
 @endsection
 
 @section('content')
-    <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-shipment" data-toggle="modal"
-            data-target="#modalAdd">Add New
-    </button>
+    @if(Auth::user()->role != 'Admin')
+        <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-shipment" data-toggle="modal"
+                data-target="#modalAdd">Add New
+        </button>
+    @endif
 
     <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
         @csrf
@@ -101,6 +103,12 @@
                                       aria-describedby="commentHelp" placeholder="comment"></textarea>
                             <small id="commentHelp" class="form-text text-danger"></small>
                         </div>
+                        <div class="form-group">
+                            <label for="shipped">Date of shipping</label>
+                            <input type="date" class="form-control" id="shipped" name="date" placeholder="date"
+                                   aria-describedby="dateHelp" required>
+                            <small id="dateHelp" class="form-text text-danger"></small>
+                        </div>
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                             <div class="form-group">
                                 <label for="received">Date of received</label>
@@ -109,12 +117,6 @@
                                 <small id="dateHelp" class="form-text text-danger"></small>
                             </div>
                         @endif
-                        <div class="form-group">
-                            <label for="shipped">Date of shipping</label>
-                            <input type="date" class="form-control" id="shipped" name="date" placeholder="date"
-                                   aria-describedby="dateHelp">
-                            <small id="dateHelp" class="form-text text-danger"></small>
-                        </div>
                         <div class="form-group">
                             <label for="productFormControlSelect1">Select product</label>
                             <div class="products-container">

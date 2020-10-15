@@ -1,11 +1,5 @@
 window.onerror = null;
 
-
-$("#country").select2( {
-    placeholder: "Select Country",
-} );
-
-
 $(document).ready(function () {
     if($('#dtEntityTable td').length) {
         $('#dtEntityTable').DataTable({
@@ -26,9 +20,16 @@ $(document).ready(function () {
         let option = document.createElement('option');
         option.innerText = element.name;
         option.value = element.name;
+        if(element.name == 'United States of America'){
+            option.setAttribute('selected', 'selected')
+        }
         countrySelect.appendChild(option);
       })
-        $(countrySelect).val($(countrySelect).find(':first')[0].value).trigger('change');
+        // $(countrySelect).val($(countrySelect).find(':first')[0].value).trigger('change');
+
+        $("#country").select2( {
+            placeholder: "Select Country",
+        } );
     }
   });
 
@@ -172,7 +173,7 @@ $('.close-modal-button').click(function (event) {
     $('#status')[0].value = ''
   }
 
-  $('.product-order-area').toArray().forEach((productsSelect) => {
+  $('#modalAdd .product-order-area').toArray().forEach((productsSelect) => {
       // $(productsSelect).next().remove();
       productsSelect.remove();
   });
@@ -212,7 +213,8 @@ function addProduct (products, product) {
     productNode.find('.product-select').eq(0).select2({
         placeholder: "Select Product",
     });
-    select.change(function (e) {
+    select.on('select2:select', function (e) {
+        console.log(this)
         $('option').toArray().forEach(function (option) {
             $(option).attr('disabled', false)
         });
@@ -238,7 +240,7 @@ function addProduct (products, product) {
             });
         })
     });
-    select.change();
+    select.trigger('select2:select');
 }
 
 function createOrderProducts () {
@@ -324,6 +326,7 @@ function sendEntityAjax (data, type, entityPath = '') {
     },
     error: (errorEvent) => {
       let errors = errorEvent.responseJSON;
+      console.log(errors)
       Object.keys(errors).forEach((error) => {
         $(`#${error}`).eq(0).addClass('is-invalid');
         $(`#${error}`).eq(0).parent().find('small')[0].innerText = errors[error][0];
@@ -364,7 +367,7 @@ $('.add-product-select').click(function (event) {
         select.select2({
             placeholder: "Select Product"
         });
-        select.change(function (e) {
+        select.on('change', function (e) {
             $('option').toArray().forEach(function (option) {
                 $(option).attr('disabled', false)
             });
@@ -384,16 +387,13 @@ $('.add-product-select').click(function (event) {
                 })
             })
             $('.product-select.product-order-select').toArray().forEach(function (select) {
-                try {
-                    $(select).select2('destroy');
-                } catch (e) {
-                }
+                try { $(select).select2('destroy'); } catch (e) {}
                 $(select).select2({
                     placeholder: "Select Product",
                 });
             })
         });
-        select.change();
+        select.trigger('select2:select');
     }
 });
 
@@ -401,6 +401,9 @@ $('.add-product-select').click(function (event) {
 
 $('#modalAdd').on('shown.bs.modal', function (e) {
     if(e.relatedTarget){
+        $('.form-group.display-none').toArray().forEach(function (control){
+            control.setAttribute('style', 'display: block!important')
+        })
         $.ajax({
             type: 'GET',
             url: `/api/product?all_auth=true`,

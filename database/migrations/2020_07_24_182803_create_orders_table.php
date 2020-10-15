@@ -28,7 +28,7 @@ class CreateOrdersTable extends Migration
             $table->string('zip_postal_code', 255);
             $table->string('state_region', 255);
             $table->string('country', 255);
-            $table->string('phone', 30);
+            $table->string('phone', 30)->nullable();
             $table->enum('shipping_company', ['USPS', 'FedEx', 'DHL', 'UPS', 'APC']);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
