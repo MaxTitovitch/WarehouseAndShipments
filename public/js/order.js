@@ -1,7 +1,7 @@
 window.onerror = null;
 
 $(document).ready(function () {
-    if($('#dtEntityTable td').length) {
+    // if($('#dtEntityTable td').length) {
         $('#dtEntityTable').DataTable({
             "paging": true,
             order: [[0, "desc"]],
@@ -10,7 +10,10 @@ $(document).ready(function () {
                 targets: -1
             }]
         });
-    }
+        let top1 = $('.text-full-size').eq(0).closest('div').offset().top;
+        let pag = $('.main-container .dataTables_paginate').closest('.row');
+        pag.css({"top": top1 - pag.height(), position: 'absolute', left: 0});
+    // }
   $.ajax({
     type: "GET",
     url: "/api/countries",

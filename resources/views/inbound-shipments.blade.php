@@ -5,64 +5,84 @@
 @endsection
 
 @section('content')
-    @if(Auth::user()->role != 'Admin')
-        <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-shipment" data-toggle="modal"
-                data-target="#modalAdd">Add New
-        </button>
-    @endif
+    <div class="main-container">
+        @if(Auth::user()->role != 'Admin')
+            <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-shipment" data-toggle="modal"
+                    data-target="#modalAdd">Add New
+            </button>
+        @endif
 
-    <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
-        @csrf
-        <input type="hidden" name="type" value="shipments" class="display-none">
-        <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
-        <input id="import-submit" type="submit" value="Submit" class="display-none">
-{{--        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>--}}
-    </form>
+        <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="type" value="shipments" class="display-none">
+            <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
+            <input id="import-submit" type="submit" value="Submit" class="display-none">
+    {{--        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>--}}
+        </form>
 
-    <a href="{{route('exportShipments')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
+        <a href="{{route('exportShipments')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
 
-    <div class="table-container">
-        <table class="table table-bordered table-striped table-hover" id="dtEntityTable">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col" class="th-sm">ID</th>
-                @if (Auth::user()->role == 'Admin')
-                    <th scope="col" class="th-sm">User</th>
-                @endif
-                <th scope="col" class="th-sm">Created</th>
-                <th scope="col" class="th-sm">Shipped</th>
-                <th scope="col" class="th-sm">Received</th>
-                <th scope="col" class="th-sm">Tracking number</th>
-                <th scope="col" class="th-sm">Shipping company</th>
-                <th scope="col" class="th-sm">Comment</th>
-                <th scope="col" class="th-sm">Quantity</th>
-                <th scope="col" class="th-sm">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($shipments as $shipment)
+        <div class="table-container">
+            <table class="table table-bordered table-striped table-hover" id="dtEntityTable">
+                <thead class="thead-dark">
                 <tr>
-                    <th scope="row">{{ $shipment->id }}</th>
+                    <th scope="col" class="th-sm">ID</th>
                     @if (Auth::user()->role == 'Admin')
-                        <td>{{ $shipment->user->name }} ({{ $shipment->user->suite }})</td>
+                        <th scope="col" class="th-sm">User</th>
                     @endif
-                    <td>{{ $shipment->created_at->format('Y-m-d') }}</td>
-                    <td>{{ $shipment->shipped }}</td>
-                    <td>{{ $shipment->received }}</td>
-                    <td>{{ $shipment->tracking_number }}</td>
-                    <td>{{ $shipment->shipping_company }}</td>
-                    <td>{{ $shipment->comment }}</td>
-                    <td>{{ $shipment->quantity }}</td>
-                    <td>
-                        <a href="#" class="show-shipment text-dark font-weight-bold show-entity-button" data-value-id="{{ $shipment->id }}">Show</a>
-                        @if(Auth::user()->role == 'Admin' || $shipment->received == null)
-                            <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $shipment->id }}">Edit</a>
-                        @endif
-                    </td>
+                    <th scope="col" class="th-sm">Created</th>
+                    <th scope="col" class="th-sm">Shipped</th>
+                    <th scope="col" class="th-sm">Received</th>
+                    <th scope="col" class="th-sm">Tracking number</th>
+                    <th scope="col" class="th-sm">Shipping company</th>
+                    <th scope="col" class="th-sm">Comment</th>
+                    <th scope="col" class="th-sm">Quantity</th>
+                    <th scope="col" class="th-sm">Action</th>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach($shipments as $shipment)
+                    <tr>
+                        <th scope="row">{{ $shipment->id }}</th>
+                        @if (Auth::user()->role == 'Admin')
+                            <td>{{ $shipment->user->name }} ({{ $shipment->user->suite }})</td>
+                        @endif
+                        <td>{{ $shipment->created_at->format('Y-m-d') }}</td>
+                        <td>{{ $shipment->shipped }}</td>
+                        <td>{{ $shipment->received }}</td>
+                        <td>{{ $shipment->tracking_number }}</td>
+                        <td>{{ $shipment->shipping_company }}</td>
+                        <td>{{ $shipment->comment }}</td>
+                        <td>{{ $shipment->quantity }}</td>
+                        <td>
+                            <a href="#" class="show-shipment text-dark font-weight-bold show-entity-button" data-value-id="{{ $shipment->id }}">Show</a>
+                            @if(Auth::user()->role == 'Admin' || $shipment->received == null)
+                                <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $shipment->id }}">Edit</a>
+                            @endif
+                            @if($shipment->received == null && Auth::user()->role != 'Admin')
+                                <a href="#" class="show-shipment text-dark font-weight-bold delete-entity-button"
+                                   data-value-id="{{ $shipment->id }}">Delete</a>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound shipments</a>
+                <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
+                <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
+                @if(\Illuminate\Support\Facades\Auth::user())
+                    @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
+                        <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+                    @endif
+                @endif
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -163,39 +183,39 @@
                     <form>
                         <div class="form-group">
                             <label class="font-weight-bold"  for="showId">ID</label>
-                            <span class="form-control form-control-height " id="showId">  ssd sdf ssd xsdfs dfsd f sdf sdf sd f</span>
+                            <span class="form-control form-control-height " id="showId"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showUser">User</label>
-                            <span class="form-control form-control-height " id="showUser">  ssdxdfs dfsd f sdf sdf sd f</span>
+                            <span class="form-control form-control-height " id="showUser"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showShipped">Shipped</label>
-                            <span class="form-control form-control-height " id="showShipped">  ssd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <span class="form-control form-control-height " id="showShipped"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showReceived">Received</label>
-                            <span class="form-control form-control-height " id="showReceived">  ssf ssd fsd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <span class="form-control form-control-height " id="showReceived"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showCompany">Shipping company</label>
-                            <span class="form-control form-control-height " id="showCompany">  ssd sdf ssd sdf sdfs dfsd f sdf sdf sd f</span>
+                            <span class="form-control form-control-height " id="showCompany"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showTrackingNumber">Tracking number</label>
-                            <span class="form-control form-control-height " id="showTrackingNumber">  ssdd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <span class="form-control form-control-height " id="showTrackingNumber"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showComment">Comment</label>
-                            <span class="form-control form-control-height " id="showComment">  ssd sdf ssd sdf sdfs dfsd f sdf sdf sd f</span>
+                            <span class="form-control form-control-height " id="showComment"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showQuantity">Quantity</label>
-                            <span class="form-control form-control-height " id="showQuantity">  ssd sdf ssd fsd fsd fsd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <span class="form-control form-control-height " id="showQuantity"></span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="showCreated">Created</label>
-                            <span class="form-control form-control-height " id="showCreated">  ssd sdf ssd fsd fsd fsdf sdd fsdf sdfs dfsd f sdf sdf sd f</span>
+                            <span class="form-control form-control-height " id="showCreated"></span>
                         </div>
 
                         <div class="form-group">

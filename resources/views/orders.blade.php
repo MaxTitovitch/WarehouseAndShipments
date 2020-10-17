@@ -6,75 +6,91 @@
 
 @section('content')
 
-    @if(Auth::user()->role != 'Admin')
-    <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
-            data-target="#modalAdd">Add New
-    </button>
-    @endif
+    <div class="main-container">
+        @if(Auth::user()->role != 'Admin')
+        <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
+                data-target="#modalAdd">Add New
+        </button>
+        @endif
 
-    <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
-        @csrf
-        <input type="hidden" name="type" value="products" class="display-none">
-        <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
-        <input id="import-submit" type="submit" value="Submit" class="display-none">
-{{--        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>--}}
-    </form>
+        <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="type" value="products" class="display-none">
+            <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
+            <input id="import-submit" type="submit" value="Submit" class="display-none">
+    {{--        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>--}}
+        </form>
 
-    <a href="{{route('exportOrders')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
+        <a href="{{route('exportOrders')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
 
-    <div class="table-container">
-        <table class="table table-bordered table-striped table-hover" id="dtEntityTable">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col" class="th-sm">ID</th>
-                @if (Auth::user()->role == 'Admin')
-                    <th scope="col" class="th-sm">User</th>
-                @endif
-                <th scope="col" class="th-sm">Created</th>
-                <th scope="col" class="th-sm">Shipped</th>
-                <th scope="col" class="th-sm">Tracking number</th>
-                <th scope="col" class="th-sm">Order Status</th>
-                <th scope="col" class="th-sm">Shipping cost</th>
-                <th scope="col" class="th-sm">Customer</th>
-                <th scope="col" class="th-sm">Comment</th>
-                <th scope="col" class="th-sm">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($orders as $order)
+        <div class="table-container">
+            <table class="table table-bordered table-striped table-hover" id="dtEntityTable">
+                <thead class="thead-dark">
                 <tr>
-                    <th scope="row">{{ $order->id }}</th>
+                    <th scope="col" class="th-sm">ID</th>
                     @if (Auth::user()->role == 'Admin')
-                        <td>{{ $order->user->name }} ({{ $order->user->suite }})</td>
+                        <th scope="col" class="th-sm">User</th>
                     @endif
-                    <td>{{ $order->created_at->format('Y-m-d') }}</td>
-                    <td>{{ $order->shipped }}</td>
-                    <td>{{ $order->tracking_number }}</td>
-                    <td>{{ $order->status }}</td>
-                    <td>{{ $order->shipping_cost }}</td>
-                    <td>{{ $order->customer }}</td>
-                    <td>{{ $order->comment }}</td>
-                    <td>
-                        <a href="#" class="show-product text-dark font-weight-bold show-entity-button"
-                           data-value-id="{{ $order->id }}">Show</a>
-                        @if(Auth::user()->role == 'Admin' || $order->shipped == null)
-                            <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button"
-                                data-value-id="{{ $order->id }}">Edit</a>
-                        @endif
-                        @if($order->status == 'Created')
-                        <a href="#" class="show-product text-dark font-weight-bold delete-entity-button"
-                           data-value-id="{{ $order->id }}">Delete</a>
-                        @endif
-
-                        @if(Auth::user()->role != 'Admin')
-                        <a href="#" class="show-product text-dark font-weight-bold copy-entity-button"
-                           data-value-id="{{ $order->id }}">Copy</a>
-                        @endif
-                    </td>
+                    <th scope="col" class="th-sm">Created</th>
+                    <th scope="col" class="th-sm">Shipped</th>
+                    <th scope="col" class="th-sm">Tracking number</th>
+                    <th scope="col" class="th-sm">Order Status</th>
+                    <th scope="col" class="th-sm">Shipping cost</th>
+                    <th scope="col" class="th-sm">Customer</th>
+                    <th scope="col" class="th-sm">Comment</th>
+                    <th scope="col" class="th-sm">Actions</th>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach($orders as $order)
+                    <tr>
+                        <th scope="row">{{ $order->id }}</th>
+                        @if (Auth::user()->role == 'Admin')
+                            <td>{{ $order->user->name }} ({{ $order->user->suite }})</td>
+                        @endif
+                        <td>{{ $order->created_at->format('Y-m-d') }}</td>
+                        <td>{{ $order->shipped }}</td>
+                        <td>{{ $order->tracking_number }}</td>
+                        <td>{{ $order->status }}</td>
+                        <td>{{ $order->shipping_cost }}</td>
+                        <td>{{ $order->customer }}</td>
+                        <td>{{ $order->comment }}</td>
+                        <td>
+                            <a href="#" class="show-product text-dark font-weight-bold show-entity-button"
+                               data-value-id="{{ $order->id }}">Show</a>
+                            @if(Auth::user()->role == 'Admin' || $order->shipped == null)
+                                <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button"
+                                    data-value-id="{{ $order->id }}">Edit</a>
+                            @endif
+                            @if($order->status == 'Created')
+                            <a href="#" class="show-product text-dark font-weight-bold delete-entity-button"
+                               data-value-id="{{ $order->id }}">Delete</a>
+                            @endif
+
+                            @if(Auth::user()->role != 'Admin')
+                            <a href="#" class="show-product text-dark font-weight-bold copy-entity-button"
+                               data-value-id="{{ $order->id }}">Copy</a>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound shipments</a>
+                <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
+                <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
+                @if(\Illuminate\Support\Facades\Auth::user())
+                    @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
+                        <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+                    @endif
+                @endif
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -335,6 +351,8 @@
             </div>
         </div>
     </div>
+
+
 @endsection
 
 @section('scripts')

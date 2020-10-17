@@ -1,7 +1,7 @@
 window.onerror = null;
 
 $(document).ready(function () {
-    if($('#dtEntityTable td').length) {
+    // if($('#dtEntityTable td').length) {
         $('#dtEntityTable').DataTable({
             "paging": true,
             order: [[0, "desc"]],
@@ -11,7 +11,10 @@ $(document).ready(function () {
             }]
         });
         $('.dataTables_length').addClass('bs-select');
-    }
+    let top1 = $('.text-full-size').eq(0).closest('div').offset().top;
+    let pag = $('.main-container .dataTables_paginate').closest('.row');
+    pag.css({"top": top1 - pag.height(), position: 'absolute', left: 0});
+    // }
 });
 
 let id = 0, showId = 0;
@@ -324,5 +327,14 @@ $('#modalAdd').on('shown.bs.modal', function (e) {
                 addProduct(products, {pivot: {quantity: ''}})
             }
         })
+    }
+})
+
+$('.delete-entity-button').click(function (event) {
+    event.preventDefault();
+
+    if(confirm('This shipment will be deleted. Shall we continue?')) {
+        let deleteId = $(this).data('value-id');
+        sendEntityAjax({}, "DELETE", `/${deleteId}`);
     }
 })

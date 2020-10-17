@@ -90,6 +90,7 @@ $('[type="date"]').toArray().forEach((element) => {
 //   } );
 // });
 
+
 let lastUser = {name: $('#personal-name')[0].value, email: $('#personal-email')[0].value};
 
 $('#updateUserData').submit(function (event) {

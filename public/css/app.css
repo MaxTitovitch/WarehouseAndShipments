@@ -52,7 +52,16 @@ body {
 
 .dashboard-table-div{
     width: 80%;
+    min-height: 100vh;
     margin: 0 auto;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.dashboard-table-div>div{
+    width: 100%;
 }
 
 .choose-file{
@@ -91,7 +100,7 @@ body {
 div.show-product-container {
     display: flex;
 }
-.bg-dark{background-color:#343a40!important}a.bg-dark:focus,a.bg-dark:hover,button.bg-dark:focus,button.bg-dark:hover{background-color:#1d2124!important}
+.bg-dark{background-color:#232531!important}a.bg-dark:focus,a.bg-dark:hover,button.bg-dark:focus,button.bg-dark:hover{background-color:#1d2124!important}
 
 table.dataTable thead .sorting:after,
 table.dataTable thead .sorting:before,
@@ -201,8 +210,25 @@ select.form-control.product-order-select {
 
 .text-full-size {
     font-size: 1.1em;
+    margin-bottom: 10px;
 }
 
+.dataTables_wrapper {
+    width: 100%;
+    /*padding-right: 15px;*/
+    /*padding-left: 15px;*/
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.dataTables_wrapper>.row {
+    padding-right: 0!important;
+    padding-left: 0!important;
+}
+.dataTables_wrapper>.row>.col-sm-12 {
+     padding-right: 0!important;
+    padding-left: 30px!important;
+}
 
 @media screen and (max-width: 767px) {
     .dashboard-table-div{
@@ -242,10 +268,10 @@ select.form-control.product-order-select {
 }
 
 .form-control.quantity {
-    width: 20% !important;
+    width: 13% !important;
 }
 .product-shipment-select+.select2.select2-container {
-    width: 75% !important;
+    width: 87% !important;
 }
 
 .select2.select2-container+.select2.select2-container {

@@ -8,6 +8,9 @@ $(document).ready(function () {
         }]
     });
     $('.dataTables_length').addClass('bs-select');
+    let top1 = $('.text-full-size').eq(0).closest('div').offset().top;
+    let pag = $('.main-container .dataTables_paginate').closest('.row');
+    pag.css({"top": top1 - pag.height(), position: 'absolute', left: 0});
 });
 
 let id = 0, showId = 0, table = null;

@@ -113,7 +113,7 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $order = Order::find($id);
-        if(Auth::id() === $order->user_id) {
+        if(Auth::id() === $order->user_id || Auth::user()->role == 'Admin') {
             $order->products()->sync([]);
             $this->updateProducts();
 //            $order->user->sendOrderNotification($order);

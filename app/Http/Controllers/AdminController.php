@@ -123,8 +123,13 @@ class AdminController extends Controller
     }
 
     private function getBalanceHistory($dates) {
-        $histories = BalanceHistory::whereRaw("created_at >= \"${dates['date_start']} 00:00:00\" ")
-            ->whereRaw("created_at <= \"${dates['date_end']} 23:59:59\"")->where('user_id', Auth::id())->orderBy('created_at')->get();
+        if(Auth::user()->role == 'Admin') {
+            $histories = BalanceHistory::whereRaw("created_at >= \"${dates['date_start']} 00:00:00\" ")
+                ->whereRaw("created_at <= \"${dates['date_end']} 23:59:59\"")->orderBy('created_at')->get();
+        } else {
+            $histories = BalanceHistory::whereRaw("created_at >= \"${dates['date_start']} 00:00:00\" ")
+                ->whereRaw("created_at <= \"${dates['date_end']} 23:59:59\"")->where('user_id', Auth::id())->orderBy('created_at')->get();
+        }
         $result = [];
         foreach ($histories as $history) {
             $date = explode(' ', $history->created_at)[0];

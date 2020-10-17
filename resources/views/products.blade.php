@@ -5,22 +5,23 @@
 @endsection
 
 @section('content')
-    @if(Auth::user()->role != 'Admin')
-        <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
-                data-target="#modalAdd">Add New
-        </button>
-    @endif
+    <div class="main-container">
+        @if(Auth::user()->role != 'Admin')
+            <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
+                    data-target="#modalAdd">Add New
+            </button>
+        @endif
 
-    <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
-        @csrf
-        <input type="hidden" name="type" value="products" class="display-none">
-        <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
-        <input id="import-submit" type="submit" value="Submit" class="display-none">
-{{--        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>--}}
-    </form>
-    <a href="{{route('exportProducts')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
+        <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="type" value="products" class="display-none">
+            <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
+            <input id="import-submit" type="submit" value="Submit" class="display-none">
+    {{--        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>--}}
+        </form>
+        <a href="{{route('exportProducts')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
 
-    <div class="table-container">
+        <div class="table-container">
         <table class="table table-bordered table-striped table-hover" id="dtEntityTable">
             <thead class="thead-dark">
             <tr>
@@ -65,6 +66,22 @@
             @endforeach
             </tbody>
         </table>
+    </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound shipments</a>
+                <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
+                <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
+                @if(\Illuminate\Support\Facades\Auth::user())
+                    @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
+                        <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+                    @endif
+                @endif
+            </div>
+        </div>
     </div>
 @endsection
 

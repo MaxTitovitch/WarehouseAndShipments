@@ -98,4 +98,18 @@ class ShipmentController extends Controller
         }
 
     }
+    public function destroy($id)
+    {
+        $shipment = Shipment::find($id);
+        if(Auth::id() === $shipment->user_id || Auth::user()->role == 'Admin') {
+            $shipment->products()->sync([]);
+            $this->updateProducts();
+//            $order->user->sendOrderNotification($order);
+            Session::flash('success', 'Shipment deleted!');
+            return response()->json(Shipment::destroy($id), 200);
+        } else {
+            Session::flash('error', 'It isn\'t your shipment!');
+            return response()->json(null, 200);
+        }
+    }
 }
