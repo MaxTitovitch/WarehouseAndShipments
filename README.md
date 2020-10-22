@@ -12,4 +12,7 @@ This is a warehouse logistics management system
 4) Run `php artisan db:seed` command
 5) Run `php artisan key:generate` command 
 
+
 # Written by: `Laravel` `JS` `Bootstrap`
+
+<a href="https://github.com/MaxTitovitch">Max Titovitch</a>
