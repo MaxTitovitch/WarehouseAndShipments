@@ -13,3 +13,5 @@ This is a warehouse logistics management system
 5) Run `php artisan key:generate` command 
 
 # Written by: `Laravel` `JS` `Bootstrap`
+
+    <a href="https://github.com/MaxTitovitch">MaxTitovitch</a>
