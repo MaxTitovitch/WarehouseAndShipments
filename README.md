@@ -14,4 +14,4 @@ This is a warehouse logistics management system
 
 # Written by: `Laravel` `JS` `Bootstrap`
 
-    <a href="https://github.com/MaxTitovitch">Max Titovitch</a>
+<a href="https://github.com/MaxTitovitch">Max Titovitch</a>
