@@ -11,9 +11,12 @@ $(document).ready(function () {
             }]
         });
         $('.dataTables_length').addClass('bs-select');
-    let top1 = $('.text-full-size').eq(0).closest('div').offset().top;
-    let pag = $('.main-container .dataTables_paginate').closest('.row');
-    pag.css({"top": top1 - pag.height(), position: 'absolute', left: 0});
+
+    if( !(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) ) {
+        let top1 = $('.text-full-size').eq(0).closest('div').offset().top;
+        let pag = $('.main-container .dataTables_paginate').closest('.row');
+        pag.css({"top": top1 - pag.height(), position: 'absolute', left: 0});
+    }
     // }
 });
 
@@ -210,8 +213,8 @@ function createProductShipment () {
 
 
 $('.form-submit').submit(function (event) {
-  if (true) {
     event.preventDefault()
+    $('.form-submit button[type="submit"]').prop('disabled', true);
     let entity = {
       _token: $('.modal [name="_token"]')[0].value,
       tracking_number: $('#tracking_number')[0].value,
@@ -230,7 +233,6 @@ $('.form-submit').submit(function (event) {
     } else {
       sendEntityAjax(entity, "PUT", `/${id}`);
     }
-  }
 })
 
 function sendEntityAjax (data, type, entityPath = '') {
@@ -249,6 +251,7 @@ function sendEntityAjax (data, type, entityPath = '') {
       let errors = errorEvent.responseJSON;
       console.log(errorEvent)
       Object.keys(errors).forEach((error) => {
+      $('.form-submit button[type="submit"]').prop('disabled', false);
         $(`#${error}`).eq(0).addClass('is-invalid');
         $(`#${error}`).eq(0).next('small')[0].innerText = errors[error][0];
       });

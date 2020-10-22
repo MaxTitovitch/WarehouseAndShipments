@@ -92,11 +92,11 @@ class OrderController extends Controller
                 $this->copyModelFromRequest($order, $cloneableOrder, false);
                 $this->syncCloneProducts($order, $cloneableOrder->products);
 
-                if($balanceHistory) {
-                    $balanceHistory->save();
-                    $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
-                    $user->save();
-                }
+//                if($balanceHistory) {
+//                    $balanceHistory->save();
+//                    $user->balance += ($balanceHistory->type === 'Debit' ? -1 : 1) * $balanceHistory->transaction_cost;
+//                    $user->save();
+//                }
                 $this->updateProducts();
                 Session::flash('success', 'Order copied!');
                 return response()->json($order, 200);
@@ -187,7 +187,7 @@ class OrderController extends Controller
     }
 
     private function createBalanceHistory($transactionCost, User $user, $order) {
-        if($user->balance - $transactionCost >= 0) {
+
             $balanceHistory = new BalanceHistory();
             $balanceHistory->user_id = $user->id;
             $balanceHistory->current_balance = $user->balance - $transactionCost;
@@ -195,15 +195,12 @@ class OrderController extends Controller
             $balanceHistory->type = 'Debit';
             $balanceHistory->comment = "Order ID: " . $order->id;
             return $balanceHistory;
-        } else {
-            return false;
-        }
+
     }
 
     private function updateBalanceHistory(OrderRequest $request, User $user, Order $lastOrder) {
         $transactionCost = $this->calculateDifferenceBalance($request, $lastOrder, $user);
 
-        if($user->balance - $transactionCost >= 0) {
             $balanceHistory = new BalanceHistory();
             $balanceHistory->user_id = $user->id;
             $balanceHistory->current_balance = $user->balance - $transactionCost;
@@ -211,9 +208,7 @@ class OrderController extends Controller
             $balanceHistory->type = $transactionCost > 0 ? 'Debit' : 'Credit';
             $balanceHistory->comment = "Order ID: {$lastOrder->id}";
             return $balanceHistory;
-        } else {
-            return false;
-        }
+
     }
 
     private function calculateBalance(OrderRequest $request, User $user) {

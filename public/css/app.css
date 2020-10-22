@@ -232,7 +232,7 @@ select.form-control.product-order-select {
 
 @media screen and (max-width: 767px) {
     .dashboard-table-div{
-        width: 100%;
+        width: 100% !important;
     }
 
     .sidenav-mobile {
@@ -243,6 +243,9 @@ select.form-control.product-order-select {
         width: 50%;
     }
 
+    .text-center-mobile {
+        text-align: center;
+    }
 }
 
 @media screen and (min-width: 768px) {

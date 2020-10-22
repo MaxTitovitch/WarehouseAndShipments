@@ -10,9 +10,11 @@ $(document).ready(function () {
                 targets: -1
             }]
         });
+    if( !(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) ) {
         let top1 = $('.text-full-size').eq(0).closest('div').offset().top;
         let pag = $('.main-container .dataTables_paginate').closest('.row');
         pag.css({"top": top1 - pag.height(), position: 'absolute', left: 0});
+    }
     // }
   $.ajax({
     type: "GET",
@@ -262,7 +264,8 @@ function createOrderProducts () {
 
 $('.form-submit').submit(function (event) {
   if (true) {
-    event.preventDefault()
+    event.preventDefault();
+      $('.form-submit button[type="submit"]').prop('disabled', true);
     let entity = {
       _token: $('.modal [name="_token"]')[0].value,
       customer: $('#customer')[0].value,
@@ -331,6 +334,7 @@ function sendEntityAjax (data, type, entityPath = '') {
       let errors = errorEvent.responseJSON;
       console.log(errors)
       Object.keys(errors).forEach((error) => {
+          $('.form-submit button[type="submit"]').prop('disabled', false);
         $(`#${error}`).eq(0).addClass('is-invalid');
         $(`#${error}`).eq(0).parent().find('small')[0].innerText = errors[error][0];
       });

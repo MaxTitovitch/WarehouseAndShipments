@@ -8,9 +8,11 @@ $(document).ready(function () {
         }]
     });
     $('.dataTables_length').addClass('bs-select');
-    let top1 = $('.text-full-size').eq(0).closest('div').offset().top;
-    let pag = $('.main-container .dataTables_paginate').closest('.row');
-    pag.css({"top": top1 - pag.height(), position: 'absolute', left: 0});
+    if( !(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) ) {
+        let top1 = $('.text-full-size').eq(0).closest('div').offset().top;
+        let pag = $('.main-container .dataTables_paginate').closest('.row');
+        pag.css({"top": top1 - pag.height(), position: 'absolute', left: 0});
+    }
 });
 
 let id = 0, showId = 0, table = null;
@@ -108,6 +110,7 @@ $('.close-modal-button').click(function (event) {
 
 $('.form-submit').submit(function (event) {
     event.preventDefault();
+    $('.form-submit button[type="submit"]').prop('disabled', true);
     let entity = {
       _token: $('.modal [name="_token"]')[0].value,
       role: $('#role')[0].value,
@@ -151,6 +154,7 @@ function sendEntityAjax (data, type, entityPath = '') {
     error: (errorEvent) => {
       let errors = errorEvent.responseJSON;
       Object.keys(errors).forEach((error) => {
+          $('.form-submit button[type="submit"]').prop('disabled', false);
           try {
               $(`#${error}`).eq(0).addClass('is-invalid');
               $(`#${error}`).eq(0).next('small')[0].innerText = errors[error][0];
