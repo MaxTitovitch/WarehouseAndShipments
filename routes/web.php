@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'api'], function () {
     Route::put('/user/add-balance/{user}', 'UserController@addBalance')->name('user.add-balance');
     Route::put('/user/update/{user}', 'UserController@updateSelf')->name('user.self-update');
     Route::put('/user/change-password/{user}', 'UserController@changePassword')->name('user.changePassword');
-    Route::resource('shipment', 'ShipmentController', ['only' => ['show', 'store', 'update']]);
+    Route::resource('shipment', 'ShipmentController', ['only' => ['show', 'store', 'update', 'destroy']]);
     Route::resource('order', 'OrderController', ['only' => ['show', 'store', 'update', 'destroy']]);
     Route::post('/order/{order}', 'OrderController@copy')->name('order.copy');
     Route::get('/chart-data', 'AdminController@chartData')->name('chart-data');

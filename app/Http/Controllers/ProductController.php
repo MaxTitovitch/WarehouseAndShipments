@@ -24,6 +24,10 @@ class ProductController extends Controller
                 $products[] = $product->name;
             }
             return response()->json($products, 200);
+        } else if($request->all_id) {
+            return response()->json(Product::where('user_id', $request->all_id)->get(), 200);
+        } else if($request->all_auth) {
+            return response()->json(Product::where('user_id', Auth::id())->get(), 200);
         } else {
             return response()->json(Product::all(), 200);
         }

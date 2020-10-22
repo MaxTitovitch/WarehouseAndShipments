@@ -24,34 +24,34 @@ function changeDisplayShow () {
   $('.section-small').css({ display: display === 'none' ? 'block' : 'none' });
   return display;
 }
-
-let products = [];
-$(document).ready(() => {
-    if(location.pathname ==='/orders' || location.pathname === '/inbound-shipments') {
-        $.ajax({
-            type: "GET",
-            url: "/api/product",
-            success: (data) => {
-                products = data;
-                if ($('.product-select').toArray().length !== 0) {
-                    addProducts($('.product-select')[0]);
-                }
-                $(".product-select").val($(".product-select").find(':first')[0].value).trigger('change');
-            },
-        });
-    }
-});
-
-function addProducts(productSelect) {
-  if(productSelect) {
-    products.forEach((element) => {
-      let option = document.createElement('option');
-      option.innerText = element.name;
-      option.value = element.id;
-      productSelect.appendChild(option);
-    })
-  }
-}
+//
+// let products = [];
+// $(document).ready(() => {
+//     if(location.pathname ==='/orders' || location.pathname === '/inbound-shipments') {
+//         $.ajax({
+//             type: "GET",
+//             url: "/api/product",
+//             success: (data) => {
+//                 products = data;
+//                 if ($('.product-select').toArray().length !== 0) {
+//                     addProducts($('.product-select')[0]);
+//                 }
+//                 $(".product-select").val($(".product-select").find(':first')[0].value).trigger('change');
+//             },
+//         });
+//     }
+// });
+//
+// function addProducts(productSelect) {
+//   if(productSelect) {
+//     products.forEach((element) => {
+//       let option = document.createElement('option');
+//       option.innerText = element.name;
+//       option.value = element.id;
+//       productSelect.appendChild(option);
+//     })
+//   }
+// }
 
 $('#import-open').click(function (event) {
     $('#import-input').click();
@@ -89,6 +89,7 @@ $('[type="date"]').toArray().forEach((element) => {
 //       placeholder: "Select Product"
 //   } );
 // });
+
 
 let lastUser = {name: $('#personal-name')[0].value, email: $('#personal-email')[0].value};
 

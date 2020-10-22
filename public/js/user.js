@@ -1,18 +1,26 @@
 $(document).ready(function () {
-  $('#dtEntityTable').DataTable({
-    "paging": false,
-    order: [[ 0, "desc" ]],
-    columnDefs: [{
-      orderable: false,
-      targets: 6
-    }]
-  });
-  $('.dataTables_length').addClass('bs-select');
+    $('#dtEntityTable').DataTable({
+        "paging": true,
+        order: [[ 0, "desc" ]],
+        columnDefs: [{
+          orderable: false,
+          targets: -1
+        }]
+    });
+    $('.dataTables_length').addClass('bs-select');
+    if( !(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) ) {
+        let top1 = $('.text-full-size').eq(0).closest('div').offset().top;
+        let pag = $('.main-container .dataTables_paginate').closest('.row');
+        pag.css({"top": top1 - pag.height(), position: 'absolute', left: 0});
+    }
 });
 
-let id = 0, showId = 0
+let id = 0, showId = 0, table = null;
 $('.show-entity-button').click(function (event) {
   event.preventDefault()
+    if (table) {
+        table.destroy();
+    }
   showId = $(this).data('value-id')
   getEntityAjax(showId, (data) => {
       // console.log(data)
@@ -22,14 +30,20 @@ $('.show-entity-button').click(function (event) {
     $('#showUserEmail')[0].innerText = data.email;
     $('#showUserRole')[0].innerText = data.role;
     $('#showUserBalance')[0].innerText = data.balance;
+    $('#showUserFee')[0].innerText = data.fee;
     $('#showUserCreated')[0].innerText = data.created_at.split('T')[0];
     $('#balanceHistoryArea').eq(0).empty();
-    data.balance_histories = data.balance_histories.reverse().slice(0, 15);
+    // data.balance_histories = data.balance_histories.reverse();
     console.log(data.balance_histories)
     data.balance_histories.forEach((history) =>{
         addHistory( $('#balanceHistoryArea')[0], history)
     });
-
+      table = $('#dtEntityTableShow').DataTable({
+          "paging": true,
+          retrieve: true,
+          order: [[ 4, "desc" ]],
+      });
+      $('.dataTables_length').addClass('bs-select');
     $('#showModal').modal()
   })
 })
@@ -70,6 +84,7 @@ $('.edit-entity-button').click(function (event) {
     $('#userName')[0].innerText = data.name
     $('#userEmail')[0].innerText = data.email
     $('#role')[0].value = data.role
+    $('#fee')[0].value = data.fee
     // $('#balance')[0].value = data.balance
 
     $('#modalAdd').modal()
@@ -95,9 +110,11 @@ $('.close-modal-button').click(function (event) {
 
 $('.form-submit').submit(function (event) {
     event.preventDefault();
+    $('.form-submit button[type="submit"]').prop('disabled', true);
     let entity = {
       _token: $('.modal [name="_token"]')[0].value,
       role: $('#role')[0].value,
+      fee: $('#fee')[0].value,
       // balance: $('#balance')[0].value,
     }
     sendEntityAjax(entity, "PUT", `/${id}`);
@@ -116,8 +133,10 @@ $('#formBalance').submit(function (event) {
 
 $('.delete-entity-button').click(function (event) {
   event.preventDefault();
-  let deleteId = $(this).data('value-id');
-  sendEntityAjax({}, "DELETE", `/${deleteId}`);
+  if(confirm('This user will be deleted. Shall we continue?')) {
+      let deleteId = $(this).data('value-id');
+      sendEntityAjax({}, "DELETE", `/${deleteId}`);
+  }
 })
 
 function sendEntityAjax (data, type, entityPath = '') {
@@ -135,6 +154,7 @@ function sendEntityAjax (data, type, entityPath = '') {
     error: (errorEvent) => {
       let errors = errorEvent.responseJSON;
       Object.keys(errors).forEach((error) => {
+          $('.form-submit button[type="submit"]').prop('disabled', false);
           try {
               $(`#${error}`).eq(0).addClass('is-invalid');
               $(`#${error}`).eq(0).next('small')[0].innerText = errors[error][0];

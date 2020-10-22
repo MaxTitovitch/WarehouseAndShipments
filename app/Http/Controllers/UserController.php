@@ -23,7 +23,9 @@ class UserController extends Controller
 
     public function show($id)
     {
-        return response()->json(User::with('balanceHistories')->find($id), 200);
+        return response()->json(User::with(['balanceHistories' => function($query) {
+            $query->orderBy('created_at', 'DESC');
+        }])->find($id), 200);
     }
 
     public function update(UserRequest $request, $id)
@@ -31,6 +33,7 @@ class UserController extends Controller
         $user = User::find($id);
 //        $this->createBalanceHistory($user, $request->balance);
         $user->role = $request->role;
+        $user->fee = $request->fee;
 
         $user->save();
         Session::flash('success', 'User updated!');

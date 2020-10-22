@@ -16,13 +16,14 @@ class HttpsProtocol
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->secure()) {
-            return redirect()->secure($request->getRequestUri());
-        }
-
-        if (substr($request->header('host'), 0, 4) === 'www.') {
-            return redirect(env('APP_URL'));
-        }
+        // TODO https
+//        if (!$request->secure()) {
+//            return redirect()->secure($request->getRequestUri());
+//        }
+//
+//        if (substr($request->header('host'), 0, 4) === 'www.') {
+//            return redirect(env('APP_URL'));
+//        }
 
         return $next($request);
     }

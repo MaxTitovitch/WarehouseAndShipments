@@ -29,7 +29,6 @@ class OrderRequest extends FormRequest
             'zip_postal_code' => 'required|string|max:255',
             'state_region' => 'required|string|max:255',
             'country' => 'required|string|max:255',
-            'phone' => 'required',
 
             'status' => 'in:Created,Shipped',
             'shipping_cost' => 'numeric|nullable',

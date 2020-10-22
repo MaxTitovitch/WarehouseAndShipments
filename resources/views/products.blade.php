@@ -5,25 +5,41 @@
 @endsection
 
 @section('content')
-    <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
-            data-target="#modalAdd">Add New
-    </button>
+    <div class="main-container">
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
 
-    <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
-        @csrf
-        <input type="hidden" name="type" value="products" class="display-none">
-        <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
-        <input id="import-submit" type="submit" value="Submit" class="display-none">
-{{--        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>--}}
-    </form>
-    <a href="{{route('exportProducts')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+        @if(Auth::user()->role != 'Admin')
+            <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
+                    data-target="#modalAdd">Add New
+            </button>
+        @endif
 
-    <div class="table-container">
+        <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="type" value="products" class="display-none">
+            <input id="import-input" type="file" name="file" class="display-none" accept=".csv, .xlsx, .xls">
+            <input id="import-submit" type="submit" value="Submit" class="display-none">
+    {{--        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>--}}
+        </form>
+        <a href="{{route('exportProducts')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
+
+        <div class="table-container">
         <table class="table table-bordered table-striped table-hover" id="dtEntityTable">
             <thead class="thead-dark">
             <tr>
                 <th scope="col" class="th-sm">ID</th>
-                <th scope="col" class="th-sm">User</th>
+                @if (Auth::user()->role == 'Admin')
+                    <th scope="col" class="th-sm">User</th>
+                @endif
                 <th scope="col" class="th-sm">Created</th>
                 <th scope="col" class="th-sm">Reserved</th>
                 <th scope="col" class="th-sm">Available</th>
@@ -39,7 +55,9 @@
             @foreach($products as $product)
                 <tr>
                     <th scope="row">{{ $product->id }}</th>
-                    <td>{{ $product->user->name }} ({{ $product->user->suite }})</td>
+                    @if (Auth::user()->role == 'Admin')
+                        <td>{{ $product->user->name }} ({{ $product->user->suite }})</td>
+                    @endif
                     <td>{{ $product->created_at->format('Y-m-d') }}</td>
                     <td>{{ $product->received }}</td>
                     <td>{{ $product->available }}</td>
@@ -59,6 +77,22 @@
             @endforeach
             </tbody>
         </table>
+    </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 text-center-mobile">
+                <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound shipments</a>
+                <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
+                <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
+                @if(\Illuminate\Support\Facades\Auth::user())
+                    @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
+                        <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+                    @endif
+                @endif
+            </div>
+        </div>
     </div>
 @endsection
 

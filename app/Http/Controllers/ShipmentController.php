@@ -77,9 +77,10 @@ class ShipmentController extends Controller
     }
 
     private function updateProducts( ) {
-        foreach (Product::with('shipments')->get() as $product) {
+        foreach (Product::with('shipments')->with('orders')->get() as $product) {
             $product->in_transit = 0;
             $product->available = 0;
+            $product->received = 0;
             foreach ($product->shipments as $shipment) {
                 if($shipment->received == null) {
                     $product->in_transit += $shipment->pivot->quantity;
@@ -87,8 +88,28 @@ class ShipmentController extends Controller
                     $product->available += $shipment->pivot->quantity;
                 }
             }
+            foreach ($product->orders as $order) {
+                $product->available -= $order->pivot->quantity;
+                if($order->shipped == null) {
+                    $product->received += $order->pivot->quantity;
+                }
+            }
             $product->save();
         }
 
+    }
+    public function destroy($id)
+    {
+        $shipment = Shipment::find($id);
+        if(Auth::id() === $shipment->user_id || Auth::user()->role == 'Admin') {
+            $shipment->products()->sync([]);
+            $this->updateProducts();
+//            $order->user->sendOrderNotification($order);
+            Session::flash('success', 'Shipment deleted!');
+            return response()->json(Shipment::destroy($id), 200);
+        } else {
+            Session::flash('error', 'It isn\'t your shipment!');
+            return response()->json(null, 200);
+        }
     }
 }

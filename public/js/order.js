@@ -1,23 +1,21 @@
-
-
-
-$("#country").select2( {
-    placeholder: "Select Country",
-} );
-
-$(".product-order-select").select2( {
-    placeholder: "Select Product"
-} );
+window.onerror = null;
 
 $(document).ready(function () {
-  $('#dtEntityTable').DataTable({
-    "paging": false,
-    order: [[ 0, "desc" ]],
-    columnDefs: [{
-      orderable: false,
-      targets: 9
-    }]
-  });
+    // if($('#dtEntityTable td').length) {
+        $('#dtEntityTable').DataTable({
+            "paging": true,
+            order: [[0, "desc"]],
+            columnDefs: [{
+                orderable: false,
+                targets: -1
+            }]
+        });
+    if( !(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) ) {
+        let top1 = $('.text-full-size').eq(0).closest('div').offset().top;
+        let pag = $('.main-container .dataTables_paginate').closest('.row');
+        pag.css({"top": top1 - pag.height(), position: 'absolute', left: 0});
+    }
+    // }
   $.ajax({
     type: "GET",
     url: "/api/countries",
@@ -27,9 +25,16 @@ $(document).ready(function () {
         let option = document.createElement('option');
         option.innerText = element.name;
         option.value = element.name;
+        if(element.name == 'United States of America'){
+            option.setAttribute('selected', 'selected')
+        }
         countrySelect.appendChild(option);
       })
-        $(countrySelect).val($(countrySelect).find(':first')[0].value).trigger('change');
+        // $(countrySelect).val($(countrySelect).find(':first')[0].value).trigger('change');
+
+        $("#country").select2( {
+            placeholder: "Select Country",
+        } );
     }
   });
 
@@ -58,7 +63,7 @@ $('.show-entity-button').click(function (event) {
     $('#showOrderPhone')[0].innerText = data.phone
     $('#showOrderShippingCompany')[0].innerText = data.shipping_company
     $('#showOrderComment')[0].innerText = data.comment
-    $('#showOrderUser')[0].innerText = data.user.id
+    $('#showOrderUser')[0].innerText = `${data.user.name}, Suite: ${data.user.suite}`;
 
 
 
@@ -79,30 +84,14 @@ $('.show-entity-button').click(function (event) {
 });
 
 function createShowProduct (element, product) {
-  element.find('.show-product')[0].innerText = product.name
+  element.find('.show-upc')[0].innerText = product.upc;
+  element.find('.show-sku')[0].innerText = product.sku;
+  element.find('.show-brand')[0].innerText = product.brand;
+  element.find('.show-product')[0].innerText = product.name;
   element.find('.show-quantity')[0].innerText = product.pivot.quantity
   element.find('.show-price')[0].innerText = product.pivot.price
   element.find('.show-description')[0].innerText = product.pivot.description
 }
-
-let handler = function(products){
-    return function(event) {
-        let newFunc = function (){
-            setTimeout(function () {
-                $('.select2-results__option').toArray().forEach(function (option) {
-                    if(products.lastIndexOf(option.innerText) !== -1) {
-                        option.classList.add('hide-it');
-                    }
-                })
-            }, 250)
-        };
-        let height = $('.select2-dropdown').css('height');
-        newFunc();
-        $('.select2-dropdown').css({height});
-        $('.select2-search__field').keydown (newFunc);
-    }
-}
-let func = function (){}, idProd = 1;
 
 $('.edit-entity-button').click(function (event) {
   event.preventDefault();
@@ -138,22 +127,10 @@ $('.edit-entity-button').click(function (event) {
 
       $.ajax({
           type: 'GET',
-          url: `/api/product?id=` + data.user.id,
+          url: `/api/product?all_id=` + data.user.id,
           success: function (products){
-              func = handler(products);
-
-              let element = $('.product-container').eq(0);
-              element.next().remove();
-              addProduct(element, data.products.shift(), false)
-              $('.select2-selection').eq(idProd).bind('click', func);
-              idProd += 1;
               for (let i = 0; i < data.products.length; i++) {
-                  let clone = element.clone()
-                  addProduct(clone, data.products[i])
-                  clone.find('.select2.select2-container.select2-container--default').eq(1).remove()
-                  clone.appendTo('.products-container')
-                  $('.select2-selection').eq(idProd).bind('click', func);
-                  idProd += 1;
+                  addProduct(products, data.products[i])
               }
               $('#modalAdd').modal()
           }
@@ -201,35 +178,74 @@ $('.close-modal-button').click(function (event) {
     $('#status')[0].value = ''
   }
 
-  $('.product-container:not(:first-child)').toArray().forEach((productsSelect) => {
-      $(productsSelect).next().remove();
+  $('#modalAdd .product-order-area').toArray().forEach((productsSelect) => {
+      // $(productsSelect).next().remove();
       productsSelect.remove();
-  })
-  $('.product-select :first').attr('selected', 'true');
-  $('.product-container').find('.quantity')[0].value = '';
-  $('.product-container').find('.price')[0].value = '';
-  $('.product-container').find('.description')[0].value = '';
+  });
 
   $('.is-invalid').toArray().forEach((element) => {
     $(element).removeClass('is-invalid');
   });
+
   $('.form-text').toArray().forEach((element) => {
     element.innerText = '';
   });
-    $('.select2-selection').eq(1).unbind('click', func);
-    idProd = 1
+
 })
 
-function addProduct (element, product, isAdd = true) {
-    element.find('.product-select').eq(0).select2({
-        placeholder: "Select Product2",
+function addProduct (products, product) {
+    let container = $('.products-container');
+    let productNode = container.append('<div class="product-container product-order-area"></div>').find('.product-container').last();
+    let select = productNode.append('<select class="form-control product-select product-order-select"></select>').find('select');
+    products.forEach(function (prod){
+        let name = `${prod.brand} | ${prod.name} | ${prod.upc} | ${prod.sku} | In transit (${prod.in_transit}) | Available (${prod.available}) | Reserved (${prod.received})`;
+        select.append(`<option value="${prod.id}" ${prod.id === product.id ? 'selected' : ''}>${name}</option>`)
     });
-    if(product) {
-        element.find('.product-select').eq(0).val(product.id).trigger('change')
-        element.find('.product-order-quantity')[0].value = product.pivot.quantity
-        element.find('.product-order-price')[0].value = product.pivot.price
-        element.find('.product-order-description')[0].value = product.pivot.description
-    }
+    let a = productNode.append(
+        '<a href="#" class="remove-product-select product-order-remove">' +
+        '   <i class="fa fa-times fa-2x text-dark" aria-hidden="true"></i>' +
+        '</a>'
+    ).find('a').click(function (event) {
+        event.preventDefault();
+        $(this).closest('.product-container').eq(0).remove();
+    });
+    productNode.append(`<input type="number" class="form-control quantity product-order-quantity"` +
+        ` placeholder="Quantity" required min="1" max="10000" value="${product.pivot.quantity}">`);
+    productNode.append(`<input type="number" class="form-control price product-order-price"` +
+        ` placeholder="Price" min="1" max="10000" value="${product.pivot.price}">`);
+    productNode.append(`<textarea rows="1" style="resize: none;" class="form-control description product-order-description"` +
+        ` placeholder="Description" maxlength="10000">${product.pivot.description}</textarea>`);
+    productNode.find('.product-select').eq(0).select2({
+        placeholder: "Select Product",
+    });
+    select.on('select2:select', function (e) {
+        console.log(this)
+        $('option').toArray().forEach(function (option) {
+            $(option).attr('disabled', false)
+        });
+        let val = $(this).val()
+        $(this).find(`option`).toArray().forEach(function (opt) {
+            if ($(opt).val() == val) {
+                $(opt).attr('selected', true);
+            } else {
+                $(opt).attr('selected', false);
+            }
+        })
+        $('option[selected]').toArray().forEach(function (option) {
+            $(`option[value="${$(option).val()}"]`).toArray().forEach(function (optionOther) {
+                if (optionOther != option) {
+                    $(optionOther).attr('disabled', true)
+                }
+            })
+        })
+        $('.product-select.product-order-select').toArray().forEach(function (select) {
+            try { $(select).select2('destroy'); } catch (e) {}
+            $(select).select2({
+                placeholder: "Select Product",
+            });
+        })
+    });
+    select.trigger('select2:select');
 }
 
 function createOrderProducts () {
@@ -248,7 +264,8 @@ function createOrderProducts () {
 
 $('.form-submit').submit(function (event) {
   if (true) {
-    event.preventDefault()
+    event.preventDefault();
+      $('.form-submit button[type="submit"]').prop('disabled', true);
     let entity = {
       _token: $('.modal [name="_token"]')[0].value,
       customer: $('#customer')[0].value,
@@ -287,8 +304,11 @@ $('.form-submit').submit(function (event) {
 
 $('.delete-entity-button').click(function (event) {
   event.preventDefault();
-  let deleteId = $(this).data('value-id');
-  sendEntityAjax({}, "DELETE", `/${deleteId}`);
+
+    if(confirm('This order will be deleted. Shall we continue?')) {
+        let deleteId = $(this).data('value-id');
+        sendEntityAjax({}, "DELETE", `/${deleteId}`);
+    }
 })
 
 $('.copy-entity-button').click(function (event) {
@@ -312,7 +332,9 @@ function sendEntityAjax (data, type, entityPath = '') {
     },
     error: (errorEvent) => {
       let errors = errorEvent.responseJSON;
+      console.log(errors)
       Object.keys(errors).forEach((error) => {
+          $('.form-submit button[type="submit"]').prop('disabled', false);
         $(`#${error}`).eq(0).addClass('is-invalid');
         $(`#${error}`).eq(0).parent().find('small')[0].innerText = errors[error][0];
       });
@@ -323,42 +345,77 @@ function sendEntityAjax (data, type, entityPath = '') {
 
 
 $('.add-product-select').click(function (event) {
-    event.preventDefault();
-    let clone = $(".product-container").eq(0).clone();
-    let select = clone.find('.product-select').eq(0);
-    clone.find('.quantity')[0].value = '';
-    if(clone.find('.price')[0]) {
-        clone.find('.price')[0].value = '';
-    }
-    if(clone.find('.description')[0]) {
-        clone.find('.description')[0].value = '';
-    }
-    clone.find('.remove-product-select').click(function (event) {
+    if($('.product-select').eq(0).find('option').length > $('div.product-order-area').length) {
         event.preventDefault();
-        $(this).closest('.product-container').eq(0).remove();
-    });
-    clone.appendTo(".products-container");
+        let clone = $(".product-container").eq(0).clone();
+        let select = clone.find('.product-select').eq(0);
+        let options = select.find('option');
+        for (let i = 0; i < options.length; i++) {
+            if(!options.eq(i).attr('disabled')){
+                options.eq(i).attr('selected', true);
+                break;
+            }
+        }
+        clone.find('.quantity')[0].value = '';
+        if (clone.find('.price')[0]) {
+            clone.find('.price')[0].value = '';
+        }
+        if (clone.find('.description')[0]) {
+            clone.find('.description')[0].value = '';
+        }
+        clone.find('.remove-product-select').click(function (event) {
+            event.preventDefault();
+            $(this).closest('.product-container').eq(0).remove();
+        });
+        clone.appendTo(".products-container");
 
-    select.next('remove');
-    select.select2( {
-        placeholder: "Select Product"
-    } );
-    clone.find('.select2.select2-container.select2-container--default').eq(1).remove()
-    $('.select2-selection').eq(idProd).bind('click', func);
-    idProd += 1;
+        select.next('remove');
+        // select.select2('destroy')
+        select.select2({
+            placeholder: "Select Product"
+        });
+        select.on('change', function (e) {
+            $('option').toArray().forEach(function (option) {
+                $(option).attr('disabled', false)
+            });
+            let val = $(this).val()
+            $(this).find(`option`).toArray().forEach(function (opt) {
+                if ($(opt).val() == val) {
+                    $(opt).attr('selected', true);
+                } else {
+                    $(opt).attr('selected', false);
+                }
+            })
+            $('option[selected]').toArray().forEach(function (option) {
+                $(`option[value="${$(option).val()}"]`).toArray().forEach(function (optionOther) {
+                    if (optionOther != option) {
+                        $(optionOther).attr('disabled', true)
+                    }
+                })
+            })
+            $('.product-select.product-order-select').toArray().forEach(function (select) {
+                try { $(select).select2('destroy'); } catch (e) {}
+                $(select).select2({
+                    placeholder: "Select Product",
+                });
+            })
+        });
+        select.trigger('select2:select');
+    }
 });
 
 
 
 $('#modalAdd').on('shown.bs.modal', function (e) {
     if(e.relatedTarget){
+        $('.form-group.display-none').toArray().forEach(function (control){
+            control.setAttribute('style', 'display: block!important')
+        })
         $.ajax({
             type: 'GET',
-            url: `/api/product?auth=true`,
+            url: `/api/product?all_auth=true`,
             success: function (products){
-                func = handler(products);
-                $('.select2-selection').eq(idProd).bind('click', func);
-                idProd += 1;
+                addProduct(products, {pivot: {description: '', price: '', quantity: ''}})
             }
         })
     }
