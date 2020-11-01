@@ -11,7 +11,7 @@ $(document).ready(function () {
             }]
         });
     if( !(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) ) {
-        let top1 = $('.text-full-size').eq(0).closest('div').offset().top;
+        let top1 = $('.text-full-size').eq(0).offset().top - 50;
         let pag = $('.main-container .dataTables_paginate').closest('.row');
         pag.css({"top": top1 - pag.height(), position: 'absolute', left: 0});
     }
@@ -53,6 +53,7 @@ $('.show-entity-button').click(function (event) {
     $('#showOrderTrackingNumber')[0].innerText = data.tracking_number
     $('#showOrderAddress')[0].innerText = data.address
     $('#showOrderShippingCost')[0].innerText = data.shipping_cost
+    $('#showOrderFeeCost')[0].innerText = data.fee_cost
     $('#showOrderCity')[0].innerText = data.city
     $('#showOrderShipped')[0].innerText = data.shipped
     $('#showOrderPackingSelection')[0].innerText = data.packing_selection
@@ -118,6 +119,9 @@ $('.edit-entity-button').click(function (event) {
       if ($('#shipping_cost')[0]) {
         $('#shipping_cost')[0].value = data.shipping_cost
       }
+      if ($('#fee_cost')[0]) {
+        $('#fee_cost')[0].value = data.fee_cost
+      }
       if ($('#shipped')[0]) {
         $('#shipped')[0].value = data.shipped
       }
@@ -170,6 +174,9 @@ $('.close-modal-button').click(function (event) {
 
   if ($('#shipping_cost')[0]) {
     $('#shipping_cost')[0].value = ''
+  }
+  if ($('#fee_cost')[0]) {
+    $('#fee_cost')[0].value = ''
   }
   if ($('#shipped')[0]) {
     $('#shipped')[0].value = ''
@@ -287,6 +294,9 @@ $('.form-submit').submit(function (event) {
     if ($('#shipping_cost')[0]) {
       entity.shipping_cost = $('#shipping_cost')[0].value
     }
+    if ($('#fee_cost')[0]) {
+      entity.fee_cost = $('#fee_cost')[0].value
+    }
     if ($('#shipped')[0]) {
       entity.shipped = $('#shipped')[0].value
     }
@@ -336,7 +346,9 @@ function sendEntityAjax (data, type, entityPath = '') {
       Object.keys(errors).forEach((error) => {
           $('.form-submit button[type="submit"]').prop('disabled', false);
         $(`#${error}`).eq(0).addClass('is-invalid');
-        $(`#${error}`).eq(0).parent().find('small')[0].innerText = errors[error][0];
+        if($(`#${error}`).eq(0).parent().find('small')[0]) {
+            $(`#${error}`).eq(0).parent().find('small')[0].innerText = errors[error][0];
+        }
       });
     }
   })

@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('company_name', 255)->nullable();
             $table->enum('status', ['Created', 'Shipped'])->default('Created');
             $table->decimal('shipping_cost', 10, 2)->nullable();
+            $table->decimal('fee_cost', 10, 2)->nullable();
             $table->string('tracking_number', 255)->nullable();
             $table->date('shipped')->nullable();
             $table->enum('packing_selection', ['Bubbles Pack', 'Carton']);

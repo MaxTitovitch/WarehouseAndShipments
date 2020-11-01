@@ -118,6 +118,7 @@
                     shipments</span></a>
             <a href="{{ route('products') }}" class="text-white"><i class="fa fa-cube" aria-hidden="true"></i> <span class="full-text">Products</span></a>
             <a href="{{ route('orders') }}" class="text-white"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="full-text">Orders</span></a>
+            <a href="{{ route('balance') }}" class="text-white"><i class="fa fa-dollar" aria-hidden="true"></i> Balance</a>
             @if(\Illuminate\Support\Facades\Auth::user())
                 @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                     <a href="{{ route('users') }}" class="text-white"><i class="fa fa-users" aria-hidden="true"></i> <span class="full-text">Users</span></a>
@@ -129,6 +130,8 @@
             <a href="{{ route('inbound-shipments') }}" class="text-white text-center"><i class="fa fa-list-alt" aria-hidden="true"></i></a>
             <a href="{{ route('products') }}" class="text-white text-center"><i class="fa fa-cube" aria-hidden="true"></i></a>
             <a href="{{ route('orders') }}" class="text-white text-center"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+            <a href="{{ route('orders') }}" class="text-white text-center"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+            <a href="{{ route('balance') }}" class="text-white text-center"><i class="fa fa-dollar" aria-hidden="true"></i></a>
             @if(\Illuminate\Support\Facades\Auth::user())
                 @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                     <a href="{{ route('users') }}" class="text-white text-center"><i class="fa fa-users" aria-hidden="true"></i></a>

@@ -46,6 +46,7 @@
                     <th scope="col" class="th-sm">Shipped</th>
                     <th scope="col" class="th-sm">Tracking number</th>
                     <th scope="col" class="th-sm">Order Status</th>
+                    <th scope="col" class="th-sm">Fee cost</th>
                     <th scope="col" class="th-sm">Shipping cost</th>
                     <th scope="col" class="th-sm">Customer</th>
                     <th scope="col" class="th-sm">Comment</th>
@@ -63,6 +64,7 @@
                         <td>{{ $order->shipped }}</td>
                         <td>{{ $order->tracking_number }}</td>
                         <td>{{ $order->status }}</td>
+                        <td>{{ $order->fee_cost }}</td>
                         <td>{{ $order->shipping_cost }}</td>
                         <td>{{ $order->customer }}</td>
                         <td>{{ $order->comment }}</td>
@@ -89,12 +91,13 @@
             </table>
         </div>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid mt-5"">
         <div class="row">
             <div class="col-12 text-center-mobile">
                 <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound shipments</a>
                 <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
                 <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
+                <a href="{{ route('balance') }}" class="badge badge-dark text-full-size"><i class="fa fa-dollar" aria-hidden="true"></i> Balance</a>
                 @if(\Illuminate\Support\Facades\Auth::user())
                     @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                         <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
@@ -318,6 +321,8 @@
                             <span id="showOrderTrackingNumber"></span><br>
                             <strong>Shipping Cost: </strong><br>
                             <span id="showOrderShippingCost"></span><br>
+                            <strong>Fee Cost: </strong><br>
+                            <span id="showOrderFeeCost"></span><br>
                         </p>
                         <p class="col-6">
                             <strong>Created: </strong><br>

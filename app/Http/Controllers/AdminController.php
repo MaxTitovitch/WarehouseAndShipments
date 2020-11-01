@@ -89,6 +89,15 @@ class AdminController extends Controller
         return view('orders')->with(['orders' => $orders]);
     }
 
+    public function balance() {
+        if (Auth::user()->role === 'Admin') {
+            $balances = BalanceHistory::orderBy('id', 'desc')->get();
+        } else {
+            $balances = BalanceHistory::where('user_id', Auth::id())->orderBy('id', 'desc')->get();
+        }
+        return view('balance')->with(['balances' => $balances]);
+    }
+
     public function chartData(Request $request) {
         $dates = $this->getDates($request);
         $statistic = [

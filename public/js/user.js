@@ -9,7 +9,7 @@ $(document).ready(function () {
     });
     $('.dataTables_length').addClass('bs-select');
     if( !(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) ) {
-        let top1 = $('.text-full-size').eq(0).closest('div').offset().top;
+        let top1 = $('.text-full-size').eq(0).offset().top - 50;
         let pag = $('.main-container .dataTables_paginate').closest('.row');
         pag.css({"top": top1 - pag.height(), position: 'absolute', left: 0});
     }

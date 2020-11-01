@@ -51,7 +51,7 @@ class OrderController extends Controller
         $auth = Auth::user();
         if($user->id === $auth->id || $auth->role === 'Admin') {
             if($auth->role == 'Admin' && $order->shipping_cost == null){
-                $request->shipping_cost += $user->fee;
+                $request->fee_cost = $user->fee;
             }
             if($balanceHistory = $this->updateBalanceHistory($request, $user, $order)) {
                 if (!$order->shipped && $request->shipped) {
@@ -146,6 +146,9 @@ class OrderController extends Controller
         if(isset($request->shipping_cost) && $isAppendUnrequired) {
             $order->shipping_cost = $request->shipping_cost;
         }
+        if(isset($request->fee_cost) && $isAppendUnrequired) {
+            $order->fee_cost = $request->fee_cost;
+        }
         if(isset($request->shipped) && $isAppendUnrequired) {
             $order->shipped = $request->shipped;
         }
@@ -217,7 +220,7 @@ class OrderController extends Controller
 //            $newBalance += ( $order_product['price'] ?? 0 ) * $order_product['quantity'];
 //        }
 //        return $newBalance;
-        return ($request->shipping_cost ?? 0);
+        return ($request->shipping_cost ?? 0) + ($request->fee_cost ?? 0);
     }
 
     private function calculateCopyBalance(Order $order, User $user, $isWithShippingCost = true) {
@@ -227,7 +230,7 @@ class OrderController extends Controller
 //        }
 //        return $newBalance;
 //        return ($isWithShippingCost ? ($order->shipping_cost ?? 0) : 0) + $user->fee;
-        return ($order->shipping_cost ?? 0);
+        return ($order->shipping_cost ?? 0) + ($order->fee_cost ?? 0);
     }
 
     private function calculateDifferenceBalance(OrderRequest $request, Order $lastOrder, User $user) {
