@@ -6,6 +6,12 @@ $('#button-filter').click(function (event){
     location.href = '/?'
 });
 
+$('.data-href').toArray().forEach(function (element) {
+    $(element).click(function (event) {
+        location.href = $(this).data('href');
+    })
+});
+
 google.charts.load('current', {'packages':['corechart']});
 getChartData();
 

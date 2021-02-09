@@ -1,29 +1,31 @@
-let display = localStorage.getItem("display")
-if(!display){
-    display = 'none';
-    localStorage.setItem("display", display);
-}
-changeDisplayShow();
+$.ready(function (){
 
-$('.show-menu').click((event) => {
-  event.preventDefault();
-  display = display === 'none' ? 'block' : 'none';
-  changeDisplayShow();
-  localStorage.setItem("display", display);
-});
-
-$('.main-drop').click(function (e) {
-    if ($(this).closest('.main-drop').hasClass('show') && e.target.tagName !== 'A') {
-        e.stopPropagation()
+    let display = localStorage.getItem("display")
+    if(!display){
+        display = 'none';
+        localStorage.setItem("display", display);
     }
-});
+    changeDisplayShow();
 
-function changeDisplayShow () {
-  $('.section-big').css({ display: display });
-  $('.dashboard-table-div').css({ width: display === 'none' ? '95%' : '80%' });
-  $('.section-small').css({ display: display === 'none' ? 'block' : 'none' });
-  return display;
-}
+    $('.show-menu').click((event) => {
+        event.preventDefault();
+        display = display === 'none' ? 'block' : 'none';
+        changeDisplayShow();
+        localStorage.setItem("display", display);
+    });
+
+    $('.main-drop').click(function (e) {
+        if ($(this).closest('.main-drop').hasClass('show') && e.target.tagName !== 'A') {
+            e.stopPropagation()
+        }
+    });
+
+    function changeDisplayShow () {
+        $('.section-big').css({ display: display });
+        $('.dashboard-table-div').css({ width: display === 'none' ? '95%' : '80%' });
+        $('.section-small').css({ display: display === 'none' ? 'block' : 'none' });
+        return display;
+    }
 //
 // let products = [];
 // $(document).ready(() => {
@@ -53,105 +55,86 @@ function changeDisplayShow () {
 //   }
 // }
 
-$('#import-open').click(function (event) {
-    $('#import-input').click();
-});
+    $('#import-open').click(function (event) {
+        $('#import-input').click();
+    });
 
-$('#import-input').change(function (event) {
-    $('#import-submit').click();
-});
+    $('#import-input').change(function (event) {
+        $('#import-submit').click();
+    });
 
-$('[type="date"]').toArray().forEach((element) => {
-    let dateMin = new Date().setFullYear(new Date().getFullYear() - 10);
-    let dateMax = new Date().setFullYear(new Date().getFullYear() + 10);
-    element.setAttribute('min', new Date(dateMin).toISOString().split('T')[0]);
-    element.setAttribute('max', new Date(dateMax).toISOString().split('T')[0]);
-});
-
-// $('.add-product-select').click(function (event) {
-//   event.preventDefault();
-//   let clone = $(".product-container").eq(0).clone();
-//   let select = clone.find('.product-select').eq(0);
-//   clone.find('.quantity')[0].value = '';
-//   if(clone.find('.price')[0]) {
-//       clone.find('.price')[0].value = '';
-//   }
-//   if(clone.find('.description')[0]) {
-//       clone.find('.description')[0].value = '';
-//   }
-//   clone.find('.remove-product-select').click(function (event) {
-//     event.preventDefault();
-//     $(this).closest('.product-container').eq(0).remove();
-//   });
-//   clone.appendTo(".products-container");
-//   select.next('remove');
-//   select.select2( {
-//       placeholder: "Select Product"
-//   } );
-// });
+    $('[type="date"]').toArray().forEach((element) => {
+        let dateMin = new Date().setFullYear(new Date().getFullYear() - 10);
+        let dateMax = new Date().setFullYear(new Date().getFullYear() + 10);
+        element.setAttribute('min', new Date(dateMin).toISOString().split('T')[0]);
+        element.setAttribute('max', new Date(dateMax).toISOString().split('T')[0]);
+    });
 
 
-let lastUser = {name: $('#personal-name')[0].value, email: $('#personal-email')[0].value};
 
-$('#updateUserData').submit(function (event) {
-  event.preventDefault();
-  let userId = $('#personal-id')[0].innerText
-  let entity = {
-    _token: $('.modal [name="_token"]')[0].value,
-    name: $('#personal-name')[0].value,
-    email: $('#personal-email')[0].value,
-  }
-  sendEntityPutAjax(entity, `user/update/${userId}`);
-})
+    let lastUser = {name: $('#personal-name')[0].value, email: $('#personal-email')[0].value};
 
-$('#changePassword').submit(function (event) {
-  event.preventDefault();
-  let userId = $('#personal-id')[0].innerText
-  let entity = {
-    _token: $('.modal [name="_token"]')[0].value,
-    last_password: $('#personal-last_password')[0].value,
-    password: $('#personal-password')[0].value,
-    password_confirmation: $('#personal-password_confirmation')[0].value,
-  }
-  sendEntityPutAjax(entity, `user/change-password/${userId}`);
-})
+    $('#updateUserData').submit(function (event) {
+        event.preventDefault();
+        let userId = $('#personal-id')[0].innerText
+        let entity = {
+            _token: $('.modal [name="_token"]')[0].value,
+            name: $('#personal-name')[0].value,
+            email: $('#personal-email')[0].value,
+        }
+        sendEntityPutAjax(entity, `user/update/${userId}`);
+    })
 
-function sendEntityPutAjax (data, entityPath = '') {
-  data['_method'] = 'PUT';
-  $.ajax({
-    type: 'POST',
-    data,
-    url: `/api/${entityPath}`,
-    success: (data) => {
-      window.location.reload()
-    },
-    error: (errorEvent) => {
-      closeModalErrors();
-      let errors = errorEvent.responseJSON;
-      Object.keys(errors).forEach((error) => {
-        $(`#personal-${error}`).eq(0).addClass('is-invalid');
-        $(`#personal-${error}`).eq(0).next('small')[0].innerText = errors[error][0];
-      });
+    $('#changePassword').submit(function (event) {
+        event.preventDefault();
+        let userId = $('#personal-id')[0].innerText
+        let entity = {
+            _token: $('.modal [name="_token"]')[0].value,
+            last_password: $('#personal-last_password')[0].value,
+            password: $('#personal-password')[0].value,
+            password_confirmation: $('#personal-password_confirmation')[0].value,
+        }
+        sendEntityPutAjax(entity, `user/change-password/${userId}`);
+    })
+
+    function sendEntityPutAjax (data, entityPath = '') {
+        data['_method'] = 'PUT';
+        $.ajax({
+            type: 'POST',
+            data,
+            url: `/api/${entityPath}`,
+            success: (data) => {
+                window.location.reload()
+            },
+            error: (errorEvent) => {
+                closeModalErrors();
+                let errors = errorEvent.responseJSON;
+                Object.keys(errors).forEach((error) => {
+                    $(`#personal-${error}`).eq(0).addClass('is-invalid');
+                    $(`#personal-${error}`).eq(0).next('small')[0].innerText = errors[error][0];
+                });
+            }
+        })
     }
-  })
-}
 
-$('.close-modal-personal').click(function (event) {
+    $('.close-modal-personal').click(function (event) {
 
-  $('#personal-name')[0].value = lastUser.name
-  $('#personal-email')[0].value = lastUser.email
-  $('#personal-last_password')[0].value = ''
-  $('#personal-password')[0].value = ''
-  $('#personal-password_confirmation')[0].value = ''
-  closeModalErrors();
+        $('#personal-name')[0].value = lastUser.name
+        $('#personal-email')[0].value = lastUser.email
+        $('#personal-last_password')[0].value = ''
+        $('#personal-password')[0].value = ''
+        $('#personal-password_confirmation')[0].value = ''
+        closeModalErrors();
+
+    })
+
+    function closeModalErrors () {
+        $('.is-invalid').toArray().forEach((element) => {
+            $(element).removeClass('is-invalid');
+        });
+        $('.form-text').toArray().forEach((element) => {
+            element.innerText = '';
+        });
+    }
 
 })
-
-function closeModalErrors () {
-  $('.is-invalid').toArray().forEach((element) => {
-    $(element).removeClass('is-invalid');
-  });
-  $('.form-text').toArray().forEach((element) => {
-    element.innerText = '';
-  });
-}

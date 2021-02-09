@@ -4,6 +4,10 @@ body {
 	font-size: 3.5mm;
 }
 
+input{
+    box-shadow: none!important;
+}
+
 .sidenav {
     min-height: 100vh;
     z-index: 1;
@@ -228,6 +232,10 @@ select.form-control.product-order-select {
 .dataTables_wrapper>.row>.col-sm-12 {
      padding-right: 0!important;
     padding-left: 30px!important;
+}
+
+.data-href:hover {
+    cursor: pointer;
 }
 
 @media screen and (max-width: 767px) {

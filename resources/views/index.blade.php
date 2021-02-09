@@ -20,7 +20,7 @@
             </div>
         @endif
         <div class="row">
-            <div class="col-12 col-sm-12 col-mb-12 col-lg-4 col-xl-4">
+            <div class="col-12 col-sm-12 col-mb-12 col-lg-4 col-xl-4 data-href" data-href="{{route('balance')}}">
                 <div class="p-3 dashboard-border-success rounded-left dashboard-boxshadow">
                     <div class="font-weight-bold text-success">Balance(current)</div>
                     <div class="mt-3">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-mb-12 col-lg-4 col-xl-4">
+            <div class="col-12 col-sm-12 col-mb-12 col-lg-4 col-xl-4 data-href" data-href="{{route('orders')}}">
                 <div class="p-3 dashboard-border-primary rounded-left dashboard-boxshadow">
                     <div class="font-weight-bold text-primary">Orders</div>
                     <div class="mt-3">
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-mb-12 col-lg-4 col-xl-4">
+            <div class="col-12 col-sm-12 col-mb-12 col-lg-4 col-xl-4 data-href" data-href="{{route('inbound-shipments')}}">
                 <div class="p-3 dashboard-border-danger rounded-left dashboard-boxshadow">
                     <div class="font-weight-bold text-danger">Shipments</div>
                     <div class="mt-3">
@@ -82,7 +82,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12 mt-5"">
+            <div class="col-12 mt-5">
                 <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound shipments</a>
                 <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
                 <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>

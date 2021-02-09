@@ -53,7 +53,7 @@ $('.show-entity-button').click(function (event) {
     $('#showOrderTrackingNumber')[0].innerText = data.tracking_number
     $('#showOrderAddress')[0].innerText = data.address
     $('#showOrderShippingCost')[0].innerText = data.shipping_cost
-    $('#showOrderFeeCost')[0].innerText = data.fee_cost
+    // $('#showOrderFeeCost')[0].innerText = data.fee_cost
     $('#showOrderCity')[0].innerText = data.city
     $('#showOrderShipped')[0].innerText = data.shipped
     $('#showOrderPackingSelection')[0].innerText = data.packing_selection
@@ -119,9 +119,9 @@ $('.edit-entity-button').click(function (event) {
       if ($('#shipping_cost')[0]) {
         $('#shipping_cost')[0].value = data.shipping_cost
       }
-      if ($('#fee_cost')[0]) {
-        $('#fee_cost')[0].value = data.fee_cost
-      }
+      // if ($('#fee_cost')[0]) {
+      //   $('#fee_cost')[0].value = data.fee_cost
+      // }
       if ($('#shipped')[0]) {
         $('#shipped')[0].value = data.shipped
       }
@@ -175,9 +175,9 @@ $('.close-modal-button').click(function (event) {
   if ($('#shipping_cost')[0]) {
     $('#shipping_cost')[0].value = ''
   }
-  if ($('#fee_cost')[0]) {
-    $('#fee_cost')[0].value = ''
-  }
+  // if ($('#fee_cost')[0]) {
+  //   $('#fee_cost')[0].value = ''
+  // }
   if ($('#shipped')[0]) {
     $('#shipped')[0].value = ''
   }
@@ -221,7 +221,7 @@ function addProduct (products, product) {
     productNode.append(`<input type="number" class="form-control price product-order-price"` +
         ` placeholder="Price" min="1" max="10000" value="${product.pivot.price}">`);
     productNode.append(`<textarea rows="1" style="resize: none;" class="form-control description product-order-description"` +
-        ` placeholder="Description" maxlength="10000">${product.pivot.description}</textarea>`);
+        ` placeholder="Description" maxlength="10000">${product.pivot.description || ''}</textarea>`);
     productNode.find('.product-select').eq(0).select2({
         placeholder: "Select Product",
     });
@@ -294,9 +294,9 @@ $('.form-submit').submit(function (event) {
     if ($('#shipping_cost')[0]) {
       entity.shipping_cost = $('#shipping_cost')[0].value
     }
-    if ($('#fee_cost')[0]) {
-      entity.fee_cost = $('#fee_cost')[0].value
-    }
+    // if ($('#fee_cost')[0]) {
+    //   entity.fee_cost = $('#fee_cost')[0].value
+    // }
     if ($('#shipped')[0]) {
       entity.shipped = $('#shipped')[0].value
     }

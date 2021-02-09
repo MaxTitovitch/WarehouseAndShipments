@@ -46,7 +46,7 @@
                     <th scope="col" class="th-sm">Shipped</th>
                     <th scope="col" class="th-sm">Tracking number</th>
                     <th scope="col" class="th-sm">Order Status</th>
-                    <th scope="col" class="th-sm">Fee cost</th>
+{{--                    <th scope="col" class="th-sm">Fee cost</th>--}}
                     <th scope="col" class="th-sm">Shipping cost</th>
                     <th scope="col" class="th-sm">Customer</th>
                     <th scope="col" class="th-sm">Comment</th>
@@ -64,7 +64,7 @@
                         <td>{{ $order->shipped }}</td>
                         <td>{{ $order->tracking_number }}</td>
                         <td>{{ $order->status }}</td>
-                        <td>{{ $order->fee_cost }}</td>
+{{--                        <td>{{ $order->fee_cost }}</td>--}}
                         <td>{{ $order->shipping_cost }}</td>
                         <td>{{ $order->customer }}</td>
                         <td>{{ $order->comment }}</td>
@@ -321,8 +321,8 @@
                             <span id="showOrderTrackingNumber"></span><br>
                             <strong>Shipping Cost: </strong><br>
                             <span id="showOrderShippingCost"></span><br>
-                            <strong>Fee Cost: </strong><br>
-                            <span id="showOrderFeeCost"></span><br>
+{{--                            <strong>Fee Cost: </strong><br>--}}
+{{--                            <span id="showOrderFeeCost"></span><br>--}}
                         </p>
                         <p class="col-6">
                             <strong>Created: </strong><br>

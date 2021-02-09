@@ -17,6 +17,8 @@ class CreateBalanceHistoriesTable extends Migration
             $table->id();
             $table->decimal('current_balance', 10, 2);
             $table->decimal('transaction_cost', 10, 2);
+            $table->decimal('shipping_cost', 10, 2)->nullable();
+            $table->decimal('fee_cost', 10, 2)->nullable();
             $table->enum('type', ['Debit', 'Credit']);
             $table->string('comment', 255)->nullable();
             $table->unsignedBigInteger('user_id')->nullable();

@@ -92,17 +92,13 @@
                         </div>
 
                     </li>
-                    <li class="nav-item dropdown for-mobile"><a class="nav-link"
-                                                                href="{{ route('inbound-shipments') }}">Inbound
-                            shipments</a></li>
-                    <li class="nav-item dropdown for-mobile"><a class="nav-link"
-                                                                href="{{ route('products') }}">Products</a></li>
-                    <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('orders') }}">Orders</a>
-                    </li>
+                    <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('inbound-shipments') }}">Inbound shipments</a></li>
+                    <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('products') }}">Products</a></li>
+                    <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('orders') }}">Orders</a></li>
+                    <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('balance') }}">Balance</a></li>
                     @if(\Illuminate\Support\Facades\Auth::user())
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
-                            <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('users') }}">Users</a>
-                            </li>
+                            <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('users') }}">Users</a></li>
                         @endif
                     @endif
                 @endguest
@@ -129,7 +125,6 @@
             <a class="dashboard text-white text-center" href="{{ route('home') }}"><i class="fa fa-tachometer mr-1" aria-hidden="true"></i></a>
             <a href="{{ route('inbound-shipments') }}" class="text-white text-center"><i class="fa fa-list-alt" aria-hidden="true"></i></a>
             <a href="{{ route('products') }}" class="text-white text-center"><i class="fa fa-cube" aria-hidden="true"></i></a>
-            <a href="{{ route('orders') }}" class="text-white text-center"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
             <a href="{{ route('orders') }}" class="text-white text-center"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
             <a href="{{ route('balance') }}" class="text-white text-center"><i class="fa fa-dollar" aria-hidden="true"></i></a>
             @if(\Illuminate\Support\Facades\Auth::user())

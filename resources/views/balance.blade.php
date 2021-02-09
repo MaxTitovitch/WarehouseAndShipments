@@ -29,6 +29,8 @@
                 <th>Created</th>
                 <th>Current Balance</th>
                 <th>Transaction cost</th>
+                <th>Fee cost</th>
+                <th>Shipping cost</th>
                 <th>Type</th>
                 <th>Comment</th>
                 <th scope="col" class="th-sm">Related</th>
@@ -44,7 +46,9 @@
                     <td>{{ $balance->created_at->format('Y-m-d') }}</td>
                     <td>{{ $balance->current_balance }}</td>
                     <td>{{ $balance->transaction_cost }}</td>
-                    <td>{{ $balance->type }}</td>
+                    <td>{{ $balance->fee_cost }}</td>
+                    <td>{{ $balance->shipping_cost }}</td>
+                    <td class="{{ $balance->type == 'Credit' ? 'text-success' : 'text-danger'  }}">{{ $balance->type }}</td>
                     <td>{{ $balance->comment}}</td>
 
                     <td>

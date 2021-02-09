@@ -195,6 +195,8 @@ class OrderController extends Controller
             $balanceHistory->user_id = $user->id;
             $balanceHistory->current_balance = $user->balance - $transactionCost;
             $balanceHistory->transaction_cost = $transactionCost;
+            $balanceHistory->shipping_cost = $transactionCost - $user->fee;
+            $balanceHistory->fee_cost = - $user->fee;
             $balanceHistory->type = 'Debit';
             $balanceHistory->comment = "Order ID: " . $order->id;
             return $balanceHistory;
@@ -208,6 +210,8 @@ class OrderController extends Controller
             $balanceHistory->user_id = $user->id;
             $balanceHistory->current_balance = $user->balance - $transactionCost;
             $balanceHistory->transaction_cost = abs($transactionCost);
+            $balanceHistory->shipping_cost = abs($transactionCost) - $user->fee;
+            $balanceHistory->fee_cost = - $user->fee;
             $balanceHistory->type = $transactionCost > 0 ? 'Debit' : 'Credit';
             $balanceHistory->comment = "Order ID: {$lastOrder->id}";
             return $balanceHistory;
