@@ -34,9 +34,9 @@ class AdminController extends Controller
     private function getOrders($orders) {
         $quantity = 0;
         foreach ($orders as $order) {
-            if($order->status === 'Created') {
+//            if($order->status === 'Создано') {
                 $quantity++;
-            }
+//            }
         }
         return $quantity;
     }
@@ -44,9 +44,9 @@ class AdminController extends Controller
     private function getShipments($orders) {
         $quantity = 0;
         foreach ($orders as $order) {
-            if($order->received === null) {
+//            if($order->received === null) {
                 $quantity++;
-            }
+//            }
         }
         return $quantity;
     }
@@ -122,10 +122,10 @@ class AdminController extends Controller
                 $date_start = date("Y-m-d", strtotime('2000-01-01'));
             }
             if($date_start > $date_end) {
-                $date_start = date("Y-m-d", mktime(0, 0, 0, date('m', strtotime($date_end)) - 1));
+                $date_start = date("Y-m-d", mktime(0, 0, 0, date('m', strtotime($date_end)) - 24));
             }
         } else {
-            $date_start = date("Y-m-d", mktime(0, 0, 0, date('m') - 1));
+            $date_start = date("Y-m-d", mktime(0, 0, 0, date('m') - 24));
             $date_end = date("Y-m-d");
         }
         return ['date_start' => $date_start, 'date_end' => $date_end];

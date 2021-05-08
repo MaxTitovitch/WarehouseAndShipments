@@ -41,8 +41,8 @@ $('.show-entity-button').click(function (event) {
 $('.edit-entity-button').click(function (event) {
   event.preventDefault()
   id = $(this).data('value-id')
-  $('.save-changes')[0].innerText = 'Update'
-  $('#modalAddLabelProduct')[0].innerText = 'Update product'
+  $('.save-changes')[0].innerText = 'Обновление'
+  $('#modalAddLabelProduct')[0].innerText = 'Обновить перечень вещей'
   getEntityAjax(id, (data) => {
     $('#name')[0].value = data.name
     $('#brand')[0].value = data.brand
@@ -65,8 +65,8 @@ function getEntityAjax (dataId, success) {
 }
 
 $('.close-modal-button').click(function (event) {
-  $('.save-changes')[0].innerText = 'Create'
-  $('#modalAddLabelProduct')[0].innerText = 'Add new product'
+  $('.save-changes')[0].innerText = 'Создание'
+  $('#modalAddLabelProduct')[0].innerText = 'Добавить вещь'
 
   $('#name')[0].value = ''
   $('#brand')[0].value = ''
@@ -98,7 +98,7 @@ $('.form-submit').submit(function (event) {
       // available: $('#available')[0].checked ? 1 : 0,
       // in_transit: $('#in_transit')[0].checked ? 1 : 0,
     }
-    if($('.save-changes')[0].innerText === 'Create') {
+    if($('.save-changes')[0].innerText === 'Создание') {
       sendEntityAjax(entity, "POST");
     } else {
       sendEntityAjax(entity, "PUT", `/${id}`);

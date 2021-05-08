@@ -1,4 +1,6 @@
-$.ready(function (){
+
+
+// $.ready(function (){
 
     let display = localStorage.getItem("display")
     if(!display){
@@ -137,4 +139,4 @@ $.ready(function (){
         });
     }
 
-})
+// })

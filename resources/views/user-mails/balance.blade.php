@@ -10,7 +10,7 @@
 <body>
     <div class="text-align-center">
         <h1>Hi, {{$user->name}}!</h1>
-        <p>Your Balance has changed. Now:  {{$user->balance}} ({{$balanceHistory->transaction_cost}}$, {{$balanceHistory->type}})</p>
+        <p>Your Баланс Получателей has changed. Now:  {{$user->balance}} ({{$balanceHistory->transaction_cost}}$, {{$balanceHistory->type}})</p>
         <a href="{{$url}}" class="btn btn-dark">Look It</a>
         <p>Or you can put this URL at your browser: <a href="{{$url}}">{{$url}}</a></p>
     </div>

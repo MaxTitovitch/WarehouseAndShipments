@@ -39,7 +39,7 @@ $('.show-entity-button').click(function (event) {
         $('#showOrderPhone')[0].innerText = data.phone
         $('#showOrderShippingCompany')[0].innerText = data.shipping_company
         $('#showOrderComment')[0].innerText = data.comment
-        $('#showOrderUser')[0].innerText = `${data.user.name}, Suite: ${data.user.suite}`;
+        $('#showOrderUser')[0].innerText = `${data.user.name}, Уникальный номер: ${data.user.suite}`;
 
 
 

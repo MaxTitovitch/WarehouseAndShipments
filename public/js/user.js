@@ -34,7 +34,7 @@ $('.show-entity-button').click(function (event) {
     $('#showUserCreated')[0].innerText = data.created_at.split('T')[0];
     $('#balanceHistoryArea').eq(0).empty();
     // data.balance_histories = data.balance_histories.reverse();
-    console.log(data.balance_histories)
+    // console.log(data.balance_histories)
     data.balance_histories.forEach((history) =>{
         addHistory( $('#balanceHistoryArea')[0], history)
     });
@@ -59,10 +59,10 @@ $('.balance-entity-button').click(function (event) {
 function addHistory(container, history) {
     let tr = document.createElement('tr');
     let tBalance = document.createElement('td');
-    tBalance.innerHTML = '<span class="font-weight-bold">$</span>' + history.current_balance;
+    tBalance.innerHTML = '<span class="font-weight-bold">BYN </span>' + history.current_balance;
     tr.appendChild(tBalance);
     let tTransitionCost = document.createElement('td');
-    tTransitionCost.innerHTML = '<span class="font-weight-bold">$</span>' + history.transaction_cost;
+    tTransitionCost.innerHTML = '<span class="font-weight-bold">BYN </span>' + history.transaction_cost;
     tr.appendChild(tTransitionCost);
     let tType = document.createElement('td');
     tType.innerText = history.type;

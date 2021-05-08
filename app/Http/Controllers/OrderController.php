@@ -25,10 +25,10 @@ class OrderController extends Controller
 //            $user->save();
 //            $order->user->sendOrderNotification($order);
             $this->updateProducts();
-            Session::flash('success', 'New Order created!');
+            Session::flash('success', 'Входящая посылка создана!');
             return response()->json($order, 200);
 //        } else {
-//            Session::flash('error', 'Insufficient funds on the balance sheet!');
+//            Session::flash('error', 'Недостаточно средств на балансе!');
 //            return response()->json(['error' => 'Недостаточно средств'], 200);
 //            $order->delete();
 //        }
@@ -68,14 +68,14 @@ class OrderController extends Controller
                     }
                 }
                 $this->updateProducts();
-                Session::flash('success', 'Order updated!');
+                Session::flash('success', 'Посылка обновлена!');
                 return response()->json($order, 200);
             } else {
-                Session::flash('error', 'Insufficient funds on the balance sheet!');
+                Session::flash('error', 'Недостаточно средств на балансе!');
                 return response()->json(['error' => 'Недостаточно средств'], 200);
             }
         } else {
-            Session::flash('error', 'It isn\'t your order!');
+            Session::flash('error', 'Это не ваша посылка!');
             return response()->json(null, 200);
         }
     }
@@ -98,10 +98,10 @@ class OrderController extends Controller
 //                    $user->save();
 //                }
                 $this->updateProducts();
-                Session::flash('success', 'Order copied!');
+                Session::flash('success', 'Продублировано!');
                 return response()->json($order, 200);
             } else {
-                Session::flash('error', 'Insufficient funds on the balance sheet!');
+                Session::flash('error', 'Недостаточно средств на балансе!');
                 return response()->json(['error' => 'Недостаточно средств'], 200);
             }
         } else {
@@ -153,12 +153,12 @@ class OrderController extends Controller
             $order->shipped = $request->shipped;
         }
         if($order->shipped){
-            $order->status = 'Shipped';
+            $order->status = 'Доставлено';
         } else {
-            $order->status = 'Created';
+            $order->status = 'Создано';
         }
         if($order->shipped){
-            $order->status = 'Shipped';
+            $order->status = 'Доставлено';
         }
     }
 
@@ -198,7 +198,7 @@ class OrderController extends Controller
             $balanceHistory->shipping_cost = $transactionCost - $user->fee;
             $balanceHistory->fee_cost = - $user->fee;
             $balanceHistory->type = 'Debit';
-            $balanceHistory->comment = "Order ID: " . $order->id;
+            $balanceHistory->comment = "ИД Посылки: " . $order->id;
             return $balanceHistory;
 
     }
@@ -213,7 +213,7 @@ class OrderController extends Controller
             $balanceHistory->shipping_cost = abs($transactionCost) - $user->fee;
             $balanceHistory->fee_cost = - $user->fee;
             $balanceHistory->type = $transactionCost > 0 ? 'Debit' : 'Credit';
-            $balanceHistory->comment = "Order ID: {$lastOrder->id}";
+            $balanceHistory->comment = "ИД Посылки: {$lastOrder->id}";
             return $balanceHistory;
 
     }

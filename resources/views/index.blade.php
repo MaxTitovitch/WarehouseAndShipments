@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Dashboard
+    АдминПанель
 @endsection
 
 @section('content')
@@ -22,16 +22,16 @@
         <div class="row">
             <div class="col-12 col-sm-12 col-mb-12 col-lg-4 col-xl-4 data-href" data-href="{{route('balance')}}">
                 <div class="p-3 dashboard-border-success rounded-left dashboard-boxshadow">
-                    <div class="font-weight-bold text-success">Balance(current)</div>
+                    <div class="font-weight-bold text-success">Баланс (текущий)</div>
                     <div class="mt-3">
-                        <span class="h1">${{ $statistic['balance'] }}</span>
+                        <span class="h1">${{ abs($statistic['balance']) }}</span>
                         <i class="fa fa-money float-right fa-4x text-secondary opacity-image" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-mb-12 col-lg-4 col-xl-4 data-href" data-href="{{route('orders')}}">
                 <div class="p-3 dashboard-border-primary rounded-left dashboard-boxshadow">
-                    <div class="font-weight-bold text-primary">Orders</div>
+                    <div class="font-weight-bold text-primary">Входящие посылки</div>
                     <div class="mt-3">
                         <span class="h1">{{ $statistic['orders'] }}</span>
                         <i class="fa fa-shopping-basket float-right fa-4x text-secondary opacity-image"
@@ -41,7 +41,7 @@
             </div>
             <div class="col-12 col-sm-12 col-mb-12 col-lg-4 col-xl-4 data-href" data-href="{{route('inbound-shipments')}}">
                 <div class="p-3 dashboard-border-danger rounded-left dashboard-boxshadow">
-                    <div class="font-weight-bold text-danger">Shipments</div>
+                    <div class="font-weight-bold text-danger">Исходящие посылки</div>
                     <div class="mt-3">
                         <span class="h1">{{ $statistic['shipments'] }}</span>
                         <i class="fa fa-truck float-right fa-4x text-secondary opacity-image" aria-hidden="true"></i>
@@ -60,7 +60,7 @@
         </div>
         <div class="row mt-5 ml-1 filter-display">
             <input type="text" class="form-control date-range" id="date-range" placeholder="Select date">
-            <button type="button" class="btn btn-dark ml-2" id="button-filter">Filter</button>
+            <button type="button" class="btn btn-dark ml-2" id="button-filter">Фильтрация</button>
         </div>
 
         <div class="container-fluid">
@@ -83,13 +83,13 @@
 
         <div class="row">
             <div class="col-12 mt-5">
-                <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound shipments</a>
-                <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
-                <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
-                <a href="{{ route('balance') }}" class="badge badge-dark text-full-size"><i class="fa fa-dollar" aria-hidden="true"></i> Balance</a>
+                <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Исходящие посылки</a>
+                <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Перечень Вещей</a>
+                <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Входящие посылки</a>
+                <a href="{{ route('balance') }}" class="badge badge-dark text-full-size"><i class="fa fa-dollar" aria-hidden="true"></i> Баланс Получателей</a>
                 @if(\Illuminate\Support\Facades\Auth::user())
                     @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
-                        <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+                        <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Пользователи</a>
                     @endif
                 @endif
             </div>

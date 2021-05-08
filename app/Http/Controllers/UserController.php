@@ -36,7 +36,7 @@ class UserController extends Controller
         $user->fee = $request->fee;
 
         $user->save();
-        Session::flash('success', 'User updated!');
+        Session::flash('success', 'Пользователь обновлен!');
         return response()->json($user, 200);
     }
 
@@ -46,7 +46,7 @@ class UserController extends Controller
         $this->createBalanceHistory($user, $request->balance + $user->balance, $request->comment);
         $user->balance += $request->balance;
         $user->save();
-        Session::flash('success', 'User updated!');
+        Session::flash('success', 'Пользователь обновлен!');
         return response()->json($user, 200);
     }
 
@@ -58,10 +58,10 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->save();
             Auth::attempt(['email' => $user->email, 'password' => $user->password]);
-            Session::flash('success', 'Personal info updated!');
+            Session::flash('success', 'Личная информация обновлена!');
             return response()->json($user, 200);
         } else {
-            Session::flash('error', 'It isn\'t your account!');
+            Session::flash('error', 'Это не ваш аккаунт!');
             return response()->json(null, 200);
         }
     }
@@ -74,20 +74,20 @@ class UserController extends Controller
                 $user->password = Hash::make($request->password);
                 $user->save();
                 Auth::attempt(['email' => $user->email, 'password' => $user->password]);
-                Session::flash('success', 'Password changed!');
+                Session::flash('success', 'Пароль Изменён!');
                 return response()->json($user, 200);
             } else {
                 throw new HttpResponseException(response()->json(['last_password' => ['It isn\'t your last password']], 403));
             }
         } else {
-            Session::flash('error', 'It isn\'t your account!');
+            Session::flash('error', 'Это не ваш аккаунт!');
             return response()->json(null, 200);
         }
     }
 
     public function destroy($id)
     {
-        Session::flash('success', 'User deleted!');
+        Session::flash('success', 'Пользователь удален!');
         return response()->json(User::destroy($id), 200);
     }
 

@@ -32,7 +32,8 @@ function getChartData (dates = null) {
             if(Object.keys(data.balance).length > 0 && Object.keys(data.ordersShipments).length > 0) {
                 showChartBalance(data)
                 showChart(data);
-                console.log(data)
+                // console.log(data)
+                console.log(data);
                 $('#date-range')[0].value = data.dates.date_start + ' - ' + data.dates.date_end;
                 $('#date-range').eq(0).daterangepicker({
                     opens: 'right',
@@ -58,7 +59,7 @@ function showChartBalance (data) {
     let balance = data.balance;
 
     function drawChartBalance () {
-        let arrayData = [['Date', 'Balance']];
+        let arrayData = [['Date', 'Баланс Получателей']];
         Object.keys(balance).forEach((key) => {
             arrayData.push([
               key, balance[key]
@@ -67,7 +68,7 @@ function showChartBalance (data) {
         var data = google.visualization.arrayToDataTable(arrayData);
 
         var options = {
-            title: 'Balance',
+            title: 'Баланс Получателей',
             curveType: 'function',
             legend: { position: 'bottom' }
         };
@@ -83,7 +84,7 @@ function showChart (data) {
     let ordersShipments = data.ordersShipments;
 
     function drawChart() {
-        let arrayData = [['Date', 'Orders', 'Shipments']];
+        let arrayData = [['Date', 'Входящие посылки', 'Shipments']];
         Object.keys(ordersShipments).forEach((key) => {
             arrayData.push([
                 key, ordersShipments[key]['orders'],ordersShipments[key]['shipments']
@@ -92,7 +93,7 @@ function showChart (data) {
         var data = google.visualization.arrayToDataTable(arrayData);
 
         var options = {
-            title: 'Orders and Shipments',
+            title: 'Входящие посылки and Shipments',
             curveType: 'function',
             legend: { position: 'bottom' }
         };

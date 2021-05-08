@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Products
+    Перечень Вещей
 @endsection
 
 @section('content')
@@ -17,11 +17,11 @@
                 {{ session('error') }}
             </div>
         @endif
-        @if(Auth::user()->role != 'Admin')
+{{--        @if(Auth::user()->role != 'Admin')--}}
             <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-product" data-toggle="modal"
-                    data-target="#modalAdd">Add New
+                    data-target="#modalAdd">Добавить
             </button>
-        @endif
+{{--        @endif--}}
 
         <form action="{{ route('parse') }}" method="post" enctype="multipart/form-data">
             @csrf
@@ -30,7 +30,7 @@
             <input id="import-submit" type="submit" value="Submit" class="display-none">
     {{--        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>--}}
         </form>
-        <a href="{{route('exportProducts')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
+        <a href="{{route('exportProducts')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Экспорт</a>
 
         <div class="table-container">
         <table class="table table-bordered table-striped table-hover" id="dtEntityTable">
@@ -38,17 +38,17 @@
             <tr>
                 <th scope="col" class="th-sm">ID</th>
                 @if (Auth::user()->role == 'Admin')
-                    <th scope="col" class="th-sm">User</th>
+                    <th scope="col" class="th-sm">Пользователь</th>
                 @endif
-                <th scope="col" class="th-sm">Created</th>
-                <th scope="col" class="th-sm">Reserved</th>
-                <th scope="col" class="th-sm">Available</th>
-                <th scope="col" class="th-sm">In Transit</th>
-                <th scope="col" class="th-sm">Name</th>
-                <th scope="col" class="th-sm">Brand</th>
+                <th scope="col" class="th-sm">Создано</th>
+                <th scope="col" class="th-sm">Зарезервировано</th>
+                <th scope="col" class="th-sm">Доступно</th>
+                <th scope="col" class="th-sm">В пути</th>
+                <th scope="col" class="th-sm">Название</th>
+                <th scope="col" class="th-sm">Бренд</th>
                 <th scope="col" class="th-sm">UPC</th>
                 <th scope="col" class="th-sm">SKU</th>
-                <th scope="col" class="th-sm">Actions</th>
+                <th scope="col" class="th-sm">Действия</th>
             </tr>
             </thead>
             <tbody>
@@ -68,9 +68,9 @@
                     <td>{{ $product->sku }}</td>
                     <td>
                         <a href="#" class="show-product text-dark font-weight-bold show-entity-button"
-                           data-value-id="{{ $product->id }}">Show</a>
+                           data-value-id="{{ $product->id }}">Показать</a>
                             <a href="#" class="edit-product text-dark font-weight-bold edit-entity-button"
-                               data-value-id="{{ $product->id }}">Edit</a>
+                               data-value-id="{{ $product->id }}">Редактировать</a>
 
                     </td>
                 </tr>
@@ -83,13 +83,13 @@
     <div class="container-fluid mt-5"">
         <div class="row">
             <div class="col-12 text-center-mobile">
-                <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound shipments</a>
-                <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
-                <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
-                <a href="{{ route('balance') }}" class="badge badge-dark text-full-size"><i class="fa fa-dollar" aria-hidden="true"></i> Balance</a>
+                <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Исходящие посылки</a>
+                <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Перечень Вещей</a>
+                <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Входящие посылки</a>
+                <a href="{{ route('balance') }}" class="badge badge-dark text-full-size"><i class="fa fa-dollar" aria-hidden="true"></i> Баланс Получателей</a>
                 @if(\Illuminate\Support\Facades\Auth::user())
                     @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
-                        <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+                        <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Пользователи</a>
                     @endif
                 @endif
             </div>
@@ -104,8 +104,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddLabelProduct">Add new product</h5>
-                    <button type="button" class="close close-modal-button" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="modalAddLabelProduct">Добавить вещь</h5>
+                    <button type="button" class="close close-modal-button" data-dismiss="modal" aria-label="Закрыть">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -113,15 +113,15 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name">Название</label>
                             <input type="text" class="form-control" required maxlength="255" id="name"
-                                   aria-describedby="ariaDescribedbyHelp" placeholder="Name">
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Название">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="brand">Brand</label>
+                            <label for="brand">Бренд</label>
                             <input type="text" class="form-control" required maxlength="255" id="brand"
-                                   aria-describedby="ariaDescribedbyHelp" placeholder="Brand">
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Бренд">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
@@ -144,20 +144,20 @@
 {{--                        </div>--}}
 {{--                        <div class="form-group custom-control custom-switch">--}}
 {{--                            <input type="checkbox" class="custom-control-input" id="available">--}}
-{{--                            <label for="available" class="custom-control-label">Available</label>--}}
+{{--                            <label for="available" class="custom-control-label">Доступно</label>--}}
 {{--                            <small id="availabletHelp" class="form-text text-danger"></small>--}}
 {{--                        </div>--}}
 {{--                        <div class="form-group custom-control custom-switch">--}}
 {{--                            <input type="checkbox" class="custom-control-input" id="in_transit">--}}
-{{--                            <label for="in_transit" class="custom-control-label">In transit</label>--}}
+{{--                            <label for="in_transit" class="custom-control-label">В пути</label>--}}
 {{--                            <small id="inTransitHelp" class="form-text text-danger"></small>--}}
 {{--                        </div>--}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary close-modal-button" data-dismiss="modal">
-                            Close
+                            Закрыть
                         </button>
-                        <button type="submit" class="btn btn-dark save-changes">Create</button>
+                        <button type="submit" class="btn btn-dark save-changes">Создать</button>
                     </div>
                 </form>
             </div>
@@ -171,8 +171,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="showModalLabel">Product</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="showModalLabel">Перечень вещей</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -183,7 +183,7 @@
                             <span class="form-control form-control-height " id="showProductId"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductCreated">Created</label>
+                            <label class="font-weight-bold" for="showProductCreated">Создано</label>
                             <span class="form-control form-control-height " id="showProductCreated"></span>
                         </div>
                         <div class="form-group">
@@ -195,33 +195,33 @@
                             <span class="form-control form-control-height " id="showProductSKU"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductBrand">Brand</label>
+                            <label class="font-weight-bold" for="showProductBrand">Бренд</label>
                             <span class="form-control form-control-height " id="showProductBrand"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductName">Name</label>
+                            <label class="font-weight-bold" for="showProductName">Название</label>
                             <span class="form-control form-control-height " id="showProductName"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductTransit">In transit</label>
+                            <label class="font-weight-bold" for="showProductTransit">В пути</label>
                             <span class="form-control form-control-height " id="showProductTransit"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductReserved">Reserved</label>
+                            <label class="font-weight-bold" for="showProductReserved">Зарезервировано</label>
                             <span class="form-control form-control-height " id="showProductReserved"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductAvailable">Available</label>
+                            <label class="font-weight-bold" for="showProductAvailable">Доступно</label>
                             <span class="form-control form-control-height " id="showProductAvailable"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showProductUser">User</label>
+                            <label class="font-weight-bold" for="showProductUser">Пользователь</label>
                             <span class="form-control form-control-height " id="showProductUser"></span>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Закрыть</button>
                 </div>
             </div>
         </div>

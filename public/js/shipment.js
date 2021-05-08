@@ -55,7 +55,7 @@ $('.show-entity-button').click(function (event) {
 });
 
 function createShowProduct (element, product) {
-  let title = `${product.brand} | ${product.name} | UPC[${product.upc}] | SKU[${product.sku}] | In transit (${product.in_transit}) | Available (${product.available}) | Reserved (${product.reserved})`
+  let title = `${product.brand} | ${product.name} | UPC[${product.upc}] | SKU[${product.sku}] | В пути (${product.in_transit}) | Доступно (${product.available}) | Зарезервировано (${product.reserved})`
   element.find('.show-product')[0].innerText = product.name;
   element.find('.show-quantity')[0].innerText = product.pivot.quantity
 }
@@ -63,8 +63,8 @@ function createShowProduct (element, product) {
 $('.edit-entity-button').click(function (event) {
   event.preventDefault();
   id = $(this).data('value-id');
-  $('.save-changes')[0].innerText = 'Update';
-  $('#modalAddLabel')[0].innerText = 'Update Inbound Shipment'
+  $('.save-changes')[0].innerText = 'Обновление';
+  $('#modalAddLabel')[0].innerText = 'Обновить исходящую посылку'
   getEntityAjax(id,(data) => {
       $('#tracking_number')[0].value = data.tracking_number
       $('#shipping_company')[0].value = data.shipping_company
@@ -119,8 +119,8 @@ function getEntityAjax (dataId, success) {
 
 
 $('.close-modal-button').click(function (event) {
-  $('.save-changes')[0].innerText = 'Create'
-  $('#modalAddLabel')[0].innerText = 'Add new Inbound Shipment'
+  $('.save-changes')[0].innerText = 'Создание'
+  $('#modalAddLabel')[0].innerText = 'Добавить Входящую посылку'
   $('#tracking_number')[0].value = ''
   $('#shipping_company :first').attr('selected', 'true')
   $('#comment')[0].value = ''
@@ -154,11 +154,11 @@ function addProduct (products, product) {
     let productNode = container.append('<div class="product-container"></div>').find('.product-container').last();
     let select = productNode.append('<select class="form-control product-select product-shipment-select"></select>').find('select');
     products.forEach(function (prod){
-        let name = `${prod.brand} | ${prod.name} | ${prod.upc} | ${prod.sku} | In transit (${prod.in_transit}) | Available (${prod.available}) | Reserved (${prod.received})`;
+        let name = `${prod.brand} | ${prod.name} | ${prod.upc} | ${prod.sku} | В пути (${prod.in_transit}) | Доступно (${prod.available}) | Зарезервировано (${prod.received})`;
         select.append(`<option value="${prod.id}" ${prod.id === product.id ? 'selected' : ''}>${name}</option>`)
     });
     productNode.append(`<input type="number" class="form-control quantity"` +
-        ` placeholder="Quantity" required min="1" max="10000" value="${product.pivot.quantity}">`);
+        ` placeholder="Количество" required min="1" max="10000" value="${product.pivot.quantity}">`);
     let a = productNode.append(
         '<a href="#" class="remove-product-select">' +
         '   <i class="fa fa-times fa-2x text-dark" aria-hidden="true"></i>' +
@@ -228,7 +228,7 @@ $('.form-submit').submit(function (event) {
     if ($('#shipped')[0]) {
       entity.shipped = $('#shipped')[0].value
     }
-    if($('.save-changes')[0].innerText === 'Create') {
+    if($('.save-changes')[0].innerText === 'Создание') {
       sendEntityAjax(entity, "POST");
     } else {
       sendEntityAjax(entity, "PUT", `/${id}`);

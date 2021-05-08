@@ -33,7 +33,7 @@ $(document).ready(function () {
         // $(countrySelect).val($(countrySelect).find(':first')[0].value).trigger('change');
 
         $("#country").select2( {
-            placeholder: "Select Country",
+            placeholder: "Select Страна",
         } );
     }
   });
@@ -64,7 +64,7 @@ $('.show-entity-button').click(function (event) {
     $('#showOrderPhone')[0].innerText = data.phone
     $('#showOrderShippingCompany')[0].innerText = data.shipping_company
     $('#showOrderComment')[0].innerText = data.comment
-    $('#showOrderUser')[0].innerText = `${data.user.name}, Suite: ${data.user.suite}`;
+    $('#showOrderUser')[0].innerText = `${data.user.name}, Уникальный номер: ${data.user.suite}`;
 
 
 
@@ -97,8 +97,8 @@ function createShowProduct (element, product) {
 $('.edit-entity-button').click(function (event) {
   event.preventDefault();
   id = $(this).data('value-id');
-  $('.save-changes')[0].innerText = 'Update';
-  $('#modalAddLabel')[0].innerText = 'Update Order'
+  $('.save-changes')[0].innerText = 'Обновление';
+  $('#modalAddLabel')[0].innerText = 'Обновить посылку'
   getEntityAjax(id,(data) => {
       $('#customer')[0].value = data.customer
       $('#company_name')[0].value = data.company_name
@@ -155,8 +155,8 @@ function getEntityAjax (dataId, success) {
 
 
 $('.close-modal-button').click(function (event) {
-  $('.save-changes')[0].innerText = 'Create'
-  $('#modalAddLabel')[0].innerText = 'Add new Order'
+  $('.save-changes')[0].innerText = 'Создание'
+  $('#modalAddLabel')[0].innerText = 'Добавить посылку'
   $('#customer')[0].value = ''
   $('#company_name')[0].value = ''
   $('#country')[0].value = $('#country option')[0].innerText
@@ -205,7 +205,7 @@ function addProduct (products, product) {
     let productNode = container.append('<div class="product-container product-order-area"></div>').find('.product-container').last();
     let select = productNode.append('<select class="form-control product-select product-order-select"></select>').find('select');
     products.forEach(function (prod){
-        let name = `${prod.brand} | ${prod.name} | ${prod.upc} | ${prod.sku} | In transit (${prod.in_transit}) | Available (${prod.available}) | Reserved (${prod.received})`;
+        let name = `${prod.brand} | ${prod.name} | ${prod.upc} | ${prod.sku} | В пути (${prod.in_transit}) | Доступно (${prod.available}) | Зарезервировано (${prod.received})`;
         select.append(`<option value="${prod.id}" ${prod.id === product.id ? 'selected' : ''}>${name}</option>`)
     });
     let a = productNode.append(
@@ -217,11 +217,11 @@ function addProduct (products, product) {
         $(this).closest('.product-container').eq(0).remove();
     });
     productNode.append(`<input type="number" class="form-control quantity product-order-quantity"` +
-        ` placeholder="Quantity" required min="1" max="10000" value="${product.pivot.quantity}">`);
+        ` placeholder="Количество" required min="1" max="10000" value="${product.pivot.quantity}">`);
     productNode.append(`<input type="number" class="form-control price product-order-price"` +
-        ` placeholder="Price" min="1" max="10000" value="${product.pivot.price}">`);
+        ` placeholder="Цена" min="1" max="10000" value="${product.pivot.price}">`);
     productNode.append(`<textarea rows="1" style="resize: none;" class="form-control description product-order-description"` +
-        ` placeholder="Description" maxlength="10000">${product.pivot.description || ''}</textarea>`);
+        ` placeholder="Описание" maxlength="10000">${product.pivot.description || ''}</textarea>`);
     productNode.find('.product-select').eq(0).select2({
         placeholder: "Select Product",
     });
@@ -303,7 +303,7 @@ $('.form-submit').submit(function (event) {
     if ($('#status')[0]) {
       entity.status = $('#status')[0].value
     }
-    if($('.save-changes')[0].innerText === 'Create') {
+    if($('.save-changes')[0].innerText === 'Создание') {
       sendEntityAjax(entity, "POST");
     } else {
       sendEntityAjax(entity, "PUT", `/${id}`);

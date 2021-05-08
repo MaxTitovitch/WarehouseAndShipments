@@ -18,9 +18,9 @@ class ImportController extends Controller
         $isParsingSuccess = MassUpload::parse(Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . $path, $typeEntity);
 
         if($isParsingSuccess == "Success") {
-            Session::flash('success', 'Data imported');
+            Session::flash('success', 'Готово');
         } else {
-            Session::flash('error', 'Import error: file data isn\'t correct');
+            Session::flash('error', 'Ошибка импорта');
         }
         Storage::delete($path);
         return redirect()->route('inbound-shipments');

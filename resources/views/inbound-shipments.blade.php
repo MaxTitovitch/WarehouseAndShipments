@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Inbound shipment
+    Исходящие отправления
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
         @endif
         @if(Auth::user()->role != 'Admin')
             <button type="button" class="btn btn-dark btn-lg float-right my-3 mr-3 create-shipment" data-toggle="modal"
-                    data-target="#modalAdd">Add New
+                    data-target="#modalAdd">Добавить
             </button>
         @endif
 
@@ -31,7 +31,7 @@
     {{--        <button id="import-open" type="button" class="btn btn-dark btn-lg float-right my-3 mr-3">Import</button>--}}
         </form>
 
-        <a href="{{route('exportShipments')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Export</a>
+        <a href="{{route('exportShipments')}}" class="btn btn-dark btn-lg float-right my-3 mr-3">Экспорт</a>
 
         <div class="table-container">
             <table class="table table-bordered table-striped table-hover" id="dtEntityTable">
@@ -39,16 +39,16 @@
                 <tr>
                     <th scope="col" class="th-sm">ID</th>
                     @if (Auth::user()->role == 'Admin')
-                        <th scope="col" class="th-sm">User</th>
+                        <th scope="col" class="th-sm">Пользователь</th>
                     @endif
-                    <th scope="col" class="th-sm">Created</th>
-                    <th scope="col" class="th-sm">Shipped</th>
-                    <th scope="col" class="th-sm">Received</th>
-                    <th scope="col" class="th-sm">Tracking number</th>
-                    <th scope="col" class="th-sm">Shipping company</th>
-                    <th scope="col" class="th-sm">Comment</th>
-                    <th scope="col" class="th-sm">Quantity</th>
-                    <th scope="col" class="th-sm">Action</th>
+                    <th scope="col" class="th-sm">Создано</th>
+                    <th scope="col" class="th-sm">Доставлено</th>
+                    <th scope="col" class="th-sm">Получено</th>
+                    <th scope="col" class="th-sm">Код Посылки</th>
+                    <th scope="col" class="th-sm">Компания Доставки</th>
+                    <th scope="col" class="th-sm">Коммент</th>
+                    <th scope="col" class="th-sm">Количество</th>
+                    <th scope="col" class="th-sm">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -66,13 +66,13 @@
                         <td>{{ $shipment->comment }}</td>
                         <td>{{ $shipment->quantity }}</td>
                         <td>
-                            <a href="#" class="show-shipment text-dark font-weight-bold show-entity-button" data-value-id="{{ $shipment->id }}">Show</a>
+                            <a href="#" class="show-shipment text-dark font-weight-bold show-entity-button" data-value-id="{{ $shipment->id }}">Показать</a>
                             @if(Auth::user()->role == 'Admin' || $shipment->received == null)
-                                <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $shipment->id }}">Edit</a>
+                                <a href="#" class="edit-shipment text-dark font-weight-bold edit-entity-button" data-value-id="{{ $shipment->id }}">Редактировать</a>
                             @endif
                             @if($shipment->received == null && Auth::user()->role != 'Admin')
                                 <a href="#" class="show-shipment text-dark font-weight-bold delete-entity-button"
-                                   data-value-id="{{ $shipment->id }}">Delete</a>
+                                   data-value-id="{{ $shipment->id }}">Удалить</a>
                             @endif
                         </td>
                     </tr>
@@ -84,13 +84,13 @@
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col-12 text-center-mobile">
-                <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound shipments</a>
-                <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
-                <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
-                <a href="{{ route('balance') }}" class="badge badge-dark text-full-size"><i class="fa fa-dollar" aria-hidden="true"></i> Balance</a>
+                <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Исходящие посылки</a>
+                <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Перечень Вещей</a>
+                <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Входящие посылки</a>
+                <a href="{{ route('balance') }}" class="badge badge-dark text-full-size"><i class="fa fa-dollar" aria-hidden="true"></i> Баланс Получателей</a>
                 @if(\Illuminate\Support\Facades\Auth::user())
                     @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
-                        <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+                        <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Пользователи</a>
                     @endif
                 @endif
             </div>
@@ -105,8 +105,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddLabel">Add new Inbound Shipment</h5>
-                    <button type="button" class="close close-modal-button" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="modalAddLabel">Добавить Входящую посылку</h5>
+                    <button type="button" class="close close-modal-button" data-dismiss="modal" aria-label="Закрыть">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -114,13 +114,13 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <label for="tracking_number-number">Tracking number</label>
+                            <label for="tracking_number-number">Код Посылки</label>
                             <input type="text" class="form-control" required maxlength="255" id="tracking_number"
-                                   aria-describedby="ariaDescribedbyHelp" placeholder="Tracking number">
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Код Посылки">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="shipping_company">Shipping company</label>
+                            <label for="shipping_company">Компания Доставки</label>
                             <select class="form-control" id="shipping_company">
                                 <option>USPS</option>
                                 <option>FedEx</option>
@@ -130,27 +130,27 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="comment">Comment</label>
+                            <label for="comment">Коммент</label>
                             <textarea rows="5" class="form-control" maxlength="255" id="comment"
                                       aria-describedby="commentHelp" placeholder="comment"></textarea>
                             <small id="commentHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="shipped">Date of shipping</label>
+                            <label for="shipped">Дата доставки</label>
                             <input type="date" class="form-control" id="shipped" name="date" placeholder="date"
                                    aria-describedby="dateHelp" required>
                             <small id="dateHelp" class="form-text text-danger"></small>
                         </div>
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
                             <div class="form-group">
-                                <label for="received">Date of received</label>
+                                <label for="received">Дата получения</label>
                                 <input type="date" class="form-control" id="received" name="date" placeholder="date"
                                        aria-describedby="dateHelp">
                                 <small id="dateHelp" class="form-text text-danger"></small>
                             </div>
                         @endif
                         <div class="form-group">
-                            <label for="productFormControlSelect1">Select product</label>
+                            <label for="productFormControlSelect1">Выбор Продукта</label>
                             <div class="products-container">
 {{--                                <div class="product-container">--}}
 {{--                                    <select class="form-control product-select product-shipment-select"></select>--}}
@@ -170,9 +170,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary close-modal-button" data-dismiss="modal">Close
+                        <button type="button" class="btn btn-outline-secondary close-modal-button" data-dismiss="modal">Закрыть
                         </button>
-                        <button type="submit" class="btn btn-dark save-changes">Create</button>
+                        <button type="submit" class="btn btn-dark save-changes">Создать</button>
                     </div>
                 </form>
             </div>
@@ -186,8 +186,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="showModalLabel">Inbound shipment</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="showModalLabel">Исходящие отправление</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -198,51 +198,51 @@
                             <span class="form-control form-control-height " id="showId"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showUser">User</label>
+                            <label class="font-weight-bold" for="showUser">Пользователь</label>
                             <span class="form-control form-control-height " id="showUser"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showShipped">Shipped</label>
+                            <label class="font-weight-bold" for="showShipped">Доставлено</label>
                             <span class="form-control form-control-height " id="showShipped"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showReceived">Received</label>
+                            <label class="font-weight-bold" for="showReceived">Получено</label>
                             <span class="form-control form-control-height " id="showReceived"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showCompany">Shipping company</label>
+                            <label class="font-weight-bold" for="showCompany">Компания Доставки</label>
                             <span class="form-control form-control-height " id="showCompany"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showTrackingNumber">Tracking number</label>
+                            <label class="font-weight-bold" for="showTrackingNumber">Код Посылки</label>
                             <span class="form-control form-control-height " id="showTrackingNumber"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showComment">Comment</label>
+                            <label class="font-weight-bold" for="showComment">Коммент</label>
                             <span class="form-control form-control-height " id="showComment"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showQuantity">Quantity</label>
+                            <label class="font-weight-bold" for="showQuantity">Количество</label>
                             <span class="form-control form-control-height " id="showQuantity"></span>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="showCreated">Created</label>
+                            <label class="font-weight-bold" for="showCreated">Создано</label>
                             <span class="form-control form-control-height " id="showCreated"></span>
                         </div>
 
                         <div class="form-group">
-                            <label class="font-weight-bold">Products</label>
+                            <label class="font-weight-bold">Перечень Вещей</label>
                             <div class="show-products-container">
                                 <div class="show-product-container">
-                                    <span class="form-control form-control-height show-product">Chear</span>
-                                    <span class="form-control form-control-height show-quantity quantity-width"><span class="show-quantity"></span><span class="font-weight-bold"> pcs</span></span>
+                                    <span class="form-control form-control-height show-product">Идентификатор</span>
+                                    <span class="form-control form-control-height show-quantity quantity-width"><span class="show-quantity"></span><span class="font-weight-bold"> шт.</span></span>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Закрыть</button>
                 </div>
             </div>
         </div>

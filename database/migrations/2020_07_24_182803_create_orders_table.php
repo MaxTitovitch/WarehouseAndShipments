@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->string('customer', 255);
             $table->string('comment', 255)->nullable();
             $table->string('company_name', 255)->nullable();
-            $table->enum('status', ['Created', 'Shipped'])->default('Created');
+            $table->enum('status', ['Создано', 'Доставлено'])->default('Создано');
             $table->decimal('shipping_cost', 10, 2)->nullable();
             $table->decimal('fee_cost', 10, 2)->nullable();
             $table->string('tracking_number', 255)->nullable();

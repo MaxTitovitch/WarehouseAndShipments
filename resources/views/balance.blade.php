@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Balance
+    Баланс Получателей
 @endsection
 
 @section('content')
@@ -24,16 +24,16 @@
             <tr>
                 <th scope="col" class="th-sm">ID</th>
                 @if (Auth::user()->role == 'Admin')
-                    <th scope="col" class="th-sm">User</th>
+                    <th scope="col" class="th-sm">Пользователь</th>
                 @endif
-                <th>Created</th>
-                <th>Current Balance</th>
-                <th>Transaction cost</th>
-                <th>Fee cost</th>
-                <th>Shipping cost</th>
-                <th>Type</th>
-                <th>Comment</th>
-                <th scope="col" class="th-sm">Related</th>
+                <th>Дата создания</th>
+                <th>Текущий Баланс Получателей</th>
+                <th>Сумма транзакции</th>
+                <th>Сумма комиссии</th>
+                <th>Стоимость доставки</th>
+                <th>Тип</th>
+                <th>Комментарий</th>
+                <th scope="col" class="th-sm">Доставлено</th>
             </tr>
             </thead>
             <tbody>
@@ -52,10 +52,10 @@
                     <td>{{ $balance->comment}}</td>
 
                     <td>
-                        @if (explode(":", $balance->comment)[0] == 'Order ID')
+                        @if (explode(":", $balance->comment)[0] == 'ИД Посылки')
 
                             <a href="#" class="show-product text-dark font-weight-bold show-entity-button"
-                               data-value-id="{{ explode(":", $balance->comment)[1] }}">Order Show</a>
+                               data-value-id="{{ explode(":", $balance->comment)[1] }}">Показать входящую посылку</a>
                         @endif
                     </td>
                 </tr>
@@ -68,13 +68,13 @@
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col-12 text-center-mobile">
-                <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Inbound shipments</a>
-                <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Products</a>
-                <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Orders</a>
-                <a href="{{ route('balance') }}" class="badge badge-dark text-full-size"><i class="fa fa-dollar" aria-hidden="true"></i> Balance</a>
+                <a href="{{ route('inbound-shipments') }}" class="badge badge-dark text-full-size"><i class="fa fa-list-alt" aria-hidden="true"></i> Исходящие посылки</a>
+                <a href="{{ route('products') }}" class="badge badge-dark text-full-size"><i class="fa fa-cube" aria-hidden="true"></i> Перечень Вещей</a>
+                <a href="{{ route('orders') }}" class="badge badge-dark text-full-size"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Входящие посылки</a>
+                <a href="{{ route('balance') }}" class="badge badge-dark text-full-size"><i class="fa fa-dollar" aria-hidden="true"></i> Баланс Получателей</a>
                 @if(\Illuminate\Support\Facades\Auth::user())
                     @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
-                        <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+                        <a href="{{ route('users') }}" class="badge badge-dark text-full-size"><i class="fa fa-users" aria-hidden="true"></i> Пользователи</a>
                     @endif
                 @endif
             </div>
@@ -89,23 +89,23 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="showModalLabel">Order</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="showModalLabel">Входящие посылки</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <p class="col-12">
-                            <strong>Order ID: </strong><span id="showOrderId"></span>,
-                            <strong>Status: </strong><span id="showOrderStatus"></span>
+                            <strong>ИД Посылки: </strong><span id="showOrderId"></span>,
+                            <strong>Статус: </strong><span id="showOrderStatus"></span>
                         </p>
                         <p class="col-12">
-                            <strong>User: </strong> <br>
+                            <strong>Пользователь: </strong> <br>
                             <span id="showOrderUser"></span>
                         </p>
                         <p class="col-6">
-                            <strong>Shipped to: </strong><br>
+                            <strong>Доставлено к: </strong><br>
                             <strong id="showOrderCustomer"></strong>.
                             <strong id="showOrderCompanyName"></strong><br>
                             <span id="showOrderZipCode"></span><br>
@@ -116,39 +116,39 @@
                             tel. <span id="showOrderPhone"></span>
                         </p>
                         <p class="col-6">
-                            <strong>Carrier: </strong><br>
+                            <strong>Перевозчик: </strong><br>
                             <span id="showOrderShippingCompany"></span><br>
-                            <strong>Packing Selection: </strong><br>
+                            <strong>Тип упаковки: </strong><br>
                             <span id="showOrderPackingSelection"></span><br>
-                            <strong>Comment: </strong><br>
+                            <strong>Коммент: </strong><br>
                             <span id="showOrderComment"></span><br>
                         </p>
                         <p class="col-6">
-                            <strong>Tracking Number: </strong><br>
+                            <strong>Код посылки: </strong><br>
                             <span id="showOrderTrackingNumber"></span><br>
-                            <strong>Shipping Cost: </strong><br>
+                            <strong>Стоимость доставки: </strong><br>
                             <span id="showOrderShippingCost"></span><br>
-                            <strong>Fee Cost: </strong><br>
+                            <strong>Стоимость комиссии: </strong><br>
                             <span id="showOrderFeeCost"></span><br>
                         </p>
                         <p class="col-6">
-                            <strong>Created: </strong><br>
+                            <strong>Создано: </strong><br>
                             <span id="showOrderCreated"></span><br>
-                            <strong>Shipped: </strong><br>
+                            <strong>Доставлено: </strong><br>
                             <span id="showOrderShipped"></span><br>
                         </p>
                         <div class="col-12">
-                            <label class="font-weight-bold">Items:</label>
+                            <label class="font-weight-bold">Вещи:</label>
                             <table class="show-products-container w-100" cellspacing="0" border="1" >
                                 <thead>
                                 <tr>
                                     <td><strong>UPC</strong></td>
                                     <td><strong>SKU</strong></td>
-                                    <td><strong>Brand</strong></td>
-                                    <td><strong>Name</strong></td>
-                                    <td><strong>Quantity</strong></td>
-                                    <td><strong>Price</strong></td>
-                                    <td><strong>Description</strong></td>
+                                    <td><strong>Бренд</strong></td>
+                                    <td><strong>Название</strong></td>
+                                    <td><strong>Количество</strong></td>
+                                    <td><strong>Цена</strong></td>
+                                    <td><strong>Описание</strong></td>
                                 </tr>
                                 </thead>
                                 <tr class="show-product-container product-order-area">
@@ -157,10 +157,10 @@
                                     <td class="show-brand"></td>
                                     <td class="show-product"></td>
                                     <td>
-                                        <span class="show-quantity"></span><span class="font-weight-bold"> pcs</span>
+                                        <span class="show-quantity"></span><span class="font-weight-bold"> шт.</span>
                                     </td>
                                     <td>
-                                        <span class="font-weight-bold">$</span><span class="show-price"></span>
+                                        <span class="font-weight-bold">BYN </span><span class="show-price"></span>
                                     </td>
                                     <td class="show-description"></td>
                                 </tr>
@@ -169,7 +169,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Закрыть</button>
                 </div>
             </div>
         </div>

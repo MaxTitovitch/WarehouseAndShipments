@@ -54,13 +54,13 @@
                 @guest
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">
-                            <i class="fa fa-sign-in" aria-hidden="true"></i> {{ __('Login') }}
+                            <i class="fa fa-sign-in" aria-hidden="true"></i> Вход
                         </a>
                     </li>
                     @if (Route::has('register'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('register') }}">
-                                <i class="fa fa-user-o" aria-hidden="true"></i> {{ __('Register') }}
+                                <i class="fa fa-user-o" aria-hidden="true"></i> Регистрация
                             </a>
                         </li>
                     @endif
@@ -79,11 +79,11 @@
                             </span>
                             <a id="" data-toggle="modal" data-target="#change-user-data"
                                class="dropdown-item text-light" href="#">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Personal information
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Личная Информация
                             </a>
                             <a class="dropdown-item text-light" href="{{ route('logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="fa fa-sign-out" aria-hidden="true"></i> {{ __('Logout') }}
+                                <i class="fa fa-sign-out" aria-hidden="true"></i> Выход
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -92,13 +92,13 @@
                         </div>
 
                     </li>
-                    <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('inbound-shipments') }}">Inbound shipments</a></li>
-                    <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('products') }}">Products</a></li>
-                    <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('orders') }}">Orders</a></li>
-                    <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('balance') }}">Balance</a></li>
+                    <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('inbound-shipments') }}">Исходящие посылки</a></li>
+                    <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('products') }}">Перечень Вещей</a></li>
+                    <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('orders') }}">Входящие посылки</a></li>
+                    <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('balance') }}">Баланс Получателей</a></li>
                     @if(\Illuminate\Support\Facades\Auth::user())
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
-                            <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('users') }}">Users</a></li>
+                            <li class="nav-item dropdown for-mobile"><a class="nav-link" href="{{ route('users') }}">Пользователи</a></li>
                         @endif
                     @endif
                 @endguest
@@ -109,15 +109,14 @@
 <div class="layout-flex">
     @section('sidebar')
         <div class="sidenav sidenav-mobile bg-dark section-big">
-            <a class="dashboard text-white" href="{{ route('home') }}"><i class="fa fa-tachometer mr-1" aria-hidden="true"></i><span class="full-text"> Dashboard</span></a>
-            <a href="{{ route('inbound-shipments') }}" class="text-white"><i class="fa fa-list-alt" aria-hidden="true"></i> <span class="full-text">Inbound
-                    shipments</span></a>
-            <a href="{{ route('products') }}" class="text-white"><i class="fa fa-cube" aria-hidden="true"></i> <span class="full-text">Products</span></a>
-            <a href="{{ route('orders') }}" class="text-white"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="full-text">Orders</span></a>
-            <a href="{{ route('balance') }}" class="text-white"><i class="fa fa-dollar" aria-hidden="true"></i> Balance</a>
+            <a class="dashboard text-white" href="{{ route('home') }}"><i class="fa fa-tachometer mr-1" aria-hidden="true"></i><span class="full-text"> АдминПанель</span></a>
+            <a href="{{ route('inbound-shipments') }}" class="text-white"><i class="fa fa-list-alt" aria-hidden="true"></i> <span class="full-text">Исходящие посылки</span></a>
+            <a href="{{ route('products') }}" class="text-white"><i class="fa fa-cube" aria-hidden="true"></i> <span class="full-text">Перечень Вещей</span></a>
+            <a href="{{ route('orders') }}" class="text-white"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="full-text">Входящие посылки</span></a>
+            <a href="{{ route('balance') }}" class="text-white"><i class="fa fa-dollar" aria-hidden="true"></i> Баланс Получателей</a>
             @if(\Illuminate\Support\Facades\Auth::user())
                 @if(\Illuminate\Support\Facades\Auth::user()->role == 'Admin')
-                    <a href="{{ route('users') }}" class="text-white"><i class="fa fa-users" aria-hidden="true"></i> <span class="full-text">Users</span></a>
+                    <a href="{{ route('users') }}" class="text-white"><i class="fa fa-users" aria-hidden="true"></i> <span class="full-text">Пользователи</span></a>
                 @endif
             @endif
         </div>
@@ -149,8 +148,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddLabelProduct">Change user data</h5>
-                    <button type="button" class="close close-modal-personal" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="modalAddLabelProduct">Изменение Личной Информации</h5>
+                    <button type="button" class="close close-modal-personal" data-dismiss="modal" aria-label="Закрыть">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -159,9 +158,9 @@
                     <form class="form-submit" id="updateUserData">
                         @csrf
                         <div class="form-group">
-                            <label for="personal-name" class="font-weight-bold">Name</label>
+                            <label for="personal-name" class="font-weight-bold">Название</label>
                             <input type="text" class="form-control" required id="personal-name" maxlength="255"
-                                   aria-describedby="ariaDescribedbyHelp" placeholder="Name" value="{{ \Illuminate\Support\Facades\Auth::user()->name }}">
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Название" value="{{ \Illuminate\Support\Facades\Auth::user()->name }}">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
@@ -170,36 +169,36 @@
                                    aria-describedby="ariaDescribedbyHelp" placeholder="Email" value="{{ \Illuminate\Support\Facades\Auth::user()->email }}">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
-                        <button type="submit" class="btn btn-dark btn-block">Change</button>
+                        <button type="submit" class="btn btn-dark btn-block">Изменить</button>
                     </form>
 
                     <form class="form-submit mt-5" id="changePassword">
                         @csrf
                         <div class="form-group">
-                            <label for="personal-last_password" class="font-weight-bold">Previous password</label>
+                            <label for="personal-last_password" class="font-weight-bold">Старый пароль</label>
                             <input type="password" class="form-control" required id="personal-last_password"
-                                   aria-describedby="ariaDescribedbyHelp" placeholder="Previous password" minlength="8" maxlength="255">
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Старый пароль" minlength="8" maxlength="255">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="personal-password" class="font-weight-bold">Password</label>
+                            <label for="personal-password" class="font-weight-bold">Пароль</label>
                             <input type="password" class="form-control" required id="personal-password"
-                                   aria-describedby="ariaDescribedbyHelp" placeholder="Password" minlength="8" maxlength="255">
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Пароль" minlength="8" maxlength="255">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="personal-password_confirmation" class="font-weight-bold">Confirm password</label>
+                            <label for="personal-password_confirmation" class="font-weight-bold">Подтвердить Пароль</label>
                             <input type="password" class="form-control" required id="personal-password_confirmation"
-                                   aria-describedby="ariaDescribedbyHelp" placeholder="Confirm password" minlength="8"  maxlength="255">
+                                   aria-describedby="ariaDescribedbyHelp" placeholder="Подтвердить Пароль" minlength="8"  maxlength="255">
                             <small id="ariaDescribedbyHelp" class="form-text text-danger"></small>
                         </div>
-                        <button type="submit" class="btn btn-dark btn-block">Change password</button>
+                        <button type="submit" class="btn btn-dark btn-block">Изменить Пароль</button>
                     </form>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary close-modal-personal" data-dismiss="modal">
-                        Close
+                        Закрыть
                     </button>
                 </div>
             </div>

@@ -30,7 +30,7 @@ class OrderRequest extends FormRequest
             'state_region' => 'required|string|max:255',
             'country' => 'required|string|max:255',
 
-            'status' => 'in:Created,Shipped',
+            'status' => 'in:Создано,Доставлено',
             'shipping_cost' => 'numeric|nullable',
             'shipped' => 'date|nullable',
             'user_id' => 'exists:users,id',

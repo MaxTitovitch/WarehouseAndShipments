@@ -18,7 +18,7 @@ class ShipmentController extends Controller
         $this->syncProducts($shipment, $request);
         $this->updateProducts();
 //        $shipment->user->sendShipmentNotification($shipment);
-        Session::flash('success', 'New Inbound shipment created!');
+        Session::flash('success', 'Новое Входящее отправление создано!');
         return response()->json($shipment, 200);
     }
 
@@ -42,12 +42,12 @@ class ShipmentController extends Controller
             }
             $this->copyModelFromRequest($shipment, $request);
             $this->syncProducts($shipment, $request);
-            Session::flash('success', 'Inbound shipment updated!');
+            Session::flash('success', 'Входящее отправление updated!');
             $this->updateProducts();
 //            $shipment->user->sendShipmentNotification($shipment);
             return response()->json($shipment, 200);
         } else {
-            Session::flash('error', 'It isn\'t your shipment!');
+            Session::flash('error', 'Это не ваша посылка!');
             return response()->json(null, 200);
         }
     }
@@ -105,10 +105,10 @@ class ShipmentController extends Controller
             $shipment->products()->sync([]);
             $this->updateProducts();
 //            $order->user->sendOrderNotification($order);
-            Session::flash('success', 'Shipment deleted!');
+            Session::flash('success', 'Удалено!');
             return response()->json(Shipment::destroy($id), 200);
         } else {
-            Session::flash('error', 'It isn\'t your shipment!');
+            Session::flash('error', 'Это не ваша посылка!');
             return response()->json(null, 200);
         }
     }
